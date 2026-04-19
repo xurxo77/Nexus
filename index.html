@@ -314,14 +314,16 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 
   <!-- S5: CONFIG -->
   <div class="screen" id="screen-config">
-    <div class="section-label">Selecciona el módulo a configurar</div>
-    <div class="card" id="config-mod-selector"></div>
+    <div id="config-mod-selector-wrap" style="display:flex;flex-direction:column;gap:12px">
+      <div class="section-label">Selecciona el módulo a configurar</div>
+      <div class="card" id="config-mod-selector"></div>
+    </div>
     <div id="config-selected-mod" style="display:none;flex-direction:column;gap:12px;margin-top:4px">
       <div class="section-label" id="config-mod-label">Prácticas predefinidas</div>
       <div class="card" id="config-acts-list"></div>
-      <button class="add-act-btn" onclick="openModal('modal-config')">＋ Añadir práctica</button>
+      <button class="add-act-btn" onclick="openConfigAct()">＋ Añadir práctica</button>
       <p style="font-size:12px;color:var(--muted);padding:0 2px;line-height:1.5">
-        Las prácticas definidas aquí aparecerán como sugerencia al evaluar a cada alumno del módulo.
+        Las prácticas definidas aquí aparecerán como sugerencia al evaluar a cada alumno del módulo. Puedes seleccionar qué criterios (P) se evalúan en cada práctica.
       </p>
     </div>
   </div>
@@ -329,7 +331,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 
 <!-- MODAL: Nueva actividad -->
 <div class="modal-overlay" id="modal-act">
-  <div class="modal">
+  <div class="modal" style="max-width:620px">
     <div class="modal-handle"></div>
     <div class="modal-title">Nueva práctica evaluada</div>
     <div class="form-group">
@@ -348,6 +350,18 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
         <input type="file" id="photo-file-act" accept="image/*" style="display:none" onchange="handlePhotoAct(this)" />
       </div>
     </div>
+
+    <!-- Selector de criterios a evaluar -->
+    <div class="form-group">
+      <label class="form-label">Criterios procedimentales a evaluar</label>
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button type="button" class="btn-secondary" style="font-size:12px;padding:8px 12px;min-height:auto;flex:1" onclick="toggleAllCritAct(true)">✓ Todos</button>
+        <button type="button" class="btn-secondary" style="font-size:12px;padding:8px 12px;min-height:auto;flex:1" onclick="toggleAllCritAct(false)">✕ Ninguno</button>
+      </div>
+      <div id="act-crit-list" style="max-height:260px;overflow-y:auto;border:1.5px solid var(--border);border-radius:12px;padding:6px;background:var(--bg)"></div>
+      <p id="act-crit-count" style="font-size:12px;color:var(--muted);margin-top:6px;text-align:right"></p>
+    </div>
+
     <button class="btn-primary" onclick="createActividad()">Crear y evaluar</button>
     <button class="btn-secondary" onclick="closeModal('modal-act')">Cancelar</button>
   </div>
@@ -369,14 +383,26 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 
 <!-- MODAL: Config práctica -->
 <div class="modal-overlay" id="modal-config">
-  <div class="modal">
+  <div class="modal" style="max-width:620px">
     <div class="modal-handle"></div>
-    <div class="modal-title">Nueva práctica predefinida</div>
+    <div class="modal-title" id="modal-config-title">Nueva práctica predefinida</div>
     <div class="form-group">
       <label class="form-label">Nombre de la práctica</label>
       <input type="text" class="form-input" id="config-act-name" placeholder="Ej: Práctica 2 – Taladrado y roscado" />
     </div>
-    <button class="btn-primary" onclick="saveConfigAct()">Añadir</button>
+
+    <!-- Selector de criterios P a evaluar -->
+    <div class="form-group">
+      <label class="form-label">Criterios procedimentales a evaluar</label>
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button type="button" class="btn-secondary" style="font-size:12px;padding:8px 12px;min-height:auto;flex:1" onclick="toggleAllCrit(true)">✓ Seleccionar todos</button>
+        <button type="button" class="btn-secondary" style="font-size:12px;padding:8px 12px;min-height:auto;flex:1" onclick="toggleAllCrit(false)">✕ Ninguno</button>
+      </div>
+      <div id="config-crit-list" style="max-height:320px;overflow-y:auto;border:1.5px solid var(--border);border-radius:12px;padding:6px;background:var(--bg)"></div>
+      <p id="config-crit-count" style="font-size:12px;color:var(--muted);margin-top:6px;text-align:right"></p>
+    </div>
+
+    <button class="btn-primary" onclick="saveConfigAct()" id="config-save-btn">Añadir</button>
     <button class="btn-secondary" onclick="closeModal('modal-config')">Cancelar</button>
   </div>
 </div>
@@ -1164,7 +1190,7 @@ function renderClases() {
 }
 function selectClase(id) {
   S.claseId=id; renderModulos();
-  navigate('screen-modulos', getClase().nombre, `Módulos · ${S.settings.year}`, true);
+  navigate('screen-modulos', getClase().nombre, `Módulos · ${S.settings.year}`, false);
 }
 
 // ═══════════ MÓDULOS ═══════════
@@ -1198,8 +1224,116 @@ function selectModulo(id) {
 function openConfig() {
   S._configModId = S.moduloId || null;
   renderConfigModSelector();
-  if (S._configModId) selectConfigMod(S._configModId);
-  navigate('screen-config','Añadir prácticas', getClase()?.nombre);
+
+  // Si ya venimos de un módulo (S.moduloId), saltamos directo al módulo
+  // sin mostrar el selector de módulos
+  const selectorWrap = document.getElementById('config-mod-selector-wrap');
+  if (S._configModId) {
+    selectConfigMod(S._configModId);
+    if (selectorWrap) selectorWrap.style.display = 'none';
+    navigate('screen-config', `Prácticas · ${getModulo().nombre}`, `Cód. ${getModulo().codigo}`);
+  } else {
+    if (selectorWrap) selectorWrap.style.display = 'flex';
+    navigate('screen-config', 'Añadir prácticas', getClase()?.nombre);
+  }
+}
+
+// Modal de añadir práctica predefinida: carga el selector de criterios
+function openConfigAct() {
+  S._editingConfigActIdx = null; // nueva práctica
+  document.getElementById('config-act-name').value = '';
+  document.getElementById('modal-config-title').textContent = 'Nueva práctica predefinida';
+  document.getElementById('config-save-btn').textContent = 'Añadir';
+  // Selector con todos marcados por defecto
+  renderConfigCritList(null);
+  openModal('modal-config');
+  setTimeout(() => document.getElementById('config-act-name').focus(), 100);
+}
+
+// Editar una práctica predefinida existente
+function editConfigAct(idx) {
+  const acts = S.configActs[S._configModId] || [];
+  const act = acts[idx];
+  if (!act) return;
+  S._editingConfigActIdx = idx;
+  document.getElementById('config-act-name').value = act.nombre || '';
+  document.getElementById('modal-config-title').textContent = 'Editar práctica predefinida';
+  document.getElementById('config-save-btn').textContent = 'Guardar';
+  renderConfigCritList(act.crits || null);
+  openModal('modal-config');
+}
+
+// Render del selector de criterios para el modal de config
+function renderConfigCritList(selectedCrits) {
+  const inds = getIndP();
+  const el = document.getElementById('config-crit-list');
+  if (!el) return;
+  // Si selectedCrits es null → todos marcados por defecto (práctica nueva o práctica antigua sin crits)
+  const selected = selectedCrits ? new Set(selectedCrits) : new Set(inds.map(i => i.id));
+  el.innerHTML = inds.map(ind => {
+    const on = selected.has(ind.id);
+    return `<label style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;background:${on?'var(--teal-lt)':'transparent'};transition:background .15s;margin-bottom:2px">
+      <input type="checkbox" class="config-crit-check" data-id="${ind.id}" ${on?'checked':''}
+             onchange="updateConfigCritCount();this.parentElement.style.background=this.checked?'var(--teal-lt)':'transparent'"
+             style="margin-top:3px;width:18px;height:18px;accent-color:var(--teal);flex-shrink:0" />
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:700;color:var(--teal);letter-spacing:.02em">${ind.ce}</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.4;margin-top:2px">${ind.texto}</div>
+      </div>
+    </label>`;
+  }).join('');
+  updateConfigCritCount();
+}
+
+function updateConfigCritCount() {
+  const all = document.querySelectorAll('.config-crit-check');
+  const checked = document.querySelectorAll('.config-crit-check:checked').length;
+  const el = document.getElementById('config-crit-count');
+  if (el) el.textContent = `${checked} de ${all.length} criterios seleccionados`;
+}
+
+function toggleAllCrit(on) {
+  document.querySelectorAll('.config-crit-check').forEach(cb => {
+    cb.checked = on;
+    cb.parentElement.style.background = on ? 'var(--teal-lt)' : 'transparent';
+  });
+  updateConfigCritCount();
+}
+
+// Lo mismo pero para el modal de prácticas extras (modal-act)
+function renderActCritList(selectedCrits) {
+  const inds = getIndP();
+  const el = document.getElementById('act-crit-list');
+  if (!el) return;
+  const selected = selectedCrits ? new Set(selectedCrits) : new Set(inds.map(i => i.id));
+  el.innerHTML = inds.map(ind => {
+    const on = selected.has(ind.id);
+    return `<label style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;background:${on?'var(--teal-lt)':'transparent'};transition:background .15s;margin-bottom:2px">
+      <input type="checkbox" class="act-crit-check" data-id="${ind.id}" ${on?'checked':''}
+             onchange="updateActCritCount();this.parentElement.style.background=this.checked?'var(--teal-lt)':'transparent'"
+             style="margin-top:3px;width:18px;height:18px;accent-color:var(--teal);flex-shrink:0" />
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:700;color:var(--teal);letter-spacing:.02em">${ind.ce}</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.4;margin-top:2px">${ind.texto}</div>
+      </div>
+    </label>`;
+  }).join('');
+  updateActCritCount();
+}
+
+function updateActCritCount() {
+  const all = document.querySelectorAll('.act-crit-check');
+  const checked = document.querySelectorAll('.act-crit-check:checked').length;
+  const el = document.getElementById('act-crit-count');
+  if (el) el.textContent = `${checked} de ${all.length} criterios seleccionados`;
+}
+
+function toggleAllCritAct(on) {
+  document.querySelectorAll('.act-crit-check').forEach(cb => {
+    cb.checked = on;
+    cb.parentElement.style.background = on ? 'var(--teal-lt)' : 'transparent';
+  });
+  updateActCritCount();
 }
 
 function renderConfigModSelector() {
@@ -1316,13 +1450,19 @@ function switchTab(tab) {
 // ═══════════ RÚBRICA ═══════════
 function actCardHTML(act, ai, s, scored, pct) {
   const isOpen = S.openActIdx === ai;
+  // Filtrar indicadores: si la práctica tiene 'crits', mostrar solo esos. Si no, mostrar todos (compat)
+  const allIndP = getIndP();
+  const indsToShow = act.crits && act.crits.length
+    ? allIndP.filter(ind => act.crits.includes(ind.id))
+    : allIndP;
+  const totalCrits = indsToShow.length;
   return `<div class="act-card">
     <div class="act-card-header-wrap" style="display:flex;align-items:stretch;border-bottom:1px solid var(--border)">
       <button class="act-toggle act-header" onclick="toggleAct(${ai})" style="flex:1;border-bottom:none;gap:14px">
         <div style="flex:1;min-width:0;text-align:left">
           <h3 style="margin-bottom:6px">${act.nombre}</h3>
           <div class="meta">
-            📅 ${act.fecha} · ${scored}/${getIndP().length} indicadores
+            📅 ${act.fecha} · ${scored}/${totalCrits} indicadores
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
@@ -1341,7 +1481,7 @@ function actCardHTML(act, ai, s, scored, pct) {
       </div>
       <div style="padding:8px 16px 4px"><div class="prog-wrap"><div class="prog-bar" style="width:${pct}%;background:var(--teal)"></div></div></div>
       <div class="ind-list">
-        ${getIndP().map(ind=>`
+        ${indsToShow.map(ind=>`
         <div class="ind-row" style="${act.scores[ind.id]>0?'':'opacity:0.6'}">
           <div class="ind-label"><span class="ce-tag">${ind.ce}</span>${ind.texto}${act.scores[ind.id]>0?'':' <span style=\"font-size:11px;color:var(--muted);font-style:italic\">(no computa)</span>'}</div>
           <div class="score-btns">
@@ -1393,16 +1533,19 @@ function renderRubrica() {
         // ── Práctica ya iniciada: mostrar tarjeta completa ──
         const act = acts[ai];
         const s = actScore(act);
+        const totalCrits = act.crits && act.crits.length ? act.crits.length : getIndP().length;
         const scored = Object.values(act.scores).filter(v=>v>0).length;
-        const pct = Math.round(scored/getIndP().length*100);
+        const pct = totalCrits ? Math.round(scored/totalCrits*100) : 0;
         html += actCardHTML(act, ai, s, scored, pct);
       } else {
         // ── Práctica pendiente: tarjeta de inicio ──
+        const defCrits = def.crits || null;
+        const critInfo = defCrits ? `${defCrits.length} criterios P` : `todos los criterios P`;
         html+=`<div class="act-card" style="opacity:.85">
           <div class="act-header" style="align-items:center">
             <div>
               <h3>${def.nombre}</h3>
-              <div class="meta" style="color:var(--amber)">⏳ Pendiente de evaluación</div>
+              <div class="meta" style="color:var(--amber)">⏳ Pendiente · ${critInfo}</div>
             </div>
             <button onclick="iniciarActividad('${def.nombre.replace(/'/g,"\\'")}')"
               style="background:var(--teal);color:#fff;border:none;padding:12px 20px;border-radius:14px;font-size:17px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;min-height:52px">
@@ -1424,8 +1567,9 @@ function renderRubrica() {
       extras.forEach(act => {
         const ai = acts.indexOf(act);
         const s = actScore(act);
+        const totalCrits = act.crits && act.crits.length ? act.crits.length : getIndP().length;
         const scored = Object.values(act.scores).filter(v=>v>0).length;
-        const pct = Math.round(scored/getIndP().length*100);
+        const pct = totalCrits ? Math.round(scored/totalCrits*100) : 0;
         html+=actCardHTML(act, ai, s, scored, pct);
       });
     }
@@ -1440,8 +1584,9 @@ function renderRubrica() {
     } else {
       acts.forEach((act,ai)=>{
         const s=actScore(act);
+        const totalCrits = act.crits && act.crits.length ? act.crits.length : getIndP().length;
         const scored=Object.values(act.scores).filter(v=>v>0).length;
-        const pct=Math.round(scored/getIndP().length*100);
+        const pct = totalCrits ? Math.round(scored/totalCrits*100) : 0;
         html += actCardHTML(act, ai, s, scored, pct);
       });
     }
@@ -1457,8 +1602,18 @@ function iniciarActividad(nombre) {
   if (!S.actividades[key]) S.actividades[key] = [];
   // Evitar duplicados
   if (S.actividades[key].find(a => a.nombre === nombre)) return;
-  const scores = {}; getIndP().forEach(i => scores[i.id] = 0);
-  S.actividades[key].push({ nombre, fecha: today(), photo: null, scores });
+
+  // Buscar la definición predefinida para copiar sus criterios
+  const defs = S.configActs[S.moduloId] || [];
+  const def = defs.find(d => d.nombre === nombre);
+  const defCrits = def && def.crits ? def.crits : null; // null = todos
+
+  const scores = {};
+  // Solo inicializar los criterios que realmente se van a evaluar
+  const critsToUse = defCrits || getIndP().map(i => i.id);
+  critsToUse.forEach(id => scores[id] = 0);
+
+  S.actividades[key].push({ nombre, fecha: today(), photo: null, scores, crits: defCrits });
   scheduleSave();
   renderRubrica();
   updateHeader();
@@ -1487,6 +1642,8 @@ function openAddAct() {
   // Título dinámico: busca el .modal-title dentro de #modal-act
   const titleEl = document.querySelector('#modal-act .modal-title');
   if (titleEl) titleEl.textContent = defs.length ? 'Nueva práctica extra' : 'Nueva práctica';
+  // Render selector de criterios con todos marcados
+  renderActCritList(null);
   openModal('modal-act');
 }
 function handlePhotoAct(input) {
@@ -1499,11 +1656,19 @@ function createActividad() {
   const nombre=document.getElementById('new-act-name').value.trim();
   const fecha=document.getElementById('new-act-date').value;
   if (!nombre) { showToast('⚠ Escribe un nombre'); return; }
+
+  // Recoger criterios seleccionados
+  const crits = Array.from(document.querySelectorAll('.act-crit-check:checked'))
+    .map(cb => cb.getAttribute('data-id'));
+  if (!crits.length) { showToast('⚠ Selecciona al menos un criterio'); return; }
+
   const key=akey();
   if (!S.actividades[key]) S.actividades[key]=[];
-  const scores={}; getIndP().forEach(i=>scores[i.id]=0);
+  const scores={};
+  crits.forEach(id => scores[id] = 0);
+
   const doCreate = (photo) => {
-    S.actividades[key].push({nombre,fecha,photo,scores});
+    S.actividades[key].push({nombre,fecha,photo,scores,crits});
     S.openActIdx = S.actividades[key].length - 1; // abrir la nueva automáticamente
     scheduleSave();
     document.getElementById('new-act-name').value = ''; // limpiar para la próxima
@@ -1712,31 +1877,58 @@ function renderConfig(){
   const mid = S._configModId;
   if (!mid) return;
   const acts = S.configActs[mid] || [];
+  const totalCrits = getIndP().length;
   document.getElementById('config-acts-list').innerHTML = acts.length
-    ? acts.map((a,i)=>`
-      <div class="config-act-item">
+    ? acts.map((a,i)=>{
+        // Compatibilidad: prácticas antiguas sin crits = todos los criterios
+        const crits = a.crits || null;
+        const n = crits ? crits.length : totalCrits;
+        return `
+      <div class="config-act-item" style="cursor:pointer" onclick="editConfigAct(${i})">
         <div class="config-act-num">${i+1}</div>
-        <div class="config-act-name">${a.nombre}</div>
-        <button class="config-act-del" onclick="deleteConfigAct(${i})">✕</button>
-      </div>`).join('')
+        <div class="config-act-name">
+          <div>${a.nombre}</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:400;margin-top:2px">${n}/${totalCrits} criterios P · toca para editar</div>
+        </div>
+        <button class="config-act-del" onclick="event.stopPropagation();deleteConfigAct(${i})">✕</button>
+      </div>`;
+      }).join('')
     : `<div class="empty"><div class="empty-icon">📋</div><p>No hay prácticas definidas aún para este módulo.</p></div>`;
 }
 function saveConfigAct(){
   const nombre = document.getElementById('config-act-name').value.trim();
   if (!nombre) { showToast('⚠ Escribe un nombre'); return; }
+
+  // Recoger criterios seleccionados
+  const crits = Array.from(document.querySelectorAll('.config-crit-check:checked'))
+    .map(cb => cb.getAttribute('data-id'));
+
   const mid = S._configModId;
   if (!S.configActs[mid]) S.configActs[mid] = [];
-  S.configActs[mid].push({nombre});
+
+  if (S._editingConfigActIdx !== null && S._editingConfigActIdx !== undefined) {
+    // Editar existente
+    S.configActs[mid][S._editingConfigActIdx] = { nombre, crits };
+    showToast('✓ Práctica actualizada');
+  } else {
+    // Nueva
+    S.configActs[mid].push({ nombre, crits });
+    showToast('✓ Práctica añadida');
+  }
+
+  S._editingConfigActIdx = null;
   scheduleSave();
   closeModal('modal-config');
   renderConfig();
   renderConfigModSelector();
 }
 function deleteConfigAct(i){
+  if (!confirm('¿Eliminar esta práctica predefinida?')) return;
   S.configActs[S._configModId].splice(i,1);
   scheduleSave();
   renderConfig();
   renderConfigModSelector();
+  showToast('✓ Práctica eliminada');
 }
 
 // ═══════════ ALUMNOS CRUD ═══════════
