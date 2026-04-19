@@ -194,6 +194,32 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .crit-badge.crit-t{background:#E65100}
 .crit-hint{font-weight:400;color:var(--muted);font-size:13px}
 
+/* ── Examen card ── */
+.examen-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.examen-header{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:12px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2)}
+.examen-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.examen-num{font-weight:700;font-size:16px;color:#E65100;letter-spacing:.02em}
+.examen-date{border:1.5px solid #FFB74D;background:rgba(255,255,255,.75);border-radius:10px;padding:6px 10px;font-size:13px;color:#5D4037;cursor:pointer;font-family:Outfit,sans-serif;font-weight:600}
+.examen-score-row{display:flex;align-items:center;gap:12px}
+.examen-nota{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:800;min-width:58px;text-align:right;background:rgba(255,255,255,.85);padding:4px 10px;border-radius:10px}
+.examen-del-btn{background:none;border:1.5px solid rgba(198,40,40,.3);color:var(--red);font-size:18px;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .15s;flex-shrink:0}
+.examen-del-btn:hover{background:#FEE2E2;border-color:var(--red)}
+.examen-crits{padding:14px 18px}
+.examen-crits-header{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.examen-crits-title{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;color:var(--navy);flex-wrap:wrap}
+.examen-crits-count{background:#FFE0B2;color:#E65100;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700}
+.examen-crit-mini-btn{background:var(--bg);border:1.5px solid var(--border);font-size:11px;padding:5px 10px;border-radius:8px;cursor:pointer;font-weight:600;color:var(--muted);min-height:auto}
+.examen-crit-mini-btn:hover{border-color:#E65100;color:#E65100;background:#FFF3E0}
+.examen-crit-list{display:flex;flex-direction:column;gap:6px;max-height:340px;overflow-y:auto;padding:2px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg)}
+.examen-crit-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;background:transparent;transition:background .15s;margin:2px}
+.examen-crit-item:hover{background:rgba(230,81,0,.05)}
+.examen-crit-item.on{background:#FFF3E0}
+.examen-crit-item input[type="checkbox"]{margin-top:3px;width:18px;height:18px;accent-color:#E65100;cursor:pointer;flex-shrink:0}
+.examen-crit-text{flex:1;min-width:0}
+.examen-crit-ce{font-size:12px;font-weight:700;color:#E65100;letter-spacing:.02em}
+.examen-crit-desc{font-size:13px;color:var(--text);line-height:1.4;margin-top:2px}
+.examen-no-crits{padding:16px;text-align:center;color:var(--muted);font-size:13px;background:var(--bg);margin:12px 18px 18px;border-radius:10px}
+
 /* ── Modal ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:200;display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
@@ -802,6 +828,24 @@ const TODOS_INDICADORES = {
     IND_A: [
       {id:"0006-A01",ce:"RA1-CEe",texto:"Trabaja de forma ordenada y metódica en la preparación de los equipos de medida."},
       {id:"0006-A02",ce:"RA5-CEe",texto:"Valora la importancia de las normas de calidad y actúa conforme a ellas."}
+    ],
+    IND_T: [
+      {id:"0006-T01",ce:"RA1-CEa",texto:"Descrito las condiciones de temperatura, humedad y limpieza que deben cumplir las piezas a."},
+      {id:"0006-T02",ce:"RA1-CEd",texto:"Descrito las características constructivas y los principios de funcionamiento de los equipos."},
+      {id:"0006-T03",ce:"RA2-CEa",texto:"Identificado los valores de referencia y sus tolerancias."},
+      {id:"0006-T04",ce:"RA2-CEb",texto:"Identificado los instrumentos de medida, indicando la magnitud que controlan, su campo de."},
+      {id:"0006-T05",ce:"RA2-CEd",texto:"Descrito el funcionamiento de los útiles de medición."},
+      {id:"0006-T06",ce:"RA2-CEe",texto:"Descrito las técnicas de medición utilizadas en mediciones dimensionales, geométricas y superficiales."},
+      {id:"0006-T07",ce:"RA2-CEf",texto:"Identificado los tipos de errores que influyen en una medida."},
+      {id:"0006-T08",ce:"RA3-CEa",texto:"Relacionado los diferentes ensayos destructivos y no destructivos con las características que controlan."},
+      {id:"0006-T09",ce:"RA3-CEb",texto:"Descrito los instrumentos y máquinas empleados en los ensayos destructivos y no destructivos y."},
+      {id:"0006-T10",ce:"RA3-CEc",texto:"Explicado los errores más característicos que se dan en los equipos y máquinas empleados en."},
+      {id:"0006-T11",ce:"RA4-CEa",texto:"Diferenciado los distintos tipos de gráficos en función de su aplicación."},
+      {id:"0006-T12",ce:"RA4-CEb",texto:"Explicado el valor de límite de control."},
+      {id:"0006-T13",ce:"RA4-CEf",texto:"Relacionado el concepto de capacidad de proceso y los índices que lo evalúan con las."},
+      {id:"0006-T14",ce:"RA5-CEa",texto:"Explicado las características de los sistemas y modelos de calidad que afectan al proceso."},
+      {id:"0006-T15",ce:"RA5-CEb",texto:"Identificado las normas y procedimientos afines al proceso de fabricación o control."},
+      {id:"0006-T16",ce:"RA5-CEc",texto:"Descrito las actividades que hay que realizar para mantener los sistemas o modelos de calidad,."}
     ]
   },
 
@@ -825,6 +869,20 @@ const TODOS_INDICADORES = {
     IND_A: [
       {id:"0007-A01",ce:"RA2-CEf",texto:"Valora cómo las tolerancias y acabados influyen en la calidad del producto."},
       {id:"0007-A02",ce:"RA3-CEf",texto:"Propone mejoras constructivas de los útiles y las argumenta técnicamente."}
+    ],
+    IND_T: [
+      {id:"0007-T01",ce:"RA1-CEa",texto:"Descrito los diferentes formatos de planos empleados en fabricación mecánica."},
+      {id:"0007-T02",ce:"RA1-CEc",texto:"Reconocido los diferentes sistemas de representación gráfica."},
+      {id:"0007-T03",ce:"RA1-CEe",texto:"Identificado los cortes y secciones representados en los planos."},
+      {id:"0007-T04",ce:"RA1-CEg",texto:"Caracterizado las formas normalizadas del objeto representado (roscas, soldaduras, entalladuras, y otros)."},
+      {id:"0007-T05",ce:"RA2-CEa",texto:"Identificado los elementos normalizados que formarán parte del conjunto."},
+      {id:"0007-T06",ce:"RA2-CEd",texto:"Identificado los materiales del objeto representado."},
+      {id:"0007-T07",ce:"RA2-CEe",texto:"Identificado los tratamientos térmicos y superficiales del objeto representado."},
+      {id:"0007-T08",ce:"RA4-CEb",texto:"Relacionado los componentes utilizados en automatización con los símbolos del esquema de la instalación."},
+      {id:"0007-T09",ce:"RA4-CEc",texto:"Identificado las referencias comerciales de los componentes de la instalación."},
+      {id:"0007-T10",ce:"RA4-CEd",texto:"Identificado los valores de funcionamiento de la instalación y sus tolerancias."},
+      {id:"0007-T11",ce:"RA4-CEe",texto:"Identificado los mandos de regulación del sistema."},
+      {id:"0007-T12",ce:"RA4-CEf",texto:"Identificado las conexiones y etiquetas de conexionado de la instalación."}
     ]
   },
 
@@ -881,6 +939,26 @@ const TODOS_INDICADORES = {
       {id:"0091-A02",ce:"RA2-CEj",texto:"Actúa con rapidez ante situaciones problemáticas e informa al profesor."},
       {id:"0091-A03",ce:"RA7-CEc",texto:"Valora el mantenimiento de primer nivel y lo realiza sin necesidad de recordatorio."},
       {id:"0091-A04",ce:"RA8-CEf",texto:"Valora el orden y la limpieza como primer factor de prevención de riesgos."}
+    ],
+    IND_T: [
+      {id:"0091-T01",ce:"RA1-CEb",texto:"Identificado las herramientas, útiles y soportes de fijación de piezas."},
+      {id:"0091-T02",ce:"RA1-CEd",texto:"Explicado las medidas de seguridad exigibles en el uso de los diferentes equipos de mecanizado."},
+      {id:"0091-T03",ce:"RA1-CEe",texto:"Identificado los equipos de protección individual para cada actividad."},
+      {id:"0091-T04",ce:"RA1-CEg",texto:"Relacionado las necesidades de materiales y recursos necesarios en cada etapa."},
+      {id:"0091-T05",ce:"RA2-CEa",texto:"Identificado el material en función de sus dimensiones y calidad según las instrucciones de trabajo."},
+      {id:"0091-T06",ce:"RA2-CEb",texto:"Identificado las máquinas, equipos, herramientas, plantillas y útiles necesarios para el."},
+      {id:"0091-T07",ce:"RA2-CEd",texto:"Definido las funciones específicas de cada máquina o equipo."},
+      {id:"0091-T08",ce:"RA4-CEb",texto:"Descrito las deformaciones que se producen al aplicar técnicas de corte a distintos elementos."},
+      {id:"0091-T09",ce:"RA4-CEg",texto:"Identificado posibles defectos y, en su caso, relacionado éstos con las causas que los provocan."},
+      {id:"0091-T10",ce:"RA5-CEb",texto:"Descrito las deformaciones que se producen al aplicar técnicas de líneas y puntos de calor a."},
+      {id:"0091-T11",ce:"RA5-CEg",texto:"Identificado posibles defectos y, en su caso, relacionado éstos con las causas que los provocan."},
+      {id:"0091-T12",ce:"RA6-CEf",texto:"Identificado posibles defectos y, en su caso, relacionado éstos con las causas que los provocan."},
+      {id:"0091-T13",ce:"RA7-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
+      {id:"0091-T14",ce:"RA8-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que suponen la manipulación de los."},
+      {id:"0091-T15",ce:"RA8-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
+      {id:"0091-T16",ce:"RA8-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
+      {id:"0091-T17",ce:"RA8-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0091-T18",ce:"RA8-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
     ]
   },
 
@@ -922,6 +1000,23 @@ const TODOS_INDICADORES = {
       {id:"0092-A04",ce:"RA4-CEi",texto:"Muestra interés por la mejora del proceso durante el mecanizado CNC."},
       {id:"0092-A05",ce:"RA5-CEc",texto:"Valora el mantenimiento de primer nivel y lo realiza sin ser recordado."},
       {id:"0092-A06",ce:"RA6-CEf",texto:"Valora el orden y la limpieza como primer factor de prevención de riesgos."}
+    ],
+    IND_T: [
+      {id:"0092-T01",ce:"RA1-CEa",texto:"Identificado la secuencia de operaciones de preparación de las máquinas en función de las."},
+      {id:"0092-T02",ce:"RA1-CEb",texto:"Identificado las herramientas, útiles y soportes de fijación de piezas."},
+      {id:"0092-T03",ce:"RA1-CEd",texto:"Explicado las medidas de seguridad exigibles en el uso de los diferentes equipos de mecanizado."},
+      {id:"0092-T04",ce:"RA1-CEe",texto:"Enumerado los equipos de protección individual para cada actividad."},
+      {id:"0092-T05",ce:"RA1-CEg",texto:"Relacionado las necesidades de materiales y recursos necesarios en cada etapa."},
+      {id:"0092-T06",ce:"RA2-CEb",texto:"Descrito los distintos componentes que forman un equipo de mecanizado, así como los útiles y."},
+      {id:"0092-T07",ce:"RA3-CEa",texto:"Descrito los procedimientos para obtener piezas por mecanizado."},
+      {id:"0092-T08",ce:"RA3-CEe",texto:"Analizado las diferencias entre el proceso definido y el realizado."},
+      {id:"0092-T09",ce:"RA3-CEf",texto:"Identificado las deficiencias debidas a las herramientas, a las condiciones de corte y al material."},
+      {id:"0092-T10",ce:"RA5-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
+      {id:"0092-T11",ce:"RA6-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los."},
+      {id:"0092-T12",ce:"RA6-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
+      {id:"0092-T13",ce:"RA6-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
+      {id:"0092-T14",ce:"RA6-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0092-T15",ce:"RA6-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
     ]
   },
 
@@ -958,6 +1053,22 @@ const TODOS_INDICADORES = {
       {id:"0093-A03",ce:"RA3-CEi",texto:"Mantiene una actitud ordenada y metódica durante el soldeo."},
       {id:"0093-A04",ce:"RA4-CEc",texto:"Valora el mantenimiento de primer nivel y lo realiza sin ser recordado."},
       {id:"0093-A05",ce:"RA5-CEf",texto:"Valora el orden y la limpieza como primer factor de prevención de riesgos."}
+    ],
+    IND_T: [
+      {id:"0093-T01",ce:"RA1-CEa",texto:"Identificado la secuencia de operaciones de preparación de los equipos."},
+      {id:"0093-T02",ce:"RA1-CEb",texto:"Identificado las herramientas, útiles y soportes de fijación de piezas."},
+      {id:"0093-T03",ce:"RA1-CEe",texto:"Enumerado los equipos de protección individual para cada actividad."},
+      {id:"0093-T04",ce:"RA1-CEg",texto:"Relacionado las necesidades de materiales y recursos necesarios."},
+      {id:"0093-T05",ce:"RA2-CEa",texto:"Identificado el comportamiento de los metales frente al soldeo, recargue o proyección."},
+      {id:"0093-T06",ce:"RA3-CEa",texto:"Descrito los procedimientos característicos de soldeo, recargue y proyección."},
+      {id:"0093-T07",ce:"RA3-CEe",texto:"Identificado los defectos de la soldadura."},
+      {id:"0093-T08",ce:"RA3-CEg",texto:"Identificado las deficiencias debidas a la preparación, equipo, condiciones, parámetros de."},
+      {id:"0093-T09",ce:"RA4-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
+      {id:"0093-T10",ce:"RA5-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los."},
+      {id:"0093-T11",ce:"RA5-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
+      {id:"0093-T12",ce:"RA5-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
+      {id:"0093-T13",ce:"RA5-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0093-T14",ce:"RA5-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
     ]
   },
 
@@ -1016,6 +1127,22 @@ const TODOS_INDICADORES = {
       {id:"0094-A05",ce:"RA5-CEk",texto:"Mantiene actitud de respeto a normas y procedimientos durante el soldeo SAW."},
       {id:"0094-A06",ce:"RA6-CEc",texto:"Valora el mantenimiento de primer nivel y lo realiza sin ser recordado."},
       {id:"0094-A07",ce:"RA7-CEf",texto:"Valora el orden y la limpieza como primer factor de prevención de riesgos."}
+    ],
+    IND_T: [
+      {id:"0094-T01",ce:"RA1-CEa",texto:"Identificado la secuencia de operaciones de preparación de los equipos."},
+      {id:"0094-T02",ce:"RA1-CEb",texto:"Identificado las herramientas, útiles y soportes de fijación de piezas."},
+      {id:"0094-T03",ce:"RA1-CEe",texto:"Enumerado los equipos de protección individual para cada actividad."},
+      {id:"0094-T04",ce:"RA1-CEg",texto:"Relacionado las necesidades de materiales y recursos necesarios."},
+      {id:"0094-T05",ce:"RA2-CEa",texto:"Identificado el comportamiento de los metales frente al soldeo y recargue."},
+      {id:"0094-T06",ce:"RA4-CEh",texto:"Identificado las deficiencias debidas a la preparación, equipo, condiciones, parámetros de soldeo."},
+      {id:"0094-T07",ce:"RA5-CEa",texto:"Descrito los procedimientos característicos de soldeo."},
+      {id:"0094-T08",ce:"RA5-CEi",texto:"Discernido si las deficiencias son debidas a la preparación, equipo, condiciones, parámetros."},
+      {id:"0094-T09",ce:"RA6-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
+      {id:"0094-T10",ce:"RA7-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los."},
+      {id:"0094-T11",ce:"RA7-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
+      {id:"0094-T12",ce:"RA7-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
+      {id:"0094-T13",ce:"RA7-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0094-T14",ce:"RA7-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
     ]
   },
 
@@ -1057,6 +1184,23 @@ const TODOS_INDICADORES = {
     IND_A: [
       {id:"0095-A01",ce:"RA5-CEc",texto:"Valora el mantenimiento de primer nivel y lo realiza sin ser recordado."},
       {id:"0095-A02",ce:"RA6-CEf",texto:"Valora el orden y la limpieza como primer factor de prevención de riesgos."}
+    ],
+    IND_T: [
+      {id:"0095-T01",ce:"RA1-CEa",texto:"Descrito las máquinas, equipos, accesorios y elementos auxiliares necesarios para realizar el trabajo."},
+      {id:"0095-T02",ce:"RA1-CEc",texto:"Identificado los materiales necesarios para el trabajo de montaje."},
+      {id:"0095-T03",ce:"RA1-CEd",texto:"Caracterizado las áreas de trabajo en función del tipo de montaje a realizar."},
+      {id:"0095-T04",ce:"RA2-CEa",texto:"Explicado los diferentes procesos de montaje en construcciones metálicas tipo: estructuras,."},
+      {id:"0095-T05",ce:"RA2-CEe",texto:"Identificado las normas de seguridad que intervienen durante el proceso de montaje."},
+      {id:"0095-T06",ce:"RA2-CEf",texto:"Relacionado las incompatibilidades de contacto entre diferentes materiales."},
+      {id:"0095-T07",ce:"RA2-CEg",texto:"Descrito las consecuencias y soluciones que producen las dilataciones de los diferentes materiales."},
+      {id:"0095-T08",ce:"RA4-CEb",texto:"Relacionado los distintos equipos, herramientas y medios auxiliares con el tratamiento a realizar."},
+      {id:"0095-T09",ce:"RA4-CEg",texto:"Identificado los defectos producidos en el tratamiento."},
+      {id:"0095-T10",ce:"RA5-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
+      {id:"0095-T11",ce:"RA6-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los."},
+      {id:"0095-T12",ce:"RA6-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
+      {id:"0095-T13",ce:"RA6-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
+      {id:"0095-T14",ce:"RA6-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0095-T15",ce:"RA6-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
     ]
   }
 };
@@ -1809,64 +1953,83 @@ function renderEscrita() {
     </div></div>`;
   }
 
+  const indsT = getIndT();
+
   // Lista de pruebas existentes
   if (pruebas.length > 0) {
-    html += `<div class="obs-session">`;
-    html += `<div class="obs-session-header">
-      <span class="title">📝 Exámenes realizados (${pruebas.length})</span>
-      <span class="obs-session-score" style="color:${scoreColor(media)}">${media!==null?media+'/10':''}</span>
-    </div>`;
-    const indsT = getIndT();
     pruebas.forEach((p, i) => {
       const crits = p.crits || [];
-      html += `<div class="obs-row" style="align-items:center;flex-wrap:wrap">
-        <div class="obs-text" style="display:flex;flex-direction:column;gap:4px">
-          <input type="date" value="${p.fecha}"
-            style="border:none;background:none;font-size:var(--fs-sm);color:var(--muted);cursor:pointer;padding:0;font-family:Outfit,sans-serif"
-            onchange="setPruebaFecha(${i},this.value)" />
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
-          <input type="range" min="0" max="10" step="0.5" value="${p.nota}"
-            style="width:100px;accent-color:var(--teal)"
-            oninput="updatePruebaSlider(${i},this.value,this)" />
-          <span id="pnota-${i}" style="font-family:'IBM Plex Mono',monospace;font-size:var(--fs-lg);font-weight:700;color:${scoreColor(p.nota)};min-width:42px;text-align:right">${p.nota.toFixed(1)}</span>
-          <button onclick="deletePrueba(${i})"
-            style="background:none;border:none;color:var(--red);font-size:22px;cursor:pointer;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px">🗑</button>
-        </div>
-      </div>`;
+      html += `<div class="examen-card">
+        <div class="examen-header">
+          <div class="examen-title-row">
+            <span class="examen-num">Examen ${i+1}</span>
+            <input type="date" value="${p.fecha}" class="examen-date"
+              onchange="setPruebaFecha(${i},this.value)" />
+          </div>
+          <div class="examen-score-row">
+            <input type="range" min="0" max="10" step="0.5" value="${p.nota}"
+              style="flex:1;accent-color:var(--teal)"
+              oninput="updatePruebaSlider(${i},this.value,this)" />
+            <span id="pnota-${i}" class="examen-nota" style="color:${scoreColor(p.nota)}">${p.nota.toFixed(1)}</span>
+            <button class="examen-del-btn" onclick="deletePrueba(${i})" title="Eliminar">🗑</button>
+          </div>
+        </div>`;
 
-      // CE conceptuales evaluados en esta prueba
+      // Selector de CE conceptuales
       if (indsT.length) {
-        html += `<div style="padding:10px 14px 14px;border-top:1px dashed var(--border);margin:-6px 0 8px">
-          <details>
-            <summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);padding:4px 0;list-style:none">
-              <span style="display:inline-block;transition:transform .2s">▸</span>
-              Criterios conceptuales evaluados (${crits.length}/${indsT.length})
-            </summary>
-            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
-              ${indsT.map(ind => {
-                const on = crits.includes(ind.id);
-                return `<label style="display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;cursor:pointer;background:${on?'#FFE0B2':'var(--bg)'};border:1.5px solid ${on?'#E65100':'var(--border)'};transition:all .15s;font-size:12px">
-                  <input type="checkbox" ${on?'checked':''} onchange="togglePruebaCrit(${i},'${ind.id}',this.checked)"
-                         style="accent-color:#E65100;cursor:pointer" />
-                  <strong style="color:#E65100">${ind.ce}</strong>
-                </label>`;
-              }).join('')}
+        html += `<div class="examen-crits">
+          <div class="examen-crits-header">
+            <span class="examen-crits-title">
+              <span class="crit-badge crit-t" style="width:22px;height:22px;font-size:11px">T</span>
+              Criterios conceptuales trabajados
+              <span class="examen-crits-count">${crits.length} de ${indsT.length}</span>
+            </span>
+            <div style="display:flex;gap:6px">
+              <button class="examen-crit-mini-btn" onclick="togglePruebaAllCrits(${i},true)">✓ Todos</button>
+              <button class="examen-crit-mini-btn" onclick="togglePruebaAllCrits(${i},false)">✕ Ninguno</button>
             </div>
-          </details>
+          </div>
+          <div class="examen-crit-list">`;
+
+        indsT.forEach(ind => {
+          const on = crits.includes(ind.id);
+          html += `<label class="examen-crit-item ${on?'on':''}">
+            <input type="checkbox" ${on?'checked':''}
+                   onchange="togglePruebaCrit(${i},'${ind.id}',this.checked)" />
+            <div class="examen-crit-text">
+              <div class="examen-crit-ce">${ind.ce}</div>
+              <div class="examen-crit-desc">${ind.texto}</div>
+            </div>
+          </label>`;
+        });
+
+        html += `</div></div>`;
+      } else {
+        html += `<div class="examen-no-crits">
+          <em>No hay criterios conceptuales definidos para este módulo todavía.</em>
         </div>`;
       }
+
+      html += `</div>`; // cierre examen-card
     });
-    html += `</div>`;
   } else {
     html += `<div class="card empty"><div class="empty-icon">✏</div>
-      <p>No hay exámenes registrados todavía.</p></div>`;
+      <p>No hay exámenes registrados todavía.<br>Pulsa <strong>＋ Añadir examen</strong> para empezar.</p></div>`;
   }
 
   // Botón añadir
   html += `<button class="add-act-btn" onclick="addPrueba()">＋ Añadir examen</button>`;
 
   document.getElementById('escrita-content').innerHTML = html;
+}
+
+function togglePruebaAllCrits(i, on) {
+  const key = akey();
+  if (!S.notas[key]?.pruebas?.[i]) return;
+  const indsT = getIndT();
+  S.notas[key].pruebas[i].crits = on ? indsT.map(ind => ind.id) : [];
+  scheduleSave();
+  renderEscrita();
 }
 
 function togglePruebaCrit(i, critId, on) {
@@ -1880,7 +2043,6 @@ function togglePruebaCrit(i, critId, on) {
     p.crits = p.crits.filter(c => c !== critId);
   }
   scheduleSave();
-  // Actualizar solo el contador del summary (sin re-renderizar todo)
   renderEscrita();
 }
 
@@ -1902,16 +2064,17 @@ function setPruebaFecha(i, fecha) {
 
 function addPrueba() {
   const key = akey();
-  // Migrar formato antiguo si existe
   if (S.notas[key] && typeof S.notas[key].nota === 'number') {
     S.notas[key] = { pruebas: [{ fecha: today(), nota: S.notas[key].nota, crits: [] }] };
   }
   if (!S.notas[key]) S.notas[key] = { pruebas: [] };
   S.notas[key].pruebas.push({ fecha: today(), nota: 5, crits: [] });
   scheduleSave(); renderEscrita(); updateHeader();
+  showToast('✓ Examen añadido');
 }
 
 function deletePrueba(i) {
+  if (!confirm('¿Eliminar este examen?\n\nSe perderá la nota y los criterios marcados.')) return;
   const key = akey();
   S.notas[key].pruebas.splice(i, 1);
   if (!S.notas[key].pruebas.length) S.notas[key] = null;
