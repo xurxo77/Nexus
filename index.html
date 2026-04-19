@@ -267,7 +267,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       <p id="topbarSub">Soldadura y Calderería · 2025-2026</p>
     </div>
     <button class="topbar-action" id="configBtn" style="display:none;align-items:center;gap:7px;font-size:16px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openConfig()">➕ Añadir prácticas</button>
-    <button class="topbar-action" id="pdfBtn" style="display:none;align-items:center;gap:7px;font-size:16px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="generarPDF()">📄 Exportar informe</button>
+    <button class="topbar-action" id="pdfBtn" style="display:none;align-items:center;gap:7px;font-size:16px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openPDFModal()">📄 Exportar informe</button>
     <button class="topbar-action" id="settingsBtn" onclick="openSettings()" title="Ajustes" style="font-size:24px;width:44px;height:44px;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,0.2);border-radius:50%;border:1.5px solid rgba(255,255,255,0.3)">⚙</button>
     <button class="topbar-action" id="infoBtn" onclick="openInfo()" title="Información" style="font-size:20px;font-weight:700;width:44px;height:44px;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,0.2);border-radius:50%;border:1.5px solid rgba(255,255,255,0.3);font-family:'Outfit',sans-serif">ⓘ</button>
   </div>
@@ -289,6 +289,14 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
     <div class="section-label" id="alumnos-label">Alumnos</div>
     <div class="card" id="alumnosList"></div>
     <button class="add-act-btn" onclick="openAddAlumno()">＋ Añadir alumno</button>
+    <button class="add-act-btn" onclick="openResumen()" style="background:var(--teal);color:#fff;border:none;margin-top:4px">📊 Ver resumen de clase</button>
+  </div>
+
+  <!-- S3b: RESUMEN DE CLASE -->
+  <div class="screen" id="screen-resumen">
+    <div class="section-label" id="resumen-label">Resumen de clase</div>
+    <div id="resumen-content"></div>
+    <button class="add-act-btn" onclick="exportResumenPDF()" style="background:var(--teal);color:#fff;border:none;margin-top:8px">📄 Exportar PDF de la clase</button>
   </div>
 
   <!-- S4: ALUMNO -->
@@ -657,6 +665,25 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
   </div>
 </div>
 
+<!-- MODAL: Observaciones del profesor antes de exportar PDF -->
+<div class="modal-overlay" id="modal-obs-pdf">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📝 Observaciones para el informe</div>
+    <p style="color:var(--muted);font-size:var(--fs-sm);margin-bottom:10px;line-height:1.5">
+      Añade comentarios generales que aparecerán en el PDF. Puedes dejarlo vacío si no quieres incluir observaciones. <strong>Se guardan</strong> para este alumno y módulo.
+    </p>
+    <div class="form-group">
+      <label class="form-label">Observaciones del profesor</label>
+      <textarea class="form-input" id="obs-pdf-text" rows="6"
+                style="resize:vertical;min-height:120px;font-family:inherit;line-height:1.5"
+                placeholder="Ej: Muestra una evolución positiva en el trimestre. Debe reforzar el uso del equipo de protección individual..."></textarea>
+    </div>
+    <button class="btn-primary" onclick="confirmGenerarPDF()">📄 Generar PDF</button>
+    <button class="btn-secondary" onclick="closeModal('modal-obs-pdf')">Cancelar</button>
+  </div>
+</div>
+
 <!-- MODAL: Confirmación de borrado total con texto -->
 <div class="modal-overlay" id="modal-del-confirm">
   <div class="modal">
@@ -1001,6 +1028,7 @@ let S = {
   claseId:null, moduloId:null, alumnoId:null, curTab:'rubrica',
   actividades:{}, observaciones:{}, notas:{},
   stuPhotos:{}, configActs:{}, photoActTmp:null, _editingStu:null,
+  obsProfesor:{}, // observaciones del profesor por clave alumnoId_moduloId
   alumnos: { CL001: [], CL002: [] }, // clases vacías por defecto
   _editAluId: null, _delAluId: null, openActIdx: null,
   settings: { year:'2025-2026', centro:'', profesor:'',
@@ -1782,7 +1810,29 @@ function confirmDeleteAlumno() {
 }
 
 // ═══════════ PDF ═══════════
-function generarPDF() {
+function openPDFModal() {
+  const key = akey();
+  const textarea = document.getElementById('obs-pdf-text');
+  // Cargar observaciones guardadas para este alumno/módulo
+  textarea.value = (S.obsProfesor && S.obsProfesor[key]) || '';
+  openModal('modal-obs-pdf');
+  setTimeout(() => textarea.focus(), 100);
+}
+
+function confirmGenerarPDF() {
+  const key = akey();
+  const text = document.getElementById('obs-pdf-text').value.trim();
+  // Guardar observaciones (persistente)
+  if (!S.obsProfesor) S.obsProfesor = {};
+  if (text) S.obsProfesor[key] = text;
+  else delete S.obsProfesor[key];
+  scheduleSave();
+  closeModal('modal-obs-pdf');
+  // Generar el PDF con las observaciones
+  setTimeout(() => generarPDF(text), 300);
+}
+
+function generarPDF(observaciones = '') {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
   const a = getAlumno();
@@ -1829,31 +1879,57 @@ function generarPDF() {
   });
   y = 52;
 
-  // ── Resumen de puntuaciones ───────────────────────────────
-  doc.setFillColor(238,242,247);
-  doc.roundedRect(M, y, W-M*2, 26, 3, 3, 'F');
-
-  const scores = [
-    { label:'Rúbrica', val:rub },
-    { label:'Observación', val:obs },
-    { label:'Prueba escrita', val:esc },
-    { label:'NOTA GLOBAL', val:glo, bold:true },
+  // ── GRÁFICO DE BARRAS de los bloques ──────────────────────
+  const blocks = [
+    { label:'Criterios procedimentales (P)', sublabel:'Evaluado mediante rúbrica', val:rub },
+    { label:'Criterios actitudinales (A)',   sublabel:'Evaluado mediante observación', val:obs },
+    { label:'Criterios conceptuales (T)',    sublabel:'Evaluado mediante prueba escrita', val:esc },
   ];
-  const colW = (W-M*2) / scores.length;
-  scores.forEach((sc, i) => {
-    const cx = M + colW*i + colW/2;
-    doc.setFont('helvetica', sc.bold?'bold':'normal');
-    doc.setFontSize(sc.bold?8:7);
-    doc.setTextColor(...MUTED);
-    doc.text(sc.label, cx, y+7, {align:'center'});
-    const v = sc.val!==null ? sc.val.toFixed(1) : '—';
-    const col = sc.val===null ? MUTED : sc.val>=9?GREEN : sc.val>=7?TEAL : sc.val>=5?AMBER : RED;
+  const blockH = 18;
+  blocks.forEach((b, i) => {
+    const by = y + i*blockH;
+    doc.setFillColor(248,250,252);
+    doc.roundedRect(M, by, W-M*2, blockH-2, 2, 2, 'F');
+    // Etiqueta
     doc.setFont('helvetica','bold');
-    doc.setFontSize(sc.bold?16:14);
+    doc.setFontSize(8);
+    doc.setTextColor(...NAVY);
+    doc.text(b.label, M+3, by+5);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(6.5);
+    doc.setTextColor(...MUTED);
+    doc.text(b.sublabel, M+3, by+9);
+    // Barra
+    const barX = M+3, barY = by+11, barW = 100, barH = 4;
+    doc.setFillColor(230,234,240);
+    doc.roundedRect(barX, barY, barW, barH, 1, 1, 'F');
+    if (b.val !== null) {
+      const pct = Math.max(0, Math.min(1, b.val/10));
+      const col = b.val>=9?GREEN : b.val>=7?TEAL : b.val>=5?AMBER : RED;
+      doc.setFillColor(...col);
+      doc.roundedRect(barX, barY, barW*pct, barH, 1, 1, 'F');
+    }
+    // Nota
+    const col = b.val===null ? MUTED : b.val>=9?GREEN : b.val>=7?TEAL : b.val>=5?AMBER : RED;
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(13);
     doc.setTextColor(...col);
-    doc.text(v + (sc.val!==null?'/10':''), cx, y+19, {align:'center'});
+    doc.text(b.val!==null ? b.val.toFixed(1)+'/10' : '—', W-M-3, by+10, {align:'right'});
   });
-  y += 34;
+  y += blocks.length * blockH + 2;
+
+  // ── Nota global ──────────────────────────────────────────
+  const gcol = glo===null ? MUTED : glo>=9?GREEN : glo>=7?TEAL : glo>=5?AMBER : RED;
+  doc.setFillColor(...NAVY);
+  doc.roundedRect(M, y, W-M*2, 14, 2, 2, 'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(10);
+  doc.setTextColor(255,255,255);
+  doc.text('CALIFICACIÓN GLOBAL', M+3, y+9);
+  doc.setFontSize(15);
+  doc.setTextColor(...(glo===null?[200,200,200]:glo>=5?[144,238,144]:[255,180,180]));
+  doc.text(glo!==null ? glo.toFixed(1)+'/10' : '—', W-M-3, y+9.5, {align:'right'});
+  y += 18;
 
   // ── Helper: badge de resultado ────────────────────────────
   const badge = (x, by, superado) => {
@@ -1865,7 +1941,7 @@ function generarPDF() {
     doc.text(superado?'Superado':'No superado', x + (superado?10:11), by, {align:'center'});
   };
 
-  // ── Sección: Prácticas realizadas con fotos ──────────────
+  // ── Sección: Fotos de prácticas realizadas ───────────────
   const acts = S.actividades[key]||[];
   if (acts.length) {
     if (y > 240) { doc.addPage(); y = 14; }
@@ -1877,7 +1953,7 @@ function generarPDF() {
     doc.text('📸  PRÁCTICAS REALIZADAS', M+3, y+5);
     y += 10;
 
-    // Grid 2 columns with photo + info per practice
+    // Grid 2 columnas con foto + info por práctica
     const cellW = (W-M*2-4)/2;
     const photoH = 38;
     const cellH = photoH + 14;
@@ -1886,12 +1962,10 @@ function generarPDF() {
       const x = M + col*(cellW+4);
       if (col === 0 && y + cellH > 280) { doc.addPage(); y = 14; }
 
-      // Card background
       doc.setFillColor(248,250,252);
       doc.setDrawColor(221,227,237);
       doc.roundedRect(x, y, cellW, cellH, 2, 2, 'FD');
 
-      // Photo or placeholder
       if (act.photo) {
         try {
           doc.addImage(act.photo, 'JPEG', x+2, y+2, cellW-4, photoH, undefined, 'FAST');
@@ -1910,7 +1984,6 @@ function generarPDF() {
         doc.text('(sin foto)', x+cellW/2, y+photoH/2+2, {align:'center'});
       }
 
-      // Name and score
       const s = actScore(act);
       doc.setFont('helvetica','bold');
       doc.setFontSize(7.5);
@@ -1936,38 +2009,45 @@ function generarPDF() {
     y += 4;
   }
 
-  // ── Sección: Rúbrica (indicadores P) ─────────────────────
+  // ── Sección: CRITERIOS PROCEDIMENTALES (P) ──────────────
   if (acts.length) {
     if (y > 260) { doc.addPage(); y = 14; }
-    // Título sección
     doc.setFillColor(...TEAL);
     doc.rect(M, y, W-M*2, 7, 'F');
     doc.setFont('helvetica','bold');
     doc.setFontSize(9);
     doc.setTextColor(255,255,255);
-    doc.text('📋  RÚBRICA · Indicadores procedimentales (P)', M+3, y+5);
+    doc.text('📋  CRITERIOS PROCEDIMENTALES (P)', M+3, y+5);
     y += 10;
 
-    // Media por indicador a través de todas las actividades
     getIndP().forEach(ind => {
       if (y > 265) { doc.addPage(); y = 14; }
       const vals = acts.map(ac=>ac.scores[ind.id]||0).filter(v=>v>0);
       const avg = vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
-      const superado = avg !== null && avg >= 2.5; // 2.5/4 ≈ 5/10
+      const superado = avg !== null && avg >= 2.5;
+      const suspenso = avg !== null && !superado;
 
-      doc.setFillColor(avg===null?245:superado?240:255, avg===null?247:superado?253:235, avg===null?250:superado?241:235);
+      // Fondo: gris si no evaluado, verde si superado, ROSA si suspenso
+      if (suspenso) {
+        doc.setFillColor(254, 226, 226); // rose-100
+      } else if (superado) {
+        doc.setFillColor(240, 253, 241);
+      } else {
+        doc.setFillColor(245, 247, 250);
+      }
       doc.rect(M, y, W-M*2, 9, 'F');
-      doc.setDrawColor(221,227,237);
+      doc.setDrawColor(suspenso?239:221, suspenso?68:227, suspenso?68:237);
+      doc.setLineWidth(suspenso ? 0.5 : 0.2);
       doc.rect(M, y, W-M*2, 9, 'S');
 
       doc.setFont('helvetica','bold');
       doc.setFontSize(7);
-      doc.setTextColor(...TEAL);
+      doc.setTextColor(...(suspenso ? RED : TEAL));
       doc.text(ind.ce, M+2, y+3.5);
 
       doc.setFont('helvetica','normal');
       doc.setFontSize(6.5);
-      doc.setTextColor(28,43,58);
+      doc.setTextColor(suspenso ? 153 : 28, suspenso ? 27 : 43, suspenso ? 27 : 58);
       const lines = doc.splitTextToSize(ind.texto, W-M*2-52);
       doc.text(lines[0]+(lines.length>1?'…':''), M+2, y+7);
 
@@ -1981,42 +2061,50 @@ function generarPDF() {
       badge(W-M-28, y+6, superado);
       y += 11;
     });
+    doc.setLineWidth(0.2);
     y += 4;
   }
 
-  // ── Sección: Observación (indicadores A) ─────────────────
+  // ── Sección: CRITERIOS ACTITUDINALES (A) ─────────────────
   const obsSessions = Object.keys(S.observaciones).filter(k=>k.startsWith(key+'_'));
   if (obsSessions.length) {
     if (y > 240) { doc.addPage(); y = 14; }
-    doc.setFillColor(...[2,136,209]);
+    doc.setFillColor(2,136,209);
     doc.rect(M, y, W-M*2, 7, 'F');
     doc.setFont('helvetica','bold');
     doc.setFontSize(9);
     doc.setTextColor(255,255,255);
-    doc.text('👁  HOJA DE OBSERVACIÓN · Indicadores actitudinales (A)', M+3, y+5);
+    doc.text('👁  CRITERIOS ACTITUDINALES (A)', M+3, y+5);
     y += 10;
 
-    // Porcentaje de Síes por indicador
     getIndA().forEach(ind => {
       if (y > 265) { doc.addPage(); y = 14; }
       const vals = obsSessions.map(sk=>(S.observaciones[sk]||{})[ind.id]).filter(v=>v);
       const si = vals.filter(v=>v==='Sí').length;
       const pct = vals.length ? Math.round(si/vals.length*100) : null;
       const superado = pct !== null && pct >= 60;
+      const suspenso = pct !== null && !superado;
 
-      doc.setFillColor(pct===null?245:superado?240:255, pct===null?247:superado?253:235, pct===null?250:superado?241:235);
+      if (suspenso) {
+        doc.setFillColor(254, 226, 226);
+      } else if (superado) {
+        doc.setFillColor(240, 253, 241);
+      } else {
+        doc.setFillColor(245, 247, 250);
+      }
       doc.rect(M, y, W-M*2, 9, 'F');
-      doc.setDrawColor(221,227,237);
+      doc.setDrawColor(suspenso?239:221, suspenso?68:227, suspenso?68:237);
+      doc.setLineWidth(suspenso ? 0.5 : 0.2);
       doc.rect(M, y, W-M*2, 9, 'S');
 
       doc.setFont('helvetica','bold');
       doc.setFontSize(7);
-      doc.setTextColor(2,136,209);
+      doc.setTextColor(...(suspenso ? RED : [2,136,209]));
       doc.text(ind.ce, M+2, y+3.5);
 
       doc.setFont('helvetica','normal');
       doc.setFontSize(6.5);
-      doc.setTextColor(28,43,58);
+      doc.setTextColor(suspenso ? 153 : 28, suspenso ? 27 : 43, suspenso ? 27 : 58);
       const lines = doc.splitTextToSize(ind.texto, W-M*2-52);
       doc.text(lines[0]+(lines.length>1?'…':''), M+2, y+7);
 
@@ -2030,10 +2118,11 @@ function generarPDF() {
       badge(W-M-28, y+6, superado);
       y += 11;
     });
+    doc.setLineWidth(0.2);
     y += 4;
   }
 
-  // ── Sección: Prueba escrita ───────────────────────────────
+  // ── Sección: CRITERIOS CONCEPTUALES (T) ──────────────────
   const pruebas = getPruebas(key);
   const mediaEsc = scoreEscrita(key);
   if (pruebas.length) {
@@ -2043,17 +2132,19 @@ function generarPDF() {
     doc.setFont('helvetica','bold');
     doc.setFontSize(9);
     doc.setTextColor(255,255,255);
-    doc.text('✏  PRUEBAS ESCRITAS · Evaluación teórico-técnica', M+3, y+5);
+    doc.text('✏  CRITERIOS CONCEPTUALES (T)', M+3, y+5);
     y += 10;
 
     pruebas.forEach((p, pi) => {
       if (y > 265) { doc.addPage(); y = 14; }
-      doc.setFillColor(238,242,247);
+      const suspenso = p.nota < 5;
+      if (suspenso) doc.setFillColor(254, 226, 226);
+      else doc.setFillColor(238,242,247);
       doc.roundedRect(M, y, W-M*2, 10, 2, 2, 'F');
       const nc = p.nota>=9?GREEN:p.nota>=7?TEAL:p.nota>=5?AMBER:RED;
       doc.setFont('helvetica','normal');
       doc.setFontSize(8);
-      doc.setTextColor(...MUTED);
+      doc.setTextColor(...(suspenso ? RED : MUTED));
       doc.text(`Prueba ${pi+1} · ${p.fecha}`, M+3, y+6.5);
       doc.setFont('helvetica','bold');
       doc.setFontSize(10);
@@ -2063,7 +2154,6 @@ function generarPDF() {
       y += 12;
     });
 
-    // Media
     if (pruebas.length > 1) {
       doc.setFillColor(224,242,241);
       doc.roundedRect(M, y, W-M*2, 10, 2, 2, 'F');
@@ -2081,12 +2171,37 @@ function generarPDF() {
     y += 4;
   }
 
+  // ── SECCIÓN: Observaciones del profesor (si hay texto) ───
+  if (observaciones && observaciones.trim()) {
+    if (y > 230) { doc.addPage(); y = 14; }
+    doc.setFillColor(...NAVY);
+    doc.rect(M, y, W-M*2, 7, 'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9);
+    doc.setTextColor(255,255,255);
+    doc.text('📝  OBSERVACIONES DEL PROFESOR', M+3, y+5);
+    y += 10;
+
+    // Caja con el texto
+    doc.setFillColor(248,250,252);
+    doc.setDrawColor(221,227,237);
+    const lines = doc.splitTextToSize(observaciones.trim(), W-M*2-6);
+    const boxH = Math.max(16, lines.length * 4.5 + 8);
+    doc.roundedRect(M, y, W-M*2, boxH, 2, 2, 'FD');
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9);
+    doc.setTextColor(40,50,70);
+    lines.forEach((ln, i) => {
+      if (y + 5 + i*4.5 > 285) return;
+      doc.text(ln, M+4, y+6+i*4.5);
+    });
+    y += boxH + 4;
+  }
+
   // ── Pie de página ─────────────────────────────────────────
   const pageCount = doc.internal.getNumberOfPages();
-  for (let p=1; p<=pageCount; p++) {
+  for (let p = 1; p <= pageCount; p++) {
     doc.setPage(p);
-    doc.setFillColor(238,242,247);
-    doc.rect(0, 287, W, 10, 'F');
     doc.setFont('helvetica','normal');
     doc.setFontSize(7);
     doc.setTextColor(...MUTED);
@@ -2100,6 +2215,273 @@ function generarPDF() {
 
 
 function today(){return new Date().toISOString().split('T')[0];}
+
+// ═══════════════════════════════════════════════════════════════
+// ═══════════ VISTA RESUMEN DE CLASE ═══════════
+// ═══════════════════════════════════════════════════════════════
+
+let _resumenSort = { col: 'apellidos', dir: 'asc' };
+
+function openResumen() {
+  if (!S.moduloId || !S.claseId) return;
+  navigate('screen-resumen', 'Resumen de clase', getModulo().nombre);
+  renderResumen();
+}
+
+function computeResumenData() {
+  const alus = S.alumnos[S.claseId] || [];
+  const mid = S.moduloId;
+  return alus.map(a => {
+    const key = `${a.id}_${mid}`;
+    const rub = scoreRubrica(key);
+    const obs = scoreObs(key);
+    const esc = scoreEscrita(key);
+    const glo = scoreGlobal(key);
+    return {
+      id: a.id,
+      nombre: a.nombre,
+      apellidos: a.apellidos,
+      rub, obs, esc, glo,
+    };
+  });
+}
+
+function sortResumenData(data) {
+  const { col, dir } = _resumenSort;
+  const mult = dir === 'asc' ? 1 : -1;
+  return [...data].sort((a, b) => {
+    let va = a[col], vb = b[col];
+    if (col === 'apellidos' || col === 'nombre') {
+      return (va || '').localeCompare(vb || '', 'es') * mult;
+    }
+    // nota: null al final siempre
+    if (va === null && vb === null) return 0;
+    if (va === null) return 1;
+    if (vb === null) return -1;
+    return (va - vb) * mult;
+  });
+}
+
+function resumenSort(col) {
+  if (_resumenSort.col === col) {
+    _resumenSort.dir = _resumenSort.dir === 'asc' ? 'desc' : 'asc';
+  } else {
+    _resumenSort.col = col;
+    _resumenSort.dir = col === 'apellidos' ? 'asc' : 'desc';
+  }
+  renderResumen();
+}
+
+function renderResumen() {
+  const data = sortResumenData(computeResumenData());
+  const el = document.getElementById('resumen-content');
+
+  if (!data.length) {
+    el.innerHTML = `<div class="card empty" style="padding:36px"><div class="empty-icon">👥</div><p>No hay alumnos en esta clase.<br>Añade alumnos desde la pantalla anterior.</p></div>`;
+    return;
+  }
+
+  const arrow = (col) => _resumenSort.col === col ? (_resumenSort.dir === 'asc' ? ' ▲' : ' ▼') : '';
+  const colorFor = (v) => v===null?'var(--muted)':v>=9?'#10B981':v>=7?'var(--teal)':v>=5?'#F59E0B':'#EF4444';
+  const fmt = v => v===null ? '—' : v.toFixed(1);
+
+  let html = `<div class="card" style="overflow:hidden;padding:0">
+    <table style="width:100%;border-collapse:collapse;font-size:14px">
+      <thead>
+        <tr style="background:var(--bg);border-bottom:2px solid var(--border)">
+          <th onclick="resumenSort('apellidos')" style="padding:12px 10px;text-align:left;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Alumno${arrow('apellidos')}</th>
+          <th onclick="resumenSort('rub')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Rúb.${arrow('rub')}</th>
+          <th onclick="resumenSort('obs')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Obs.${arrow('obs')}</th>
+          <th onclick="resumenSort('esc')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Prueb.${arrow('esc')}</th>
+          <th onclick="resumenSort('glo')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Global${arrow('glo')}</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+  data.forEach((r, i) => {
+    const bg = i % 2 === 0 ? 'var(--card)' : 'var(--bg)';
+    html += `<tr style="background:${bg};border-bottom:1px solid var(--border)">
+      <td style="padding:12px 10px">
+        <div style="font-weight:600;color:var(--text)">${r.apellidos}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">${r.nombre} · ${r.id}</div>
+      </td>
+      <td style="padding:12px 6px;text-align:center;color:${colorFor(r.rub)};font-weight:700;font-family:'IBM Plex Mono',monospace">${fmt(r.rub)}</td>
+      <td style="padding:12px 6px;text-align:center;color:${colorFor(r.obs)};font-weight:700;font-family:'IBM Plex Mono',monospace">${fmt(r.obs)}</td>
+      <td style="padding:12px 6px;text-align:center;color:${colorFor(r.esc)};font-weight:700;font-family:'IBM Plex Mono',monospace">${fmt(r.esc)}</td>
+      <td style="padding:12px 6px;text-align:center;color:${colorFor(r.glo)};font-weight:800;font-family:'IBM Plex Mono',monospace;font-size:15px">${fmt(r.glo)}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div>`;
+
+  // Estadísticas
+  const withGlo = data.filter(r => r.glo !== null);
+  const aprobados = withGlo.filter(r => r.glo >= 5).length;
+  const media = withGlo.length ? (withGlo.reduce((a,r) => a + r.glo, 0) / withGlo.length) : null;
+  html += `<div style="background:var(--card);border-radius:14px;padding:16px;margin-top:12px;display:flex;justify-content:space-around;text-align:center;gap:8px;box-shadow:var(--shadow)">
+    <div>
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700">Alumnos</div>
+      <div style="font-size:22px;font-weight:700;color:var(--navy);margin-top:4px">${data.length}</div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700">Aprobados</div>
+      <div style="font-size:22px;font-weight:700;color:var(--teal);margin-top:4px">${aprobados}/${withGlo.length}</div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700">Media</div>
+      <div style="font-size:22px;font-weight:700;color:${colorFor(media)};margin-top:4px">${fmt(media)}</div>
+    </div>
+  </div>`;
+
+  el.innerHTML = html;
+}
+
+function exportResumenPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4' });
+  const data = sortResumenData(computeResumenData());
+  const clase = getClase();
+  const mod = getModulo();
+
+  const NAVY = [26,35,126], TEAL = [0,137,123], MUTED = [107,122,141];
+  const GREEN = [16,185,129], RED = [239,68,68], AMBER = [245,158,11];
+  const W = 210, M = 14;
+  let y = 0;
+
+  // Cabecera
+  doc.setFillColor(...NAVY);
+  doc.rect(0, 0, W, 40, 'F');
+  try { doc.addImage('icon-192.png', 'PNG', M, 6, 28, 28); } catch(e){}
+
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(16);
+  doc.text('Resumen de clase', M + 34, 14);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.text(`${clase.emoji || ''} ${clase.nombre}  ·  ${mod.nombre}`, M + 34, 21);
+  doc.setFontSize(8);
+  doc.text(`Cód. ${mod.codigo}  ·  ${mod.horas}h`, M + 34, 27);
+
+  doc.setFontSize(8);
+  const infoRight = [
+    S.settings.year ? `Curso ${S.settings.year}` : '',
+    S.settings.centro || '',
+    S.settings.profesor ? `Prof: ${S.settings.profesor}` : '',
+    `Fecha: ${new Date().toLocaleDateString('es-ES')}`,
+  ].filter(Boolean);
+  infoRight.forEach((line, i) => {
+    doc.text(line, W-M, 12 + i*5, {align:'right'});
+  });
+
+  y = 50;
+
+  // Tabla
+  if (!data.length) {
+    doc.setFont('helvetica','italic');
+    doc.setFontSize(11);
+    doc.setTextColor(...MUTED);
+    doc.text('No hay alumnos en esta clase.', W/2, y+20, {align:'center'});
+    doc.save(`Resumen_${clase.nombre}_${mod.codigo}.pdf`);
+    showToast('✓ PDF generado');
+    return;
+  }
+
+  // Cabecera de tabla
+  doc.setFillColor(...NAVY);
+  doc.rect(M, y, W-M*2, 8, 'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(8);
+  doc.setTextColor(255,255,255);
+  const colX = { alu: M+2, rub: M+115, obs: M+140, esc: M+160, glo: M+180 };
+  doc.text('Alumno', colX.alu, y+5.5);
+  doc.text('Proc.', colX.rub+8, y+5.5, {align:'center'});
+  doc.text('Actit.', colX.obs+8, y+5.5, {align:'center'});
+  doc.text('Conc.', colX.esc+8, y+5.5, {align:'center'});
+  doc.text('GLOBAL', colX.glo+8, y+5.5, {align:'center'});
+  y += 8;
+
+  const colorFor = (v) => v===null?MUTED : v>=9?GREEN : v>=7?TEAL : v>=5?AMBER : RED;
+  const fmt = v => v===null ? '—' : v.toFixed(1);
+  const rowH = 8;
+
+  data.forEach((r, i) => {
+    if (y + rowH > 280) {
+      doc.addPage();
+      y = 14;
+      // Repetir cabecera
+      doc.setFillColor(...NAVY);
+      doc.rect(M, y, W-M*2, 8, 'F');
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(8);
+      doc.setTextColor(255,255,255);
+      doc.text('Alumno', colX.alu, y+5.5);
+      doc.text('Proc.', colX.rub+8, y+5.5, {align:'center'});
+      doc.text('Actit.', colX.obs+8, y+5.5, {align:'center'});
+      doc.text('Conc.', colX.esc+8, y+5.5, {align:'center'});
+      doc.text('GLOBAL', colX.glo+8, y+5.5, {align:'center'});
+      y += 8;
+    }
+
+    // Fila alterna
+    if (i % 2 === 0) {
+      doc.setFillColor(248,250,252);
+      doc.rect(M, y, W-M*2, rowH, 'F');
+    }
+    doc.setDrawColor(230,234,240);
+    doc.line(M, y+rowH, W-M, y+rowH);
+
+    // Nombre
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(30,40,60);
+    doc.text(`${r.apellidos}, ${r.nombre}`.substring(0,48), colX.alu, y+5);
+
+    // Notas
+    [['rub', colX.rub], ['obs', colX.obs], ['esc', colX.esc], ['glo', colX.glo]].forEach(([k, x], idx) => {
+      const v = r[k];
+      doc.setFont('helvetica', idx === 3 ? 'bold' : 'normal');
+      doc.setFontSize(idx === 3 ? 10 : 9);
+      doc.setTextColor(...colorFor(v));
+      doc.text(fmt(v), x+8, y+5.5, {align:'center'});
+    });
+
+    y += rowH;
+  });
+
+  // Estadísticas al final
+  y += 6;
+  if (y > 260) { doc.addPage(); y = 20; }
+  const withGlo = data.filter(r => r.glo !== null);
+  const aprobados = withGlo.filter(r => r.glo >= 5).length;
+  const media = withGlo.length ? (withGlo.reduce((a,r) => a + r.glo, 0) / withGlo.length) : null;
+
+  doc.setFillColor(...NAVY);
+  doc.roundedRect(M, y, W-M*2, 18, 2, 2, 'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(9);
+  doc.setTextColor(255,255,255);
+  doc.text('ESTADÍSTICAS DE LA CLASE', M+4, y+7);
+
+  doc.setFontSize(8);
+  doc.text(`Alumnos: ${data.length}`, M+4, y+13);
+  doc.text(`Aprobados: ${aprobados}/${withGlo.length}`, M+50, y+13);
+  doc.text(`Media: ${fmt(media)}`, M+100, y+13);
+
+  // Pie
+  const pageCount = doc.internal.getNumberOfPages();
+  for (let p = 1; p <= pageCount; p++) {
+    doc.setPage(p);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(7);
+    doc.setTextColor(...MUTED);
+    doc.text(`NEXUS by Xurxo · Soldadura y Calderería · ${S.settings.year}${S.settings.centro?' · '+S.settings.centro:''}`, M, 293);
+    doc.text(`Página ${p} de ${pageCount}`, W-M, 293, {align:'right'});
+  }
+
+  doc.save(`Resumen_${clase.nombre.replace(/\s+/g,'_')}_${mod.codigo}.pdf`);
+  showToast('✓ PDF de clase generado');
+}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(o=>{
@@ -2282,6 +2664,7 @@ async function persistState() {
       stuPhotos:     S.stuPhotos,
       configActs:    S.configActs,
       alumnos:       S.alumnos,
+      obsProfesor:   S.obsProfesor,
       settings:      S.settings,
     };
     await idbSet('state', data);
@@ -2320,6 +2703,7 @@ async function loadState() {
     if (data.notas)         S.notas         = data.notas;
     if (data.stuPhotos)     S.stuPhotos     = data.stuPhotos;
     if (data.configActs)    S.configActs    = data.configActs;
+    if (data.obsProfesor)   S.obsProfesor   = data.obsProfesor;
     if (data.settings) {
       S.settings = {
         ...S.settings,
@@ -2400,7 +2784,7 @@ async function exportBackup(withPhotos) {
     const data = {
       _meta: {
         app: 'NEXUS by Xurxo',
-        version: 'v27',
+        version: 'v28',
         exported: new Date().toISOString(),
         withPhotos: withPhotos,
       },
@@ -2410,6 +2794,7 @@ async function exportBackup(withPhotos) {
       stuPhotos:     withPhotos ? S.stuPhotos : {},
       configActs:    S.configActs,
       alumnos:       S.alumnos,
+      obsProfesor:   S.obsProfesor,
       settings:      S.settings,
     };
 
@@ -2470,6 +2855,7 @@ function importBackup(input) {
       if (data.notas)         S.notas         = data.notas;
       if (data.stuPhotos)     S.stuPhotos     = data.stuPhotos;
       if (data.configActs)    S.configActs    = data.configActs;
+      if (data.obsProfesor)   S.obsProfesor   = data.obsProfesor;
       if (data.alumnos)       S.alumnos       = data.alumnos;
       if (data.settings)      S.settings      = { ...S.settings, ...data.settings };
 
