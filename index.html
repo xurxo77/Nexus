@@ -108,15 +108,18 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .stu-info h2{font-size:var(--fs-xl);font-weight:700;line-height:1.2}
 .stu-info p{font-size:var(--fs-sm);opacity:.78;margin-top:4px}
 .stu-scores{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.score-pill{background:rgba(255,255,255,.15);border-radius:24px;padding:6px 14px;display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace}
-.score-pill .label{opacity:.72;font-size:var(--fs-xs)}
-.score-pill .val{font-weight:700;font-size:var(--fs-lg)}
+.score-pill{background:rgba(255,255,255,.15);border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace}
+.score-pill .label{opacity:.72;font-size:11px;font-weight:700;letter-spacing:.05em}
+.score-pill .val{font-weight:700;font-size:15px;color:#fff}
 .score-pill.global{background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.45)}
+.stu-global-pill{border-radius:18px;padding:12px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:78px;flex-shrink:0;color:#fff;box-shadow:0 4px 14px rgba(0,0,0,0.18)}
+.stu-global-label{font-size:10px;font-weight:700;letter-spacing:.08em;opacity:.9}
+.stu-global-val{font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:800;line-height:1;margin-top:4px}
 
-/* ── Tabs ── */
+/* ── Tabs (refuerzo activa) ── */
 .tabs{display:flex;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-.tab-btn{flex:1;padding:16px 8px;border:none;background:none;cursor:pointer;font-size:var(--fs-xs);font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:5px;transition:all .2s;border-bottom:3px solid transparent}
-.tab-btn.active{color:var(--navy);border-bottom-color:var(--teal)}
+.tab-btn{flex:1;padding:16px 8px;border:none;background:none;cursor:pointer;font-size:var(--fs-xs);font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:5px;transition:all .2s;border-bottom:4px solid transparent}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);background:var(--teal-lt)}
 .tab-btn .ticon{font-size:28px}
 .tab-content{display:none;flex-direction:column;gap:16px}
 .tab-content.active{display:flex}
@@ -139,9 +142,9 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .act-photo-zone{height:220px;background:var(--bg);cursor:pointer;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
 .act-photo-zone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 /* ── Accordion ── */
-.act-body{overflow:hidden;transition:max-height .32s ease,opacity .25s ease}
+.act-body{overflow:hidden;transition:opacity .22s ease}
 .act-body.closed{max-height:0;opacity:0;pointer-events:none}
-.act-body.open{max-height:8000px;opacity:1}
+.act-body.open{max-height:none;opacity:1}
 .act-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;cursor:pointer;border:none;background:none;text-align:left;gap:12px}
 .act-toggle-chevron{font-size:20px;color:var(--muted);transition:transform .28s;flex-shrink:0}
 .act-toggle-chevron.open{transform:rotate(180deg)}
@@ -187,12 +190,57 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .nota-labels{display:flex;justify-content:space-between;width:100%;font-size:var(--fs-sm);color:var(--muted)}
 
 /* ── Criterial subtitle ── */
-.crit-subtitle{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg);border-radius:12px;margin-bottom:12px;font-size:14px;font-weight:600;color:var(--navy);flex-wrap:wrap}
-.crit-badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;color:#fff;font-weight:800;font-size:13px;flex-shrink:0}
+.crit-subtitle{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg);border-radius:12px;margin-bottom:12px;font-size:14px;font-weight:600;color:var(--navy)}
+.crit-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;color:#fff;font-weight:800;font-size:12px;flex-shrink:0}
 .crit-badge.crit-p{background:var(--teal)}
 .crit-badge.crit-a{background:#0288D1}
 .crit-badge.crit-t{background:#E65100}
-.crit-hint{font-weight:400;color:var(--muted);font-size:13px}
+.crit-hint{font-weight:400;color:var(--muted);font-size:12px;display:none}
+@media (min-width:500px){.crit-hint{display:inline}}
+
+/* ── Alumno card ── */
+.alu-status-bar{position:absolute;left:0;top:8px;bottom:8px;width:5px;border-radius:0 3px 3px 0}
+.alu-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--navy)}
+.alu-avatar span{font-size:16px;font-weight:700;color:#fff;letter-spacing:.02em}
+.alu-legend{display:flex;flex-wrap:wrap;gap:14px;padding:12px 4px 4px;font-size:11px;color:var(--muted);justify-content:center}
+.alu-legend span{display:inline-flex;align-items:center;gap:5px}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%}
+
+/* ── Rubric legend and section subhead ── */
+.rubric-legend{background:var(--teal-lt);border-radius:12px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:6px 14px;margin-bottom:12px;font-size:11.5px;color:var(--teal);justify-content:space-around}
+.rubric-legend span{display:inline-flex;align-items:center;gap:4px}
+.rubric-legend strong{font-size:14px;font-family:'IBM Plex Mono',monospace;color:var(--teal);background:#fff;min-width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--teal)}
+.section-subhead{font-size:var(--fs-xs);font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:8px 2px 2px;margin-top:6px}
+
+/* ── Observation session editable date ── */
+.obs-session-date-icon{font-size:18px;flex-shrink:0}
+.obs-session-date-input{position:absolute;opacity:0;width:100%;height:100%;inset:0;cursor:pointer;z-index:2}
+.obs-session-date-label{font-size:15px;font-weight:600;color:var(--text);cursor:pointer;position:relative;padding:2px 8px;border-radius:6px;transition:background .15s}
+.obs-session-date-label:hover{background:var(--bg)}
+.obs-session-header > div:first-child{position:relative}
+
+/* ── Resumen de clase · responsive ── */
+.resumen-sort-bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px 12px;background:var(--card);border-radius:12px;margin-bottom:12px;box-shadow:var(--shadow)}
+.resumen-sort-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-right:4px}
+.resumen-sort-btn{border:1.5px solid var(--border);background:var(--bg);color:var(--muted);padding:6px 12px;border-radius:16px;font-size:12px;font-weight:600;cursor:pointer;min-height:auto}
+.resumen-sort-btn.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+.resumen-mobile{display:flex;flex-direction:column;gap:8px}
+.resumen-desktop{display:none}
+.resumen-card-mobile{background:var(--card);border-radius:12px;padding:12px 14px 12px 18px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.resumen-status-bar{position:absolute;left:0;top:8px;bottom:8px;width:5px;border-radius:0 3px 3px 0}
+.resumen-mobile-main{flex:1;min-width:0}
+.resumen-mobile-name{font-size:14px;line-height:1.3;margin-bottom:6px;color:var(--text)}
+.resumen-mobile-scores{display:flex;gap:10px;flex-wrap:wrap}
+.resumen-score{display:inline-flex;align-items:center;gap:4px;font-size:12px}
+.resumen-score .lbl{font-weight:700;color:var(--muted);font-size:10px;background:var(--bg);padding:2px 6px;border-radius:6px}
+.resumen-score .val{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px}
+.resumen-global-mobile{border-radius:12px;padding:8px 12px;display:flex;flex-direction:column;align-items:center;min-width:62px;flex-shrink:0}
+.resumen-global-mobile .lbl{font-size:9px;font-weight:800;letter-spacing:.08em;opacity:.9}
+.resumen-global-mobile .val{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:800;margin-top:2px}
+@media (min-width:680px){
+  .resumen-mobile{display:none}
+  .resumen-desktop{display:block}
+}
 
 /* ── Examen card ── */
 .examen-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
@@ -300,7 +348,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       <h1 id="topbarTitle">NEXUS <span style="font-weight:300;font-size:14px;opacity:.75;letter-spacing:.03em">by Xurxo</span></h1>
       <p id="topbarSub">Soldadura y Calderería · 2025-2026</p>
     </div>
-    <button class="topbar-action" id="configBtn" style="display:none;align-items:center;gap:7px;font-size:16px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openConfig()">➕ Añadir prácticas</button>
+    <button class="topbar-action" id="configBtn" style="display:none;align-items:center;gap:7px;font-size:15px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openConfig()">⚙ Configurar prácticas</button>
     <button class="topbar-action" id="pdfBtn" style="display:none;align-items:center;gap:7px;font-size:16px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openPDFModal()">📄 Exportar informe</button>
     <button class="topbar-action" id="settingsBtn" onclick="openSettings()" title="Ajustes" style="font-size:24px;width:44px;height:44px;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,0.2);border-radius:50%;border:1.5px solid rgba(255,255,255,0.3)">⚙</button>
     <button class="topbar-action" id="infoBtn" onclick="openInfo()" title="Información" style="font-size:20px;font-weight:700;width:44px;height:44px;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,0.2);border-radius:50%;border:1.5px solid rgba(255,255,255,0.3);font-family:'Outfit',sans-serif">ⓘ</button>
@@ -740,13 +788,17 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
     <div class="modal-handle"></div>
     <div class="modal-title">📝 Observaciones para el informe</div>
     <p style="color:var(--muted);font-size:var(--fs-sm);margin-bottom:10px;line-height:1.5">
-      Añade comentarios generales que aparecerán en el PDF. Puedes dejarlo vacío si no quieres incluir observaciones. <strong>Se guardan</strong> para este alumno y módulo.
+      Añade comentarios generales que aparecerán en el PDF. Puedes dejarlo vacío si no quieres incluir observaciones.
     </p>
+    <div id="obs-pdf-hint" style="display:none;background:#E0F2F1;color:var(--teal);padding:8px 12px;border-radius:10px;font-size:12px;margin-bottom:10px;line-height:1.4">
+      💡 Hay observaciones guardadas de este alumno. Puedes editarlas o dejarlas como están.
+    </div>
     <div class="form-group">
       <label class="form-label">Observaciones del profesor</label>
       <textarea class="form-input" id="obs-pdf-text" rows="6"
                 style="resize:vertical;min-height:120px;font-family:inherit;line-height:1.5"
                 placeholder="Ej: Muestra una evolución positiva en el trimestre. Debe reforzar el uso del equipo de protección individual..."></textarea>
+      <span style="font-size:11px;color:var(--muted);margin-top:4px">💾 Se guardan automáticamente para este alumno y módulo, acumulando entre informes.</span>
     </div>
     <button class="btn-primary" onclick="confirmGenerarPDF()">📄 Generar PDF</button>
     <button class="btn-secondary" onclick="closeModal('modal-obs-pdf')">Cancelar</button>
@@ -1470,7 +1522,10 @@ function renderActCritList(selectedCrits) {
   const inds = getIndP();
   const el = document.getElementById('act-crit-list');
   if (!el) return;
-  const selected = selectedCrits ? new Set(selectedCrits) : new Set(inds.map(i => i.id));
+  // null = todos; array (incluso vacío) = los especificados
+  const selected = (selectedCrits === null || selectedCrits === undefined)
+    ? new Set(inds.map(i => i.id))
+    : new Set(selectedCrits);
   el.innerHTML = inds.map(ind => {
     const on = selected.has(ind.id);
     return `<label style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;background:${on?'var(--teal-lt)':'transparent'};transition:background .15s;margin-bottom:2px">
@@ -1530,28 +1585,47 @@ function renderAlumnos() {
   const aluLabel = document.getElementById('alumnos-label');
   if (!aluLabel) return;
   const alus=S.alumnos[S.claseId]||[];
-  const avatarColors=["#1A237E","#00695C","#E65100","#4A148C","#880E4F","#1B5E20","#0D47A1","#B71C1C"];
   aluLabel.textContent=`Alumnos · ${alus.length}`;
+
+  const getInitials = (a) => {
+    const n = (a.nombre||'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const ap = (a.apellidos||'').replace(/[★☆]/g,'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    return ((n[0]||'?') + (ap[0]||'')).toUpperCase();
+  };
+
+  const getEstado = (key, numActs) => {
+    if (numActs === 0) return { color:'#BDBDBD', label:'sin evaluar' };
+    const g = scoreGlobal(key);
+    const susp = hayBloqueSuspenso(key);
+    if (g === null) return { color:'#BDBDBD', label:'en proceso' };
+    if (susp) return { color:'#EF4444', label:'bloque suspenso' };
+    if (g < 5) return { color:'#EF4444', label:'suspenso' };
+    if (g < 6) return { color:'#F59E0B', label:'aprobado justo' };
+    return { color:'#10B981', label:'aprobado' };
+  };
+
   document.getElementById('alumnosList').innerHTML = alus.map((a,i)=>{
     const key=`${a.id}_${S.moduloId}`;
     const g=scoreGlobal(key);
-    const suspenso=hayBloqueSuspenso(key);
     const photo=S.stuPhotos[a.id];
-    const initials=a.nombre[0]+a.apellidos[0];
+    const initials = getInitials(a);
     const isRepetidor=a.apellidos.includes('★');
     const numActs=(S.actividades[key]||[]).length;
+    const estado = getEstado(key, numActs);
     return `
-    <div class="card-list-item" onclick="selectAlumno('${a.id}')">
-      <div style="width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:${avatarColors[i%avatarColors.length]}">
+    <div class="card-list-item" onclick="selectAlumno('${a.id}')"
+         style="position:relative;padding-left:22px">
+      <div class="alu-status-bar" style="background:${estado.color}" title="${estado.label}"></div>
+      <div class="alu-avatar">
         ${photo?`<img src="${photo}" style="width:100%;height:100%;object-fit:cover">`
-               :`<span style="font-size:16px;font-weight:700;color:#fff">${initials}</span>`}
+               :`<span>${initials}</span>`}
       </div>
       <div class="item-body">
         <h3>${a.nombre} ${a.apellidos}${isRepetidor?' <span style="font-size:13px;color:var(--amber)">★</span>':''}</h3>
         <div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap">
           <span style="font-size:var(--fs-sm);color:var(--muted)">${numActs} práctica(s)</span>
           ${g!==null?`<span class="chip" style="background:${scoreColor(g)}22;color:${scoreColor(g)}">${g}/10</span>`:''}
-          ${suspenso?`<span style="font-size:12px;color:var(--red);font-weight:700">⚠</span>`:''}
+          ${estado.label==='bloque suspenso'?`<span style="font-size:12px;color:var(--red);font-weight:700">⚠</span>`:''}
         </div>
       </div>
       <div style="display:flex;align-items:center;flex-shrink:0">
@@ -1564,9 +1638,25 @@ function renderAlumnos() {
       </div>
     </div>`;
   }).join('');
+
+  // Leyenda de colores al final
+  if (alus.length) {
+    document.getElementById('alumnosList').innerHTML += `
+    <div class="alu-legend">
+      <span><span class="legend-dot" style="background:#10B981"></span>Aprobado</span>
+      <span><span class="legend-dot" style="background:#F59E0B"></span>Justo</span>
+      <span><span class="legend-dot" style="background:#EF4444"></span>Suspenso</span>
+      <span><span class="legend-dot" style="background:#BDBDBD"></span>Pendiente</span>
+    </div>`;
+  }
 }
 function selectAlumno(id) {
-  S.alumnoId=id; S.curTab='rubrica'; S.openActIdx=null;
+  S.alumnoId=id;
+  // Recordar pestaña previa de este alumno/módulo (o empezar en Prácticas)
+  S._lastTab = S._lastTab || {};
+  const k = `${id}_${S.moduloId}`;
+  S.curTab = S._lastTab[k] || 'rubrica';
+  S.openActIdx=null;
   renderAlumnoScreen();
   navigate('screen-alumno',getAlumno().nombre+' '+getAlumno().apellidos,getModulo().nombre);
 }
@@ -1584,9 +1674,13 @@ function updateHeader() {
   const a=getAlumno(), key=akey();
   if (!a) return;
   const photo=S.stuPhotos[a.id];
-  const initials=a.nombre[0]+a.apellidos[0];
+  // Iniciales robustas (sin tildes, sin estrellas)
+  const n = (a.nombre||'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const ap = (a.apellidos||'').replace(/[★☆]/g,'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const initials = ((n[0]||'?') + (ap[0]||'')).toUpperCase();
   const r=scoreLabel(scoreRubrica(key)),o=scoreLabel(scoreObs(key)),
         e=scoreLabel(scoreEscrita(key)),g=scoreGlobal(key);
+  const hasSusp = hayBloqueSuspenso(key);
   document.getElementById('stuHeader').innerHTML=`
     <div class="stu-avatar" onclick="triggerStuPhoto('${a.id}')">
       ${photo?`<img src="${photo}" alt="${initials}">`:`<span>${initials}</span>`}
@@ -1596,16 +1690,24 @@ function updateHeader() {
       <h2>${a.nombre} ${a.apellidos}</h2>
       <p>${getModulo()?.nombre}</p>
       <div class="stu-scores">
-        <span class="score-pill"><span class="label">Rúb</span><span class="val">${r}</span></span>
-        <span class="score-pill"><span class="label">Obs</span><span class="val">${o}</span></span>
-        <span class="score-pill"><span class="label">Esc</span><span class="val">${e}</span></span>
-        ${g!==null?`<span class="score-pill global"><span class="label">Global</span><span class="val" style="color:${scoreColor(g)}">${g}</span></span>`:''}
-        ${hayBloqueSuspenso(key)?`<span style="background:#FFEBEE;color:#C62828;border-radius:20px;padding:4px 10px;font-size:var(--fs-xs);font-weight:700">⚠ Bloque suspenso</span>`:''}
+        <span class="score-pill"><span class="label">P</span><span class="val" style="color:${scoreColor(scoreRubrica(key))}">${r}</span></span>
+        <span class="score-pill"><span class="label">A</span><span class="val" style="color:${scoreColor(scoreObs(key))}">${o}</span></span>
+        <span class="score-pill"><span class="label">T</span><span class="val" style="color:${scoreColor(scoreEscrita(key))}">${e}</span></span>
+        ${hasSusp?`<span style="background:#FFEBEE;color:#C62828;border-radius:20px;padding:4px 10px;font-size:var(--fs-xs);font-weight:700">⚠ Bloque suspenso</span>`:''}
       </div>
+    </div>
+    <div class="stu-global-pill" style="background:${g!==null?scoreColor(g):'#E0E0E0'}">
+      <div class="stu-global-label">GLOBAL</div>
+      <div class="stu-global-val">${g!==null?g.toFixed(1):'—'}</div>
     </div>`;
 }
 function switchTab(tab) {
   S.curTab=tab;
+  // Guardar preferencia por alumno/módulo
+  if (S.alumnoId && S.moduloId) {
+    S._lastTab = S._lastTab || {};
+    S._lastTab[`${S.alumnoId}_${S.moduloId}`] = tab;
+  }
   ['rubrica','observacion','escrita'].forEach((t,i)=>{
     document.querySelectorAll('.tab-btn')[i].classList.toggle('active',t===tab);
     document.getElementById('tab-'+t).classList.toggle('active',t===tab);
@@ -1627,7 +1729,7 @@ function actCardHTML(act, ai, s, scored, pct) {
         <div style="flex:1;min-width:0;text-align:left">
           <h3 style="margin-bottom:6px">${act.nombre}</h3>
           <div class="meta">
-            📅 ${act.fecha} · ${scored}/${totalCrits} indicadores
+            📅 ${fmtFecha(act.fecha)} · ${scored}/${totalCrits} indicadores
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
@@ -1684,13 +1786,24 @@ function renderRubrica() {
   const r=scoreRubrica(key);
   if (r!==null) {
     html+=`<div class="score-bar"><div class="score-bar-row">
-      <span class="score-bar-label">Rúbrica: <strong style="color:${scoreColor(r)};font-size:22px">${r}/10</strong></span>
+      <span class="score-bar-label">Media prácticas: <strong style="color:${scoreColor(r)};font-size:22px">${r}/10</strong></span>
       <div class="score-bar-track"><div class="score-bar-fill" style="width:${r*10}%;background:${scoreColor(r)}"></div></div>
     </div></div>`;
   }
 
+  // Leyenda de la escala 1-4 (solo si hay alguna práctica abierta o iniciada)
+  if (defs.length || acts.length) {
+    html += `<div class="rubric-legend">
+      <span><strong>1</strong> No conseguido</span>
+      <span><strong>2</strong> En proceso</span>
+      <span><strong>3</strong> Conseguido</span>
+      <span><strong>4</strong> Excelente</span>
+    </div>`;
+  }
+
   // Si hay prácticas predefinidas, mostrarlas todas (iniciadas o pendientes)
   if (defs.length) {
+    html += `<div class="section-subhead">📋 Prácticas del módulo</div>`;
     defs.forEach((def, di) => {
       // Buscar si ya existe una actividad iniciada con ese nombre
       const ai = acts.findIndex(a => a.nombre === def.nombre);
@@ -1721,14 +1834,11 @@ function renderRubrica() {
       }
     });
 
-    // Botón para añadir práctica adicional no predefinida
-    html+=`<button class="add-act-btn" onclick="openAddAct()">＋ Añadir práctica extra</button>`;
-
     // ── Prácticas EXTRAS (nombre no está en predefinidas) ──────────
     const defNames = defs.map(d=>d.nombre);
     const extras = acts.filter(a => !defNames.includes(a.nombre));
     if (extras.length) {
-      html+=`<div style="font-size:var(--fs-xs);font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:4px 2px;margin-top:4px">Prácticas adicionales</div>`;
+      html+=`<div class="section-subhead">✏ Prácticas adicionales</div>`;
       extras.forEach(act => {
         const ai = acts.indexOf(act);
         const s = actScore(act);
@@ -1739,12 +1849,15 @@ function renderRubrica() {
       });
     }
 
+    // Botón al final, después de las extras
+    html+=`<button class="add-act-btn" onclick="openAddAct()">＋ Añadir práctica extra</button>`;
+
   } else {
     // Sin predefinidas: flujo original
     if (!acts.length) {
       html+=`<div class="card empty">
         <div class="empty-icon">📦</div>
-        <p>No hay prácticas evaluadas.<br>Pulsa <strong>Añadir práctica</strong> para empezar,<br>o define prácticas en <strong>➕ Añadir prácticas</strong>.</p>
+        <p>No hay prácticas evaluadas.<br>Pulsa <strong>Añadir práctica</strong> para empezar,<br>o define prácticas en <strong>⚙ Configurar prácticas</strong>.</p>
       </div>`;
     } else {
       acts.forEach((act,ai)=>{
@@ -1784,8 +1897,14 @@ function iniciarActividad(nombre) {
   updateHeader();
   showToast('✓ ' + nombre + ' · lista para evaluar');
 }
+// Helper: vibración háptica en móvil (feedback táctil sutil)
+function haptic(ms) {
+  try { if (navigator.vibrate) navigator.vibrate(ms || 10); } catch(e) {}
+}
+
 function setScore(ai,indId,val) {
   S.actividades[akey()][ai].scores[indId]=val;
+  haptic(8);
   scheduleSave();
   renderRubrica(); updateHeader();
 }
@@ -1807,8 +1926,8 @@ function openAddAct() {
   // Título dinámico: busca el .modal-title dentro de #modal-act
   const titleEl = document.querySelector('#modal-act .modal-title');
   if (titleEl) titleEl.textContent = defs.length ? 'Nueva práctica extra' : 'Nueva práctica';
-  // Render selector de criterios con todos marcados
-  renderActCritList(null);
+  // Render selector de criterios con NINGUNO marcado (fuerza a pensar qué se evalúa)
+  renderActCritList([]);
   openModal('modal-act');
 }
 function handlePhotoAct(input) {
@@ -1862,7 +1981,12 @@ function triggerActPhoto(ai) { document.getElementById('paf-'+ai).click(); }
 function handleActPhotoExist(input,ai) {
   if (!input.files[0]) return;
   const r=new FileReader();
-  r.onload=e=>{ compressImage(e.target.result, compressed=>{ S.actividades[akey()][ai].photo=compressed; scheduleSave(); renderRubrica(); }); };
+  r.onload=e=>{ compressImage(e.target.result, compressed=>{
+    S.actividades[akey()][ai].photo=compressed;
+    scheduleSave();
+    renderRubrica();
+    showToast('✓ Foto actualizada');
+  }); };
   r.readAsDataURL(input.files[0]);
 }
 
@@ -1886,8 +2010,16 @@ function renderObs() {
     const ss=tot?+(si/tot*10).toFixed(1):null;
     html+=`<div class="obs-session">
       <div class="obs-session-header">
-        <span class="title">📅 ${date}</span>
-        ${ss!==null?`<span class="obs-session-score" style="color:${scoreColor(ss)}">${ss}/10</span>`:''}
+        <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+          <span class="obs-session-date-icon">📅</span>
+          <input type="date" value="${date}" class="obs-session-date-input"
+                 onchange="changeObsDate('${sk}',this.value)" />
+          <span class="obs-session-date-label">${fmtFecha(date)}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+          ${ss!==null?`<span class="obs-session-score" style="color:${scoreColor(ss)}">${ss}/10</span>`:''}
+          <button class="examen-del-btn" onclick="confirmDelObsSession('${sk}')" title="Eliminar sesión">🗑</button>
+        </div>
       </div>
       ${getIndA().map(ind=>{
         const isActitud = ['0092-A03','0093-A03','0094-A04'].includes(ind.id);
@@ -1906,9 +2038,43 @@ function renderObs() {
   html+=`<button class="add-act-btn" onclick="openModal('modal-obs');document.getElementById('new-obs-date').value=today()">＋ Nueva sesión de observación</button>`;
   document.getElementById('obs-content').innerHTML=html;
 }
+
+// Cambiar fecha de una sesión de observación
+function changeObsDate(oldKey, newDate) {
+  if (!newDate) return;
+  const parts = oldKey.split('_');
+  const newKey = `${parts[0]}_${parts[1]}_${newDate}`;
+  if (newKey === oldKey) return;
+  if (S.observaciones[newKey] && Object.keys(S.observaciones[newKey]).length) {
+    if (!confirm('Ya existe una sesión en esa fecha. ¿Fusionar datos?')) {
+      renderObs(); return;
+    }
+    S.observaciones[newKey] = { ...S.observaciones[newKey], ...S.observaciones[oldKey] };
+  } else {
+    S.observaciones[newKey] = S.observaciones[oldKey];
+  }
+  delete S.observaciones[oldKey];
+  scheduleSave();
+  renderObs();
+  updateHeader();
+  showToast('✓ Fecha actualizada');
+}
+
+// Borrar sesión de observación con confirmación
+function confirmDelObsSession(sk) {
+  const parts = sk.split('_');
+  const date = parts.slice(2).join('_');
+  if (!confirm(`¿Eliminar la sesión del ${fmtFecha(date)}?\n\nSe perderán todas las respuestas Sí/No de esa sesión.`)) return;
+  delete S.observaciones[sk];
+  scheduleSave();
+  renderObs();
+  updateHeader();
+  showToast('✓ Sesión eliminada');
+}
 function setObs(sk,indId,val,btn) {
   if (!S.observaciones[sk]) S.observaciones[sk]={};
   S.observaciones[sk][indId]=val;
+  haptic(8);
   btn.closest('.obs-row').querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   scheduleSave();
@@ -2228,8 +2394,11 @@ function confirmDeleteAlumno() {
 function openPDFModal() {
   const key = akey();
   const textarea = document.getElementById('obs-pdf-text');
-  // Cargar observaciones guardadas para este alumno/módulo
-  textarea.value = (S.obsProfesor && S.obsProfesor[key]) || '';
+  const existing = (S.obsProfesor && S.obsProfesor[key]) || '';
+  textarea.value = existing;
+  // Mostrar hint si ya hay observaciones guardadas
+  const hint = document.getElementById('obs-pdf-hint');
+  if (hint) hint.style.display = existing ? 'block' : 'none';
   openModal('modal-obs-pdf');
   setTimeout(() => textarea.focus(), 100);
 }
@@ -2409,7 +2578,7 @@ function generarPDF(observaciones = '') {
       doc.setFont('helvetica','normal');
       doc.setFontSize(6.5);
       doc.setTextColor(...MUTED);
-      doc.text(act.fecha || '—', x+3, y+photoH+11);
+      doc.text(fmtFecha(act.fecha || '—'), x+3, y+photoH+11);
 
       if (s !== null) {
         const col2 = s>=9?GREEN:s>=7?TEAL:s>=5?AMBER:RED;
@@ -2563,7 +2732,7 @@ function generarPDF(observaciones = '') {
       doc.setFont('helvetica','normal');
       doc.setFontSize(8);
       doc.setTextColor(...(suspenso ? RED : MUTED));
-      doc.text(`Examen ${pi+1} · ${p.fecha}`, M+3, y+6.5);
+      doc.text(`Examen ${pi+1} · ${fmtFecha(p.fecha)}`, M+3, y+6.5);
       // CE trabajados
       if (critsInP.length) {
         doc.setFont('helvetica','normal');
@@ -2673,6 +2842,15 @@ function generarPDF(observaciones = '') {
 
 
 function today(){return new Date().toISOString().split('T')[0];}
+function fmtFecha(iso) {
+  if (!iso || typeof iso !== 'string') return '—';
+  const [y, m, d] = iso.split('-');
+  if (!y || !m || !d) return iso;
+  const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const mi = parseInt(m, 10) - 1;
+  const mes = meses[mi] || m;
+  return `${parseInt(d,10)} ${mes} ${y}`;
+}
 
 // ═══════════════════════════════════════════════════════════════
 // ═══════════ VISTA RESUMEN DE CLASE ═══════════
@@ -2743,14 +2921,52 @@ function renderResumen() {
   const colorFor = (v) => v===null?'var(--muted)':v>=9?'#10B981':v>=7?'var(--teal)':v>=5?'#F59E0B':'#EF4444';
   const fmt = v => v===null ? '—' : v.toFixed(1);
 
-  let html = `<div class="card" style="overflow:hidden;padding:0">
+  // Controles de ordenación (compactos, siempre visibles)
+  let html = `<div class="resumen-sort-bar">
+    <span class="resumen-sort-label">Ordenar:</span>
+    <button class="resumen-sort-btn ${_resumenSort.col==='apellidos'?'active':''}" onclick="resumenSort('apellidos')">Alumno${arrow('apellidos')}</button>
+    <button class="resumen-sort-btn ${_resumenSort.col==='rub'?'active':''}" onclick="resumenSort('rub')">P${arrow('rub')}</button>
+    <button class="resumen-sort-btn ${_resumenSort.col==='obs'?'active':''}" onclick="resumenSort('obs')">A${arrow('obs')}</button>
+    <button class="resumen-sort-btn ${_resumenSort.col==='esc'?'active':''}" onclick="resumenSort('esc')">T${arrow('esc')}</button>
+    <button class="resumen-sort-btn ${_resumenSort.col==='glo'?'active':''}" onclick="resumenSort('glo')">Global${arrow('glo')}</button>
+  </div>`;
+
+  // Vista móvil: cards
+  html += `<div class="resumen-mobile">`;
+  data.forEach(r => {
+    const estadoColor = r.glo === null ? '#BDBDBD'
+                      : r.glo < 5 ? '#EF4444'
+                      : r.glo < 6 ? '#F59E0B'
+                      : '#10B981';
+    html += `<div class="resumen-card-mobile">
+      <div class="resumen-status-bar" style="background:${estadoColor}"></div>
+      <div class="resumen-mobile-main">
+        <div class="resumen-mobile-name">
+          <strong>${r.apellidos}, ${r.nombre}</strong>
+        </div>
+        <div class="resumen-mobile-scores">
+          <span class="resumen-score"><span class="lbl">P</span><span class="val" style="color:${colorFor(r.rub)}">${fmt(r.rub)}</span></span>
+          <span class="resumen-score"><span class="lbl">A</span><span class="val" style="color:${colorFor(r.obs)}">${fmt(r.obs)}</span></span>
+          <span class="resumen-score"><span class="lbl">T</span><span class="val" style="color:${colorFor(r.esc)}">${fmt(r.esc)}</span></span>
+        </div>
+      </div>
+      <div class="resumen-global-mobile" style="background:${colorFor(r.glo)}22;color:${colorFor(r.glo)}">
+        <div class="lbl">GLOBAL</div>
+        <div class="val">${fmt(r.glo)}</div>
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Vista desktop: tabla tradicional
+  html += `<div class="resumen-desktop"><div class="card" style="overflow:hidden;padding:0">
     <table style="width:100%;border-collapse:collapse;font-size:14px">
       <thead>
         <tr style="background:var(--bg);border-bottom:2px solid var(--border)">
           <th onclick="resumenSort('apellidos')" style="padding:12px 10px;text-align:left;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Alumno${arrow('apellidos')}</th>
-          <th onclick="resumenSort('rub')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Rúb.${arrow('rub')}</th>
-          <th onclick="resumenSort('obs')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Obs.${arrow('obs')}</th>
-          <th onclick="resumenSort('esc')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Prueb.${arrow('esc')}</th>
+          <th onclick="resumenSort('rub')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">P${arrow('rub')}</th>
+          <th onclick="resumenSort('obs')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">A${arrow('obs')}</th>
+          <th onclick="resumenSort('esc')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">T${arrow('esc')}</th>
           <th onclick="resumenSort('glo')" style="padding:12px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Global${arrow('glo')}</th>
         </tr>
       </thead>
@@ -2770,9 +2986,9 @@ function renderResumen() {
     </tr>`;
   });
 
-  html += `</tbody></table></div>`;
+  html += `</tbody></table></div></div>`;
 
-  // Estadísticas
+  // Estadísticas (comunes)
   const withGlo = data.filter(r => r.glo !== null);
   const aprobados = withGlo.filter(r => r.glo >= 5).length;
   const media = withGlo.length ? (withGlo.reduce((a,r) => a + r.glo, 0) / withGlo.length) : null;
@@ -3479,6 +3695,41 @@ window.addEventListener('load', () => {
       setTimeout(() => splash.remove(), 500); // tras el fade, quitar del DOM
     }
   }, 2000);
+});
+
+// ═══════════ ATAJOS DE TECLADO (solo PC) ═══════════
+document.addEventListener('keydown', (e) => {
+  // Ignorar si estamos escribiendo en un input, textarea, etc.
+  const tag = (document.activeElement?.tagName || '').toUpperCase();
+  if (['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+
+  // Esc cierra cualquier modal abierto
+  if (e.key === 'Escape') {
+    const open = document.querySelector('.modal-overlay.open');
+    if (open) { open.classList.remove('open'); e.preventDefault(); return; }
+  }
+
+  // 1-2-3-4 puntúan la práctica activa si hay una abierta en la pestaña Prácticas
+  if (['1','2','3','4'].includes(e.key) && S.curTab === 'rubrica' && S.openActIdx !== null) {
+    const val = parseInt(e.key, 10);
+    const acts = S.actividades[akey()] || [];
+    const act = acts[S.openActIdx];
+    if (!act) return;
+
+    // Buscar el primer indicador sin puntuar
+    const indsToShow = act.crits && act.crits.length
+      ? getIndP().filter(i => act.crits.includes(i.id))
+      : getIndP();
+    const nextInd = indsToShow.find(i => !act.scores[i.id] || act.scores[i.id] === 0);
+
+    if (nextInd) {
+      setScore(S.openActIdx, nextInd.id, val);
+      e.preventDefault();
+      // Pequeño toast solo si es el primero (feedback)
+      const countScored = Object.values(act.scores).filter(v => v > 0).length;
+      if (countScored === 0) showToast(`Atajo activo · pulsa 1-4 para puntuar`);
+    }
+  }
 });
 </script>
 </body>
