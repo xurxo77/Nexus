@@ -68,6 +68,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .topbar-title{flex:1;min-width:0}
 .topbar-title h1{font-size:19px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.03em;line-height:1.2}
 .topbar-title p{font-size:12px;opacity:.75;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em}
+#topbarSub{white-space:normal;line-height:1.3} /* el nombre del departamento no cabe en una línea en el móvil */
 .topbar-action{background:none;border:none;color:#fff;font-size:26px;cursor:pointer;min-width:52px;min-height:52px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s;flex-shrink:0}
 .topbar-action:hover{background:rgba(255,255,255,.15)}
 
@@ -94,18 +95,21 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .clase-banner:hover{transform:scale(1.01)}
 .clase-banner:active{transform:scale(.99)}
 .clase-banner-inner{padding:30px 24px;display:flex;align-items:center;gap:20px}
-.clase-icon-big{font-size:64px;flex-shrink:0}
+/* Icono temático de la clase: solo el icono en blanco, sin recuadro, para que no compita con el nombre */
+.clase-badge{width:52px;height:68px;background:none;border:none;color:#fff!important;opacity:.5;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:none}
+.clase-dot-ico{display:inline-flex;vertical-align:-4px;margin-right:6px}
 .clase-banner-info h2{font-size:var(--fs-2xl);font-weight:700;color:#fff;letter-spacing:.01em}
-.clase-banner-info p{font-size:var(--fs-sm);color:rgba(255,255,255,.82);margin-top:6px}
+.clase-banner-info p{font-size:var(--fs-sm);color:rgba(255,255,255,.82);margin-top:3px}
 .clase-banner-arrow{font-size:32px;color:rgba(255,255,255,.6);margin-left:auto}
 
 /* ── Student header ── */
-.stu-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;border-radius:var(--radius);padding:20px;display:flex;gap:18px;align-items:center}
-.stu-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;overflow:hidden;flex-shrink:0;cursor:pointer;border:2.5px solid rgba(255,255,255,.35);position:relative}
+.stu-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;border-radius:var(--radius);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.stu-top{display:flex;gap:14px;align-items:center}
+.stu-avatar{width:56px;height:56px;position:relative;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;overflow:hidden;flex-shrink:0;cursor:pointer;border:2.5px solid rgba(255,255,255,.35);position:relative}
 .stu-avatar img{width:100%;height:100%;object-fit:cover}
-.stu-avatar-edit{position:absolute;bottom:0;right:0;width:26px;height:26px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.stu-avatar-edit{position:absolute;bottom:0;right:0;width:20px;height:20px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;border:2px solid var(--navy)}
 .stu-info{flex:1;min-width:0}
-.stu-info h2{font-size:var(--fs-xl);font-weight:700;line-height:1.2}
+.stu-info h2{font-size:var(--fs-lg);font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stu-info p{font-size:var(--fs-sm);opacity:.78;margin-top:4px}
 .stu-scores{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .score-pill{background:rgba(255,255,255,.15);border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace}
@@ -115,6 +119,39 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .stu-global-pill{border-radius:18px;padding:12px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:78px;flex-shrink:0;color:#fff;box-shadow:0 4px 14px rgba(0,0,0,0.18)}
 .stu-global-label{font-size:10px;font-weight:700;letter-spacing:.08em;opacity:.9}
 .stu-global-val{font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:800;line-height:1;margin-top:4px}
+.stu-global-pill{padding:10px 12px;min-width:70px}
+/* Lista de alumnos: acción principal y primeros pasos */
+.btn-principal{width:100%;min-height:58px;border:none;border-radius:16px;background:var(--navy);color:#fff;font-size:var(--fs-md);font-weight:700;cursor:pointer;box-shadow:var(--shadow);margin-bottom:6px}
+.chip-prov{border:1.5px dashed currentColor}
+.primeros-pasos{padding:14px 16px;display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
+.paso-tit{font-weight:700;color:var(--navy);font-size:var(--fs-md)}
+.paso{display:flex;align-items:center;gap:10px;font-size:var(--fs-sm)}
+.paso-num{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:14px}
+.paso.hecho{color:var(--muted);text-decoration:line-through}
+.paso.hecho .paso-num{background:var(--teal)}
+.paso-txt{flex:1;min-width:0}
+.paso button{border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:10px;min-height:40px;padding:0 12px;font-weight:600;cursor:pointer;flex-shrink:0}
+/* Nota provisional: aún falta alguna parte por evaluar */
+.stu-global-pill.prov{opacity:.85;border:2px dashed rgba(255,255,255,.8);box-shadow:none}
+.stu-global-pill.prov .stu-global-label{font-size:8.5px}
+.stu-estado{font-size:13px!important;opacity:.9!important;margin-top:3px!important}
+.stu-estado.mal{color:#FFCDD2;font-weight:700;opacity:1!important}
+.stu-detalle summary{cursor:pointer;font-size:13px;font-weight:600;opacity:.85;list-style:none;padding:2px 0}
+.stu-detalle summary::-webkit-details-marker{display:none}
+.stu-detalle summary::before{content:'▸ '}
+.stu-detalle[open] summary::before{content:'▾ '}
+.stu-detalle-body{margin-top:8px;background:#fff;color:var(--text);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.stu-detalle-tit{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.stu-detalle-body .stu-scores{margin-top:0}
+.stu-detalle-body .score-pill{background:var(--bg)}
+.stu-detalle-body .score-pill .label{color:var(--muted);opacity:1}
+.stu-detalle-body .ra-chip{background:var(--bg);color:var(--muted);border-color:var(--border)}
+.stu-detalle-body .ra-chip.bien{background:#E8F5E9;color:#2E7D32;border-color:#A5D6A7}
+.stu-detalle-body .ra-chip.mal{background:#FFEBEE;color:#C62828;border-color:#EF9A9A}
+.stu-detalle-nota{font-size:12px;color:var(--muted)}
+.stu-acciones{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:10px}
+.stu-acciones button{flex:1;min-height:44px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--navy);cursor:pointer}
+.stu-acciones button.borrar{color:var(--red);border-color:#EF9A9A}
 
 /* ── Tabs (refuerzo activa) ── */
 .tabs{display:flex;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
@@ -163,6 +200,30 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .score-btn.s4.active{background:#E8F5E9;border-color:#2E7D32;color:#2E7D32}
 .score-btn-clear{background:none;border:none;color:var(--border);font-size:18px;cursor:pointer;padding:4px 6px;border-radius:8px;min-width:36px;min-height:36px;display:none;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
 .score-btn-clear.visible{display:flex;color:var(--muted)}
+/* Nota que el criterio hereda de la nota rápida de la práctica (no ajustada a mano) */
+.score-btn.active.heredada{opacity:.5;border-style:dashed}
+/* Botones de nota 0-10, coloreados por franjas de la rúbrica */
+.nota-btns{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.nota-btn{min-height:46px;border-radius:10px;border:2px solid;background:#fff;font-family:'IBM Plex Mono',monospace;font-size:var(--fs-md);font-weight:700;cursor:pointer;transition:all .12s;padding:0}
+.nota-btn.b0{border-color:#EF9A9A;color:#C62828}
+.nota-btn.b5{border-color:#FFCC80;color:#E65100}
+.nota-btn.b7{border-color:#90CAF9;color:#1565C0}
+.nota-btn.b9{border-color:#A5D6A7;color:#2E7D32}
+.nota-btn.active{color:#fff}
+.nota-btn.b0.active{background:#C62828;border-color:#C62828}
+.nota-btn.b5.active{background:#E65100;border-color:#E65100}
+.nota-btn.b7.active{background:#1565C0;border-color:#1565C0}
+.nota-btn.b9.active{background:#2E7D32;border-color:#2E7D32}
+.nota-btn.active.heredada{opacity:.45;border-style:dashed}
+.nota-btn.quitar{border-color:var(--border);color:var(--muted);font-family:inherit}
+.nota-btn.quitar:disabled{opacity:.3;cursor:default}
+.franjas{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;margin-bottom:12px;padding:10px 12px;background:#fff;border-radius:12px;border:1px solid var(--border)}
+.rapida-box .franjas{margin:0;background:transparent;border:none;padding:2px 0 0}
+.franjas span{display:flex;align-items:center;gap:5px}
+.franjas i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.rapida-box{margin:4px 16px 0;padding:12px 14px;background:var(--teal-lt);border-radius:14px;display:flex;flex-direction:column;gap:8px}
+.rapida-box .rapida-title{font-size:var(--fs-sm);font-weight:700;color:var(--teal)}
+.rapida-box .rapida-hint{font-size:12px;color:var(--muted);line-height:1.4}
 .score-btn-clear:hover{background:#FEE2E2;color:var(--red)}
 /* Indicador no puntuado: fondo ligeramente distinto para que se note que está vacío */
 .ind-row:has(.score-btn-clear:not(.visible)){background:transparent}
@@ -263,6 +324,53 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .examen-crit-item:hover{background:rgba(230,81,0,.05)}
 .examen-crit-item.on{background:#FFF3E0}
 .examen-crit-item input[type="checkbox"]{margin-top:3px;width:18px;height:18px;accent-color:#E65100;cursor:pointer;flex-shrink:0}
+/* Criterios trabajados por módulo (pantalla de configuración) */
+.ra-block{border-bottom:1px solid var(--border)}
+.ra-block:last-child{border-bottom:none}
+.ra-block summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.ra-block summary::-webkit-details-marker{display:none}
+.ra-block[open] summary{background:var(--teal-lt)}
+.ra-num{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--teal);flex-shrink:0;min-width:34px}
+.ra-text{flex:1;min-width:0;font-size:13px;line-height:1.45;color:var(--text)}
+.ra-count{font-size:12px;font-weight:700;color:var(--muted);flex-shrink:0;white-space:nowrap}
+.ra-count.full{color:var(--teal)}
+.ra-count.none{color:#C62828}
+.ra-actions{display:flex;gap:6px;padding:8px 16px 4px;align-items:center;flex-wrap:wrap}
+.ra-peso{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.ra-peso input{width:72px;padding:6px 8px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;text-align:right;background:#fff;color:var(--text)}
+.ra-peso input.custom{border-color:var(--teal);color:var(--teal);font-weight:700}
+.ra-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.ra-chip{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.35)}
+.ra-chip.bien{background:#E8F5E9;color:#2E7D32;border-color:#A5D6A7}
+.ra-chip.mal{background:#FFEBEE;color:#C62828;border-color:#EF9A9A}
+.no-supera{margin-top:6px;display:inline-block;background:#FFEBEE;color:#C62828;border-radius:20px;padding:4px 10px;font-size:var(--fs-xs);font-weight:700}
+/* Visor a pantalla completa de la imagen de una práctica */
+.visor{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.94);display:flex;flex-direction:column;cursor:zoom-out}
+.visor-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;color:#fff;font-weight:600;font-size:var(--fs-md)}
+.visor-bar button{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:22px;border-radius:50%;min-width:48px;min-height:48px;cursor:pointer}
+.visor img{flex:1;min-height:0;width:100%;object-fit:contain;padding:0 8px 16px}
+.ver-practica-btn{display:flex;align-items:center;gap:10px;width:100%;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:8px;cursor:pointer;text-align:left;font-weight:600;color:var(--navy);font-size:var(--fs-sm)}
+.ver-practica-btn img{width:56px;height:56px;object-fit:cover;border-radius:8px;flex-shrink:0;background:var(--bg)}
+.config-act-thumb{width:44px;height:44px;object-fit:cover;border-radius:8px;flex-shrink:0;border:1px solid var(--border);cursor:zoom-in}
+.cp-head{padding:16px;display:flex;flex-direction:column;gap:10px}
+.cp-head h3{font-size:var(--fs-lg)}
+.cp-sub{font-size:13px;color:var(--muted);line-height:1.4}
+.cp-fecha{padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px}
+.cp-todos-label{font-size:13px;font-weight:700;color:var(--teal)}
+.cp-row{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.cp-row:last-child{border-bottom:none}
+.cp-name{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:var(--fs-sm);line-height:1.3}
+.cp-name span{font-size:13px;color:var(--muted);white-space:nowrap}
+.cp-detalle{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;min-width:48px;min-height:48px;font-size:22px;color:var(--navy);cursor:pointer;flex-shrink:0}
+.calif-card{padding:14px 16px;font-size:13px;line-height:1.55;color:var(--text)}
+.calif-card ul{margin:6px 0 0 18px}
+.calif-card .calif-pesos{margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.calif-card .aviso-suma{color:#C62828;font-weight:700}
+.ra-crit{display:flex;align-items:flex-start;gap:10px;padding:9px 16px;cursor:pointer}
+.ra-crit input{margin-top:3px;width:18px;height:18px;accent-color:var(--teal);flex-shrink:0;cursor:pointer}
+.ra-crit.off .ra-crit-text{color:var(--muted);text-decoration:line-through}
+.ra-crit-text{flex:1;min-width:0;font-size:13px;line-height:1.4}
+.ra-crit .crit-badge{width:20px;height:20px;font-size:10px;margin-top:1px}
 .examen-crit-text{flex:1;min-width:0}
 .examen-crit-ce{font-size:12px;font-weight:700;color:#E65100;letter-spacing:.02em}
 .examen-crit-desc{font-size:13px;color:var(--text);line-height:1.4;margin-top:2px}
@@ -314,12 +422,26 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .prog-wrap{background:var(--border);border-radius:6px;height:8px;overflow:hidden}
 .prog-bar{height:100%;border-radius:6px;transition:width .4s}
 .chip{padding:5px 12px;border-radius:24px;font-size:var(--fs-xs);font-weight:700;font-family:'IBM Plex Mono',monospace}
+/* Avisos persistentes (guardado, copia de seguridad, versión nueva) */
+.avisos{position:fixed;top:84px;left:0;right:0;padding:0 16px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:998;pointer-events:none}
+.aviso{pointer-events:auto;width:100%;max-width:520px;background:#fff;border-left:6px solid var(--amber);border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.22);padding:12px 12px 12px 16px;display:flex;align-items:center;gap:10px;z-index:998;font-size:15px;line-height:1.4;color:var(--text);animation:fadeUp .2s ease}
+.aviso.error{border-left-color:var(--red);background:#FFEBEE}
+.aviso.info{border-left-color:var(--teal)}
+.aviso-msg{flex:1;min-width:0}
+.aviso-btn{background:var(--navy);color:#fff;border:none;border-radius:10px;padding:9px 14px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;min-height:44px}
+.aviso.error .aviso-btn{background:var(--red)}
+.aviso-close{background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;min-width:40px;min-height:44px}
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:14px 26px;border-radius:30px;font-size:var(--fs-md);font-weight:600;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.28);animation:fadeUp .2s ease}
 
 /* ── Responsive ── */
+/* En pantallas estrechas los botones de la barra superior se quedan en icono para que se lea el título */
+@media (max-width:600px) {
+  .topbar-action .txt{display:none}
+  #configBtn,#pdfBtn{padding:9px 12px!important;font-size:20px!important}
+}
 @media (max-width:400px) {
   :root{ --fs-xs:13px; --fs-sm:15px; --fs-md:17px; --fs-lg:20px; --fs-xl:24px; --fs-2xl:30px; }
-  .clase-icon-big{font-size:48px}
+  .clase-badge{width:44px;height:58px}
   .nota-big{font-size:76px}
   .topbar-title h1{font-size:18px}
   .topbar-title p{font-size:11.5px}
@@ -346,10 +468,10 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
     <button class="topbar-back" id="backBtn" style="display:none" onclick="goBack()">←</button>
     <div class="topbar-title">
       <h1 id="topbarTitle">NEXUS <span style="font-weight:300;font-size:14px;opacity:.75;letter-spacing:.03em">by Xurxo</span></h1>
-      <p id="topbarSub">Soldadura y Calderería · 2025-2026</p>
+      <p id="topbarSub">Departamento de Fabricación Mecánica · 2026-2027</p>
     </div>
-    <button class="topbar-action" id="configBtn" style="display:none;align-items:center;gap:7px;font-size:15px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openConfig()">⚙ Configurar prácticas</button>
-    <button class="topbar-action" id="pdfBtn" style="display:none;align-items:center;gap:7px;font-size:16px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openPDFModal()">📄 Exportar informe</button>
+    <button class="topbar-action" id="configBtn" style="display:none;align-items:center;gap:7px;font-size:15px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openConfig()" title="Criterios y prácticas" aria-label="Criterios y prácticas"><span>⚙</span><span class="txt">Criterios y prácticas</span></button>
+    <button class="topbar-action" id="pdfBtn" style="display:none;align-items:center;gap:7px;font-size:16px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openPDFModal()" title="Exportar informe PDF" aria-label="Exportar informe PDF"><span>📄</span><span class="txt">Exportar informe</span></button>
     <button class="topbar-action" id="settingsBtn" onclick="openSettings()" title="Ajustes" style="font-size:24px;width:44px;height:44px;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,0.2);border-radius:50%;border:1.5px solid rgba(255,255,255,0.3)">⚙</button>
     <button class="topbar-action" id="infoBtn" onclick="openInfo()" title="Información" style="font-size:20px;font-weight:700;width:44px;height:44px;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,0.2);border-radius:50%;border:1.5px solid rgba(255,255,255,0.3);font-family:'Outfit',sans-serif">ⓘ</button>
   </div>
@@ -368,10 +490,17 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 
   <!-- S3: ALUMNOS -->
   <div class="screen" id="screen-alumnos">
+    <div class="card primeros-pasos" id="primeros-pasos" style="display:none"></div>
+    <button class="btn-principal" id="btn-clase-practica" onclick="openClasePractica()" style="display:none">📋 Evaluar una práctica a toda la clase</button>
     <div class="section-label" id="alumnos-label">Alumnos</div>
     <div class="card" id="alumnosList"></div>
     <button class="add-act-btn" onclick="openAddAlumno()">＋ Añadir alumno</button>
-    <button class="add-act-btn" onclick="openResumen()" style="background:var(--teal);color:#fff;border:none;margin-top:4px">📊 Ver resumen de clase</button>
+    <button class="add-act-btn" id="btn-resumen" onclick="openResumen()" style="margin-top:4px">📊 Ver resumen de clase</button>
+  </div>
+
+  <!-- S3c: EVALUAR UNA PRÁCTICA A TODA LA CLASE -->
+  <div class="screen" id="screen-clase-practica">
+    <div id="cp-content" style="display:flex;flex-direction:column;gap:12px"></div>
   </div>
 
   <!-- S3b: RESUMEN DE CLASE -->
@@ -390,15 +519,12 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       <button class="tab-btn" onclick="switchTab('escrita')"><span class="ticon">✏</span>Examen</button>
     </div>
     <div class="tab-content active" id="tab-rubrica">
-      <div class="crit-subtitle"><span class="crit-badge crit-p">P</span>Criterios procedimentales <span class="crit-hint">· evaluados mediante prácticas</span></div>
       <div id="rubrica-content"></div>
     </div>
     <div class="tab-content" id="tab-observacion">
-      <div class="crit-subtitle"><span class="crit-badge crit-a">A</span>Criterios actitudinales <span class="crit-hint">· evaluados mediante observación</span></div>
       <div id="obs-content"></div>
     </div>
     <div class="tab-content" id="tab-escrita">
-      <div class="crit-subtitle"><span class="crit-badge crit-t">T</span>Criterios conceptuales <span class="crit-hint">· evaluados mediante examen</span></div>
       <div id="escrita-content"></div>
     </div>
   </div>
@@ -410,6 +536,12 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       <div class="card" id="config-mod-selector"></div>
     </div>
     <div id="config-selected-mod" style="display:none;flex-direction:column;gap:12px;margin-top:4px">
+      <div class="section-label" id="config-crits-label">Criterios que trabajo en este módulo</div>
+      <p style="font-size:12px;color:var(--muted);padding:0 2px;line-height:1.5;margin-top:-6px">
+        Desmarca los criterios que no vas a trabajar este curso. Dejan de aparecer en prácticas, observación, exámenes y PDF, y no cuentan en la nota. Lo ya puntuado no se borra: si vuelves a marcarlo, reaparece.
+      </p>
+      <div class="card calif-card" id="config-calif"></div>
+      <div class="card" id="config-crits-ra" style="padding:0;overflow:hidden"></div>
       <div class="section-label" id="config-mod-label">Prácticas predefinidas</div>
       <div class="card" id="config-acts-list"></div>
       <button class="add-act-btn" onclick="openConfigAct()">＋ Añadir práctica</button>
@@ -482,6 +614,17 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       <input type="text" class="form-input" id="config-act-name" placeholder="Ej: Práctica 2 – Taladrado y roscado" />
     </div>
 
+    <!-- Imagen de referencia de la práctica (plano, croquis o pieza terminada) -->
+    <div class="form-group">
+      <label class="form-label">Imagen de la práctica (opcional)</label>
+      <div class="photo-upload" id="config-img-drop" onclick="document.getElementById('config-img-file').click()">
+        <img id="config-img-preview" alt="" style="display:none;max-width:100%;max-height:220px;border-radius:10px" />
+        <span id="config-img-label">📐 Toca para añadir un plano, croquis o foto de la pieza</span>
+        <input type="file" id="config-img-file" accept="image/*" style="display:none" onchange="handleConfigImg(this)" />
+      </div>
+      <button type="button" id="config-img-quitar" class="btn-secondary" style="display:none;font-size:12px;padding:8px 12px;min-height:auto;margin-top:8px" onclick="setConfigImg(null)">✕ Quitar imagen</button>
+    </div>
+
     <!-- Selector de criterios P a evaluar -->
     <div class="form-group">
       <label class="form-label">Criterios procedimentales a evaluar</label>
@@ -537,7 +680,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
     <div class="form-group">
       <label class="form-label">Año académico</label>
       <input type="text" class="form-input" id="settings-year"
-             placeholder="Ej: 2024-25" maxlength="10" />
+             placeholder="Ej: 2026-2027" maxlength="10" />
       <span style="font-size:12px;color:var(--muted);margin-top:2px">
         Se mostrará en el encabezado y en los informes PDF.
       </span>
@@ -556,6 +699,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
     <!-- 2. Módulos que imparto -->
     <div style="border-top:1px solid var(--border);padding-top:18px;display:flex;flex-direction:column;gap:14px">
       <div style="font-size:var(--fs-md);font-weight:700">Módulos que imparto este curso</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:-8px">En la pantalla de inicio solo aparecen las clases en las que marques algún módulo.</div>
       <div id="settings-modulos-list" style="display:flex;flex-direction:column;gap:12px"></div>
     </div>
 
@@ -628,7 +772,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
         </div>
       </div>
       <div style="font-size:13px;opacity:.9;line-height:1.55">
-        Evaluación criterial para Formación Profesional de Soldadura y Calderería.<br>
+        Evaluación criterial para el CFGM de Soldadura y Calderería y la FP Básica de Fabricación de Elementos Metálicos.<br>
         Diseñada para docentes de FP de Andalucía.
       </div>
       <div id="install-prompt" style="display:none;margin-top:14px">
@@ -648,23 +792,30 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       <details class="info-section">
         <summary>🚀 Cómo usar la app</summary>
         <div class="info-content">
-          <p><strong>Flujo básico:</strong></p>
-          <p>1. Elige la clase (1º o 2º CMSYC)</p>
-          <p>2. Selecciona el módulo que impartes</p>
+          <p><strong>Antes de empezar (una vez por módulo):</strong></p>
+          <p>Entra en el módulo y pulsa <strong>⚙ Criterios y prácticas</strong>:</p>
+          <p>• Desmarca los criterios que no vas a trabajar este curso.</p>
+          <p>• Si tu programación lo indica, pon el peso de cada RA (si no, todos pesan igual).</p>
+          <p>• Define las prácticas: nombre, criterios que evalúa e imagen (plano, croquis o foto de la pieza).</p>
+
+          <p style="margin-top:14px"><strong>Flujo básico:</strong></p>
+          <p>1. Elige la clase. Solo aparecen las clases y los módulos que impartes: se marcan en ⚙ Ajustes → Módulos que imparto.</p>
+          <p>2. Selecciona el módulo</p>
           <p>3. Escoge al alumno</p>
-          <p>4. Evalúa en las 3 pestañas: <strong>Rúbrica · Observación · Prueba</strong></p>
+          <p>4. Evalúa en las 3 pestañas: <strong>Prácticas · Observación · Examen</strong></p>
 
-          <p style="margin-top:14px"><strong>Rúbrica (procedimental):</strong></p>
-          <p>Añade una práctica con <strong>+ Añadir práctica</strong>. Puntúa cada indicador del 1 al 4. Si un indicador no aplica, déjalo en blanco o pulsa ✕ para que no compute en la media.</p>
+          <p style="margin-top:14px"><strong>Prácticas (procedimental · P):</strong></p>
+          <p>Pon la <strong>nota de la práctica de 0 a 10</strong>: se aplica a todos sus criterios. Si un criterio destaca o falla, ajústalo con su propia nota. Con <strong>📐 Ver la práctica</strong> se abre su imagen a pantalla completa.</p>
+          <p>Para calificar a toda la clase en una sola pantalla, usa <strong>📋 Evaluar una práctica a toda la clase</strong> desde la lista de alumnos: cada alumno con su nota, sin entrar en su ficha.</p>
 
-          <p style="margin-top:14px"><strong>Observación (actitudinal):</strong></p>
-          <p>Crea una sesión (recomendado: 2 por trimestre). Marca Sí / No en cada indicador. La nota es el % de Síes sobre el total.</p>
+          <p style="margin-top:14px"><strong>Observación (actitudinal · A):</strong></p>
+          <p>Crea una sesión (recomendado: 2 por trimestre) y marca Sí / No en cada criterio. En cada criterio, Sí cuenta 10 y No cuenta 0, y se hace la media de todas las sesiones. Algunos módulos (3015 y 3073) no tienen criterios de actitud en el currículo.</p>
 
-          <p style="margin-top:14px"><strong>Prueba escrita:</strong></p>
-          <p>Añade varias pruebas con fecha y nota. La app calcula la media automáticamente.</p>
+          <p style="margin-top:14px"><strong>Examen (teórico · T):</strong></p>
+          <p>Añade cada examen con fecha y nota, y marca los criterios que evalúa. Si no marcas ninguno, cuenta para todos los criterios de teoría del módulo.</p>
 
           <p style="margin-top:14px"><strong>Informe PDF:</strong></p>
-          <p>Desde cada alumno puedes generar un PDF con todas las evaluaciones, fotos de prácticas y notas.</p>
+          <p>Desde cada alumno, <strong>📄 Exportar informe</strong> genera un PDF con la nota de cada RA, la nota del módulo, las prácticas con sus fotos, la observación y los exámenes. Desde el resumen de clase puedes exportar el PDF de toda la clase.</p>
         </div>
       </details>
 
@@ -672,21 +823,27 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       <details class="info-section">
         <summary>📐 Sistema de evaluación</summary>
         <div class="info-content">
-          <p>La nota global de cada módulo es la media de los tres bloques evaluados:</p>
+          <p>La nota del módulo se calcula por <strong>resultados de aprendizaje</strong> (Orden 18/09/2025, arts. 2.7 y 19):</p>
           <p style="background:var(--bg);padding:10px 14px;border-radius:10px;margin:10px 0">
-            <strong>Nota = (Rúbrica + Observación + Prueba) / bloques evaluados</strong>
+            Criterio = media de prácticas, observación y exámenes · RA = media de sus criterios · <strong>Módulo = media de los RA según su peso</strong>
           </p>
-          <p><strong>Condición de aprobado:</strong> si los tres bloques están evaluados y alguno es menor de 5, la nota global queda limitada a <strong>4,9 máximo</strong>. Todos los bloques deben superar el 5 para aprobar.</p>
+          <p><strong>Condición de aprobado:</strong> todos los RA con 5 o más y cada parte (prácticas, actitud y teoría) con 5 o más. Si no, la nota queda en <strong>4 como máximo</strong>.</p>
+          <p>La nota final es <strong>entera, de 1 a 10</strong>. Los pesos de los RA se configuran en ⚙ Criterios y prácticas (por defecto, todos iguales).</p>
+          <p>Mientras falte por evaluar alguna parte (prácticas, actitud o teoría), la nota aparece como <strong>provisional</strong>, también en el informe PDF. El detalle por partes y por RA está en la ficha del alumno, en «Ver detalle de la nota».</p>
 
-          <p style="margin-top:12px"><strong>Escala de la rúbrica:</strong></p>
-          <p>1 = No conseguido · 2 = En proceso · 3 = Conseguido · 4 = Excelente</p>
-          <p>Se convierte automáticamente a escala 0-10.</p>
+          <p style="margin-top:12px"><strong>Escala de las prácticas (0-10):</strong></p>
+          <p>0-4 No conseguido · 5-6 Conseguido justo · 7-8 Conseguido · 9-10 Excelente</p>
 
-          <p style="margin-top:12px"><strong>Indicadores "no computa":</strong></p>
-          <p>Si en una práctica un indicador no aplica, déjalo sin puntuar. No afectará a la media.</p>
+          <p style="margin-top:12px"><strong>Criterios "no computa":</strong></p>
+          <p>Si en una práctica un criterio no tiene nota, no afecta a la media.</p>
 
           <p style="margin-top:12px"><strong>Criterios oficiales:</strong></p>
-          <p>Todos los indicadores están vinculados a los RA y CE del currículo oficial (Orden 7 julio 2009 · BOJA 150).</p>
+          <p>Todos los criterios están vinculados a los RA y CE del currículo andaluz:</p>
+          <p>• CFGM Soldadura y Calderería: Orden de 7 de julio de 2009 (BOJA nº 150, 4/08/2009).</p>
+          <p>• FP Básica Fabricación de Elementos Metálicos: Orden de 8 de noviembre de 2016, Anexo XXIV (BOJA nº 241, 19/12/2016).</p>
+          <p>La clasificación de cada criterio como práctica (P), actitud (A) o teoría (T) es una decisión metodológica del profesorado: no la fija el currículo.</p>
+
+          <p style="margin-top:12px"><strong>Importante:</strong> lo que configures en NEXUS (criterios trabajados, pesos de los RA y condición de aprobado) debe coincidir con tu programación didáctica (art. 3 de la Orden 18/09/2025).</p>
         </div>
       </details>
 
@@ -697,16 +854,20 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
           <p>Los datos se guardan en <strong>IndexedDB</strong> del navegador — una base de datos local del dispositivo.</p>
 
           <p style="margin-top:12px"><strong>¿Cuánto espacio necesita?</strong></p>
-          <p>Orientativo: para 40 alumnos con fotos de prácticas, unos <strong>40-80 MB</strong>. El navegador te deja usar centenares de MB, así que sobra espacio.</p>
+          <p>Orientativo: para 40 alumnos con fotos de prácticas, unos <strong>40-80 MB</strong>. El navegador te deja usar centenares de MB, así que sobra espacio. Puedes ver el uso real en ⚙ Ajustes → Gestión de datos.</p>
+
+          <p style="margin-top:12px"><strong>¿Cuándo se guarda?</strong></p>
+          <p>Cada cambio se guarda automáticamente al momento, y también al cambiar de app o cerrar la ventana. Si algún guardado falla, aparece un aviso rojo con el botón «Reintentar»: en ese caso, no cierres la app y haz una copia de seguridad.</p>
 
           <p style="margin-top:12px"><strong>¿Los datos se pueden perder?</strong></p>
-          <p>En condiciones normales, no. Si instalas la app como PWA, el navegador protege los datos como "persistentes" y no los borra nunca sin tu permiso.</p>
+          <p>En condiciones normales, no. Al abrirla, la app pide al navegador que guarde los datos como "persistentes", y si está instalada como app, normalmente lo concede. Aun así, <strong>los datos solo existen en este dispositivo</strong>: si se rompe, se pierde o se borran los datos del navegador, solo se recuperan desde una copia de seguridad.</p>
 
-          <p style="margin-top:12px"><strong>Riesgo sin instalar como PWA:</strong></p>
+          <p style="margin-top:12px"><strong>Riesgo sin instalar como app:</strong></p>
           <p>Si usas la app solo como página web y pasas mucho tiempo sin abrirla (ej. Safari iOS tras ~7 días), el navegador <strong>puede</strong> borrar los datos. Por eso conviene instalarla.</p>
 
           <p style="margin-top:12px"><strong>Copias de seguridad:</strong></p>
-          <p>Ve a Ajustes → Gestión de datos → Copia completa. Descarga un .json que puedes guardar en OneDrive educaAnd, Drive, USB, o donde quieras. Para restaurar, usa "Restaurar copia".</p>
+          <p>Ve a ⚙ Ajustes → Gestión de datos → Copia completa. Descarga un archivo .json; para recuperarlo, usa "Restaurar copia". Si pasan 7 días sin copia, la app te lo recuerda al abrirla. La fecha de la última copia aparece en Gestión de datos.</p>
+          <p>⚠ El archivo de copia contiene los nombres y las notas del alumnado <strong>sin cifrar</strong>: guárdalo en un sitio seguro (preferiblemente el almacenamiento corporativo de la Junta) y no lo envíes por correo ni mensajería.</p>
         </div>
       </details>
 
@@ -714,7 +875,8 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       <details class="info-section">
         <summary>🔒 Protección de datos</summary>
         <div class="info-content">
-          <p><strong>Nada sale de tu dispositivo.</strong> NEXUS no tiene servidor, no hay cuenta, no hay login, no hay sincronización en la nube.</p>
+          <p><strong>Los datos del alumnado nunca salen de tu dispositivo.</strong> NEXUS no tiene servidor, no hay cuenta, no hay login, no hay sincronización en la nube.</p>
+          <p>Lo único que la app descarga de internet es su tipografía (Google Fonts) y la librería que genera los PDF (cdnjs). En esas descargas no se envía ningún dato de alumnos ni de notas.</p>
 
           <p style="margin-top:12px">Es el equivalente digital a un <strong>cuaderno del profesor</strong>: la información vive solo en tu dispositivo, tú decides qué hacer con ella.</p>
 
@@ -729,7 +891,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
           <p>Como cualquier herramienta personal de apoyo, el uso de esta app es responsabilidad profesional del docente. Si tienes dudas sobre tratamiento de datos, consulta al Delegado de Protección de Datos de tu centro: <strong>dpd.ced@juntadeandalucia.es</strong></p>
 
           <p style="margin-top:12px"><strong>Cómo borrar todo:</strong></p>
-          <p>Ajustes → Zona de peligro → Borrar TODOS los datos. Requiere escribir "BORRAR" y es irreversible.</p>
+          <p>⚙ Ajustes → Zona de peligro → Borrar TODOS los datos. Requiere escribir "BORRAR" y es irreversible.</p>
         </div>
       </details>
 
@@ -744,7 +906,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
           <p>No hay sincronización automática. Usa exportar/importar para mover los datos manualmente.</p>
 
           <p style="margin-top:10px"><strong>¿Y si cambio de móvil?</strong></p>
-          <p>Antes de cambiar: Ajustes → Exportar copia completa. En el móvil nuevo: instala la app y en Ajustes → Restaurar copia.</p>
+          <p>Antes de cambiar: ⚙ Ajustes → Gestión de datos → Copia completa. En el móvil nuevo: instala la app y en ⚙ Ajustes → Gestión de datos → Restaurar copia.</p>
 
           <p style="margin-top:10px"><strong>¿Se pueden compartir los datos con compañeros?</strong></p>
           <p>No se recomienda. Los datos de evaluación son personales y confidenciales.</p>
@@ -753,7 +915,10 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
           <p>Exporta copia completa, guárdala en sitio seguro, y usa "Borrar TODOS los datos" para empezar limpio el siguiente curso.</p>
 
           <p style="margin-top:10px"><strong>¿Puedo imprimir las evaluaciones?</strong></p>
-          <p>Sí. Desde cada alumno pulsa "Generar informe PDF". El PDF incluye todas las puntuaciones y fotos de prácticas.</p>
+          <p>Sí. Desde cada alumno pulsa "📄 Exportar informe". El PDF incluye la nota de cada RA, la nota del módulo, las puntuaciones y las fotos de prácticas.</p>
+
+          <p style="margin-top:10px"><strong>¿Cómo se actualiza la app?</strong></p>
+          <p>Cuando hay una versión nueva, al abrir la app aparece el aviso «Hay una versión nueva de NEXUS» con el botón «Actualizar». Tus datos no se tocan.</p>
 
           <p style="margin-top:10px"><strong>¿Se puede usar en ordenador?</strong></p>
           <p>Sí. Desde Chrome o Edge en PC también se puede instalar como app (botón "Instalar" en la barra de direcciones).</p>
@@ -764,7 +929,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       <details class="info-section">
         <summary>🛠 Información técnica</summary>
         <div class="info-content">
-          <p><strong>Versión:</strong> v28 (abril 2026)</p>
+          <p><strong>Versión:</strong> <span id="app-version"></span></p>
           <p><strong>Stack:</strong> HTML5 + JavaScript puro, sin frameworks</p>
           <p><strong>Almacenamiento:</strong> IndexedDB (navegador)</p>
           <p><strong>PDF:</strong> jsPDF</p>
@@ -829,11 +994,34 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 <input type="file" id="photo-stu-file" accept="image/*" style="display:none" onchange="handleStuPhoto(this)" />
 
 <script>
+// Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
+// Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
+const APP_VERSION = 'v44';
+
 // ═══════════ DATA ═══════════
 const CLASES = [
-  { id:"CL001", nombre:"1º CMSYC", curso:1, color1:"#0D47A1", color2:"#1976D2", emoji:"🔵" },
-  { id:"CL002", nombre:"2º CMSYC", curso:2, color1:"#4A148C", color2:"#7B1FA2", emoji:"🟣" },
+  { id:"CL001", nombre:"1º CMSYC", curso:1, color1:"#0D47A1", color2:"#1976D2", icono:"llama",   titulo:"Soldadura y Calderería" },
+  { id:"CL002", nombre:"2º CMSYC", curso:2, color1:"#4A148C", color2:"#7B1FA2", icono:"careta",  titulo:"Soldadura y Calderería" },
+  { id:"CL003", nombre:"1º FPB FEM", curso:1, modulos:"FPB1", color1:"#BF360C", color2:"#F4511E", icono:"martillo", titulo:"Fabricación de Elementos Metálicos" },
+  { id:"CL004", nombre:"2º FPB FEM", curso:2, modulos:"FPB2", color1:"#1B5E20", color2:"#43A047", icono:"ventana",  titulo:"Fabricación de Elementos Metálicos" },
 ];
+// Iconos de las clases (dibujo propio, trazo en el color de la clase):
+// llama    = 1º CMSYC (corte térmico y soldadura en atmósfera natural: oxigás, electrodo)
+// careta  = 2º CMSYC (soldadura en atmósfera protegida y montaje)
+// martillo = 1º FPB (operaciones básicas de fabricación, soldadura y carpintería metálica)
+// ventana = 2º FPB (carpintería de aluminio y PVC, calderería ligera)
+const ICONOS_CLASE = {
+  llama:    `<path d="M12 21.5c3.9 0 6.8-2.7 6.8-6.6 0-4.1-3.1-6.5-4.5-11.9-1 2.8-2.4 4.3-3.8 5.6-1.6 1.6-5.3 3.2-5.3 6.3 0 3.9 2.9 6.6 6.8 6.6z"/>
+            <path d="M12 21.5c-1.8 0-3-1.3-3-2.9 0-2.1 1.9-2.9 2.4-4.8 1.6 1.4 3.6 2.5 3.6 4.8 0 1.6-1.2 2.9-3 2.9z" fill="currentColor"/>`,
+  careta:   `<path d="M5 9.5C5 5.4 8.1 2.5 12 2.5s7 2.9 7 7V15c0 3.6-3.1 6.5-7 6.5S5 18.6 5 15z"/>
+            <rect x="7.5" y="9" width="9" height="4.5" rx="1" fill="currentColor"/><circle cx="3.3" cy="11" r="1.2"/><circle cx="20.7" cy="11" r="1.2"/>`,
+  martillo: `<rect x="11.5" y="4.5" width="9" height="5" rx="1" transform="rotate(45 16 7)"/><path d="M14.5 8.5l-10 10" stroke-width="3"/>`,
+  ventana:  `<rect x="4" y="3" width="16" height="18" rx="1.2"/><path d="M12 3v18M4 12h16"/><path d="M7.5 6.5l2 2"/>`,
+};
+const iconoClase = (c, size = 42) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+  stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONOS_CLASE[c.icono] || ''}</svg>`;
+// Módulos de una clase: los de FPB van aparte; los del CFGM se agrupan por curso
+const modsDeClase = c => (c ? MODULOS[c.modulos || c.curso] : null) || [];
 
 const MODULOS = {
   1: [
@@ -846,6 +1034,15 @@ const MODULOS = {
     { id:"MOD0094", codigo:"0094", nombre:"Soldadura en atmósfera protegida", horas:231, icon:"🛡️", bg:"#E1BEE7" },
     { id:"MOD0095", codigo:"0095", nombre:"Montaje",                          horas:126, icon:"🔧", bg:"#B2DFDB" },
     { id:"MOD0006", codigo:"0006", nombre:"Metrología y ensayos",             horas:126, icon:"📏", bg:"#BBDEFB" },
+  ],
+  FPB1: [
+    { id:"MOD3020", codigo:"3020", nombre:"Operaciones básicas de fabricación",  horas:160, icon:"🛠️", bg:"#D7CCC8" },
+    { id:"MOD3021", codigo:"3021", nombre:"Soldadura y carpintería metálica",    horas:160, icon:"🔩", bg:"#FFCCBC" },
+    { id:"MOD3015", codigo:"3015", nombre:"Equipos eléctricos y electrónicos",   horas:192, icon:"🔌", bg:"#FFF9C4" },
+  ],
+  FPB2: [
+    { id:"MOD3022", codigo:"3022", nombre:"Carpintería de aluminio y PVC",          horas:156, icon:"🪟", bg:"#C8E6C9" },
+    { id:"MOD3073", codigo:"3073", nombre:"Operaciones básicas de calderería ligera", horas:260, icon:"🛢️", bg:"#DCEDC8" },
   ]
 };
 
@@ -882,22 +1079,22 @@ const TODOS_INDICADORES = {
       {id:"0006-A02",ce:"RA5-CEe",texto:"Valora la importancia de las normas de calidad y actúa conforme a ellas."}
     ],
     IND_T: [
-      {id:"0006-T01",ce:"RA1-CEa",texto:"Descrito las condiciones de temperatura, humedad y limpieza que deben cumplir las piezas a."},
+      {id:"0006-T01",ce:"RA1-CEa",texto:"Descrito las condiciones de temperatura, humedad y limpieza que deben cumplir las piezas a medir y los equipos de medición para proceder a su control."},
       {id:"0006-T02",ce:"RA1-CEd",texto:"Descrito las características constructivas y los principios de funcionamiento de los equipos."},
       {id:"0006-T03",ce:"RA2-CEa",texto:"Identificado los valores de referencia y sus tolerancias."},
-      {id:"0006-T04",ce:"RA2-CEb",texto:"Identificado los instrumentos de medida, indicando la magnitud que controlan, su campo de."},
+      {id:"0006-T04",ce:"RA2-CEb",texto:"Identificado los instrumentos de medida, indicando la magnitud que controlan, su campo de aplicación y precisión."},
       {id:"0006-T05",ce:"RA2-CEd",texto:"Descrito el funcionamiento de los útiles de medición."},
       {id:"0006-T06",ce:"RA2-CEe",texto:"Descrito las técnicas de medición utilizadas en mediciones dimensionales, geométricas y superficiales."},
       {id:"0006-T07",ce:"RA2-CEf",texto:"Identificado los tipos de errores que influyen en una medida."},
       {id:"0006-T08",ce:"RA3-CEa",texto:"Relacionado los diferentes ensayos destructivos y no destructivos con las características que controlan."},
-      {id:"0006-T09",ce:"RA3-CEb",texto:"Descrito los instrumentos y máquinas empleados en los ensayos destructivos y no destructivos y."},
-      {id:"0006-T10",ce:"RA3-CEc",texto:"Explicado los errores más característicos que se dan en los equipos y máquinas empleados en."},
+      {id:"0006-T09",ce:"RA3-CEb",texto:"Descrito los instrumentos y máquinas empleados en los ensayos destructivos y no destructivos y el procedimiento de empleo."},
+      {id:"0006-T10",ce:"RA3-CEc",texto:"Explicado los errores más característicos que se dan en los equipos y máquinas empleados en los ensayos y la manera de corregirlos."},
       {id:"0006-T11",ce:"RA4-CEa",texto:"Diferenciado los distintos tipos de gráficos en función de su aplicación."},
       {id:"0006-T12",ce:"RA4-CEb",texto:"Explicado el valor de límite de control."},
-      {id:"0006-T13",ce:"RA4-CEf",texto:"Relacionado el concepto de capacidad de proceso y los índices que lo evalúan con las."},
-      {id:"0006-T14",ce:"RA5-CEa",texto:"Explicado las características de los sistemas y modelos de calidad que afectan al proceso."},
+      {id:"0006-T13",ce:"RA4-CEf",texto:"Relacionado el concepto de capacidad de proceso y los índices que lo evalúan con las intervenciones de ajuste del proceso."},
+      {id:"0006-T14",ce:"RA5-CEa",texto:"Explicado las características de los sistemas y modelos de calidad que afectan al proceso tecnológico de este perfil profesional."},
       {id:"0006-T15",ce:"RA5-CEb",texto:"Identificado las normas y procedimientos afines al proceso de fabricación o control."},
-      {id:"0006-T16",ce:"RA5-CEc",texto:"Descrito las actividades que hay que realizar para mantener los sistemas o modelos de calidad,."}
+      {id:"0006-T16",ce:"RA5-CEc",texto:"Descrito las actividades que hay que realizar para mantener los sistemas o modelos de calidad, en los procesos de fabricación asociados a las competencias de esta figura profesional."}
     ]
   },
 
@@ -998,18 +1195,18 @@ const TODOS_INDICADORES = {
       {id:"0091-T03",ce:"RA1-CEe",texto:"Identificado los equipos de protección individual para cada actividad."},
       {id:"0091-T04",ce:"RA1-CEg",texto:"Relacionado las necesidades de materiales y recursos necesarios en cada etapa."},
       {id:"0091-T05",ce:"RA2-CEa",texto:"Identificado el material en función de sus dimensiones y calidad según las instrucciones de trabajo."},
-      {id:"0091-T06",ce:"RA2-CEb",texto:"Identificado las máquinas, equipos, herramientas, plantillas y útiles necesarios para el."},
+      {id:"0091-T06",ce:"RA2-CEb",texto:"Identificado las máquinas, equipos, herramientas, plantillas y útiles necesarios para el trazado, corte o conformado a realizar."},
       {id:"0091-T07",ce:"RA2-CEd",texto:"Definido las funciones específicas de cada máquina o equipo."},
       {id:"0091-T08",ce:"RA4-CEb",texto:"Descrito las deformaciones que se producen al aplicar técnicas de corte a distintos elementos."},
       {id:"0091-T09",ce:"RA4-CEg",texto:"Identificado posibles defectos y, en su caso, relacionado éstos con las causas que los provocan."},
-      {id:"0091-T10",ce:"RA5-CEb",texto:"Descrito las deformaciones que se producen al aplicar técnicas de líneas y puntos de calor a."},
+      {id:"0091-T10",ce:"RA5-CEb",texto:"Descrito las deformaciones que se producen al aplicar técnicas de líneas y puntos de calor a distintos elementos."},
       {id:"0091-T11",ce:"RA5-CEg",texto:"Identificado posibles defectos y, en su caso, relacionado éstos con las causas que los provocan."},
       {id:"0091-T12",ce:"RA6-CEf",texto:"Identificado posibles defectos y, en su caso, relacionado éstos con las causas que los provocan."},
       {id:"0091-T13",ce:"RA7-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
-      {id:"0091-T14",ce:"RA8-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que suponen la manipulación de los."},
-      {id:"0091-T15",ce:"RA8-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
-      {id:"0091-T16",ce:"RA8-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
-      {id:"0091-T17",ce:"RA8-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0091-T14",ce:"RA8-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que suponen la manipulación de los distintos materiales, herramientas, útiles, máquinas y medios de transporte."},
+      {id:"0091-T15",ce:"RA8-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales, herramientas, máquinas de corte y conformado."},
+      {id:"0091-T16",ce:"RA8-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros) de las máquinas y los equipos de protección individual (calzado, protección ocular, indumentaria, entre otros) que se deben emplear en las distintas operaciones de trazado, corte y conformado."},
+      {id:"0091-T17",ce:"RA8-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de seguridad y protección personal requeridos."},
       {id:"0091-T18",ce:"RA8-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
     ]
   },
@@ -1054,20 +1251,20 @@ const TODOS_INDICADORES = {
       {id:"0092-A06",ce:"RA6-CEf",texto:"Valora el orden y la limpieza como primer factor de prevención de riesgos."}
     ],
     IND_T: [
-      {id:"0092-T01",ce:"RA1-CEa",texto:"Identificado la secuencia de operaciones de preparación de las máquinas en función de las."},
+      {id:"0092-T01",ce:"RA1-CEa",texto:"Identificado la secuencia de operaciones de preparación de las máquinas en función de las características del proceso a realizar."},
       {id:"0092-T02",ce:"RA1-CEb",texto:"Identificado las herramientas, útiles y soportes de fijación de piezas."},
       {id:"0092-T03",ce:"RA1-CEd",texto:"Explicado las medidas de seguridad exigibles en el uso de los diferentes equipos de mecanizado."},
       {id:"0092-T04",ce:"RA1-CEe",texto:"Enumerado los equipos de protección individual para cada actividad."},
       {id:"0092-T05",ce:"RA1-CEg",texto:"Relacionado las necesidades de materiales y recursos necesarios en cada etapa."},
-      {id:"0092-T06",ce:"RA2-CEb",texto:"Descrito los distintos componentes que forman un equipo de mecanizado, así como los útiles y."},
+      {id:"0092-T06",ce:"RA2-CEb",texto:"Descrito los distintos componentes que forman un equipo de mecanizado, así como los útiles y accesorios, la función de cada uno de ellos y la interrelación de los mismos."},
       {id:"0092-T07",ce:"RA3-CEa",texto:"Descrito los procedimientos para obtener piezas por mecanizado."},
       {id:"0092-T08",ce:"RA3-CEe",texto:"Analizado las diferencias entre el proceso definido y el realizado."},
       {id:"0092-T09",ce:"RA3-CEf",texto:"Identificado las deficiencias debidas a las herramientas, a las condiciones de corte y al material."},
       {id:"0092-T10",ce:"RA5-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
-      {id:"0092-T11",ce:"RA6-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los."},
-      {id:"0092-T12",ce:"RA6-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
-      {id:"0092-T13",ce:"RA6-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
-      {id:"0092-T14",ce:"RA6-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0092-T11",ce:"RA6-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los distintos materiales, herramientas, útiles, máquinas y medios de transporte."},
+      {id:"0092-T12",ce:"RA6-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales, herramientas y máquinas de mecanizado."},
+      {id:"0092-T13",ce:"RA6-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros) de las máquinas y los equipos de protección individual (calzado, protección ocular, indumentaria, entre otros) que se deben emplear en las distintas operaciones de mecanizado."},
+      {id:"0092-T14",ce:"RA6-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de seguridad y protección personal requeridos."},
       {id:"0092-T15",ce:"RA6-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
     ]
   },
@@ -1114,12 +1311,12 @@ const TODOS_INDICADORES = {
       {id:"0093-T05",ce:"RA2-CEa",texto:"Identificado el comportamiento de los metales frente al soldeo, recargue o proyección."},
       {id:"0093-T06",ce:"RA3-CEa",texto:"Descrito los procedimientos característicos de soldeo, recargue y proyección."},
       {id:"0093-T07",ce:"RA3-CEe",texto:"Identificado los defectos de la soldadura."},
-      {id:"0093-T08",ce:"RA3-CEg",texto:"Identificado las deficiencias debidas a la preparación, equipo, condiciones, parámetros de."},
-      {id:"0093-T09",ce:"RA4-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
-      {id:"0093-T10",ce:"RA5-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los."},
-      {id:"0093-T11",ce:"RA5-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
-      {id:"0093-T12",ce:"RA5-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
-      {id:"0093-T13",ce:"RA5-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0093-T08",ce:"RA3-CEg",texto:"Identificado las deficiencias debidas a la preparación, equipo, condiciones, parámetros de soldeo o proyección y al material de aporte como base."},
+      {id:"0093-T09",ce:"RA4-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos de soldadura y proyección."},
+      {id:"0093-T10",ce:"RA5-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los distintos materiales, herramientas, útiles, máquinas y medios de transporte."},
+      {id:"0093-T11",ce:"RA5-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales, herramientas, máquinas de soldadura y proyección."},
+      {id:"0093-T12",ce:"RA5-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros) de las máquinas y los equipos de protección individual (calzado, protección ocular, indumentaria, entre otros) que se deben emplear en las distintas operaciones de soldadura y proyección."},
+      {id:"0093-T13",ce:"RA5-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de seguridad y protección personal requeridos."},
       {id:"0093-T14",ce:"RA5-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
     ]
   },
@@ -1188,12 +1385,12 @@ const TODOS_INDICADORES = {
       {id:"0094-T05",ce:"RA2-CEa",texto:"Identificado el comportamiento de los metales frente al soldeo y recargue."},
       {id:"0094-T06",ce:"RA4-CEh",texto:"Identificado las deficiencias debidas a la preparación, equipo, condiciones, parámetros de soldeo."},
       {id:"0094-T07",ce:"RA5-CEa",texto:"Descrito los procedimientos característicos de soldeo."},
-      {id:"0094-T08",ce:"RA5-CEi",texto:"Discernido si las deficiencias son debidas a la preparación, equipo, condiciones, parámetros."},
-      {id:"0094-T09",ce:"RA6-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
-      {id:"0094-T10",ce:"RA7-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los."},
-      {id:"0094-T11",ce:"RA7-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
-      {id:"0094-T12",ce:"RA7-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
-      {id:"0094-T13",ce:"RA7-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0094-T08",ce:"RA5-CEi",texto:"Discernido si las deficiencias son debidas a la preparación, equipo, condiciones, parámetros de soldeo o al material de aporte como base."},
+      {id:"0094-T09",ce:"RA6-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos de soldadura y proyección."},
+      {id:"0094-T10",ce:"RA7-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los distintos materiales, herramientas, útiles, máquinas y medios de transporte."},
+      {id:"0094-T11",ce:"RA7-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales, herramientas, máquinas de soldadura y proyección."},
+      {id:"0094-T12",ce:"RA7-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros) de las máquinas y los equipos de protección individual (calzado, protección ocular, indumentaria, entre otras) que se deben emplear en las distintas operaciones de soldadura y proyección."},
+      {id:"0094-T13",ce:"RA7-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de seguridad y protección personal requeridos."},
       {id:"0094-T14",ce:"RA7-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
     ]
   },
@@ -1241,29 +1438,389 @@ const TODOS_INDICADORES = {
       {id:"0095-T01",ce:"RA1-CEa",texto:"Descrito las máquinas, equipos, accesorios y elementos auxiliares necesarios para realizar el trabajo."},
       {id:"0095-T02",ce:"RA1-CEc",texto:"Identificado los materiales necesarios para el trabajo de montaje."},
       {id:"0095-T03",ce:"RA1-CEd",texto:"Caracterizado las áreas de trabajo en función del tipo de montaje a realizar."},
-      {id:"0095-T04",ce:"RA2-CEa",texto:"Explicado los diferentes procesos de montaje en construcciones metálicas tipo: estructuras,."},
+      {id:"0095-T04",ce:"RA2-CEa",texto:"Explicado los diferentes procesos de montaje en construcciones metálicas tipo: estructuras, calderería, carpintería metálica, tuberías."},
       {id:"0095-T05",ce:"RA2-CEe",texto:"Identificado las normas de seguridad que intervienen durante el proceso de montaje."},
       {id:"0095-T06",ce:"RA2-CEf",texto:"Relacionado las incompatibilidades de contacto entre diferentes materiales."},
       {id:"0095-T07",ce:"RA2-CEg",texto:"Descrito las consecuencias y soluciones que producen las dilataciones de los diferentes materiales."},
       {id:"0095-T08",ce:"RA4-CEb",texto:"Relacionado los distintos equipos, herramientas y medios auxiliares con el tratamiento a realizar."},
       {id:"0095-T09",ce:"RA4-CEg",texto:"Identificado los defectos producidos en el tratamiento."},
       {id:"0095-T10",ce:"RA5-CEa",texto:"Descrito las operaciones de mantenimiento de primer nivel de herramientas, máquinas y equipos."},
-      {id:"0095-T11",ce:"RA6-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los."},
-      {id:"0095-T12",ce:"RA6-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales,."},
-      {id:"0095-T13",ce:"RA6-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros)."},
-      {id:"0095-T14",ce:"RA6-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de."},
+      {id:"0095-T11",ce:"RA6-CEa",texto:"Identificado los riesgos y el nivel de peligrosidad que supone la manipulación de los distintos materiales, herramientas, útiles, máquinas y medios de transporte."},
+      {id:"0095-T12",ce:"RA6-CEb",texto:"Identificado las causas más frecuentes de accidentes en la manipulación de materiales, herramientas, máquinas, equipos y medios."},
+      {id:"0095-T13",ce:"RA6-CEc",texto:"Descrito los elementos de seguridad (protecciones, alarmas, paros de emergencia, entre otros) de las máquinas y los equipos de protección individual (calzado, protección ocular, indumentaria, entre otros) que se deben emplear en las distintas operaciones de montaje."},
+      {id:"0095-T14",ce:"RA6-CEd",texto:"Relacionado la manipulación de materiales, herramientas y máquinas con las medidas de seguridad y protección personal requeridos."},
       {id:"0095-T15",ce:"RA6-CEh",texto:"Identificado las posibles fuentes de contaminación del entorno ambiental."}
+    ]
+  },
+
+  // ────────────────────────────────────────────────────────────
+  // MOD3015 · Equipos eléctricos y electrónicos (FPB Fabricación de Elementos Metálicos) · 192h
+  // ────────────────────────────────────────────────────────────
+  MOD3015: {
+    IND_P: [
+      {id:"3015-P01",ce:"RA2-CEb",texto:"Interpreta el procedimiento y la secuencia de montaje/conexión a partir de esquemas o guías de montaje."},
+      {id:"3015-P02",ce:"RA2-CEc",texto:"Identifica cada elemento representado en el esquema con el elemento real."},
+      {id:"3015-P03",ce:"RA2-CEe",texto:"Define el proceso y la secuencia de montaje/conexión a partir del esquema o guía de montaje."},
+      {id:"3015-P04",ce:"RA3-CEa",texto:"Selecciona los esquemas y guías de montaje indicados para un modelo determinado."},
+      {id:"3015-P05",ce:"RA3-CEb",texto:"Selecciona las herramientas indicadas en los esquemas y guías de montaje."},
+      {id:"3015-P06",ce:"RA3-CEc",texto:"Prepara los elementos y materiales a utilizar siguiendo procedimientos normalizados."},
+      {id:"3015-P07",ce:"RA3-CEd",texto:"Identifica la ubicación de los distintos elementos en el equipo."},
+      {id:"3015-P08",ce:"RA3-CEe",texto:"Ensambla los componentes siguiendo procedimientos normalizados y aplicando sus normas de seguridad."},
+      {id:"3015-P09",ce:"RA3-CEf",texto:"Fija los componentes con los elementos de sujeción indicados, aplicando el par de apriete o presión establecidos."},
+      {id:"3015-P10",ce:"RA3-CEg",texto:"Aplica técnicas de montaje de componentes y conectores electrónicos en placas de circuito impreso."},
+      {id:"3015-P11",ce:"RA3-CEh",texto:"Aplica técnicas de desmontaje de equipos eléctricos o electrónicos."},
+      {id:"3015-P12",ce:"RA3-CEi",texto:"Cumple los requerimientos de seguridad establecidos."},
+      {id:"3015-P13",ce:"RA3-CEj",texto:"Elabora un informe con las actividades desarrolladas y los resultados obtenidos."},
+      {id:"3015-P14",ce:"RA4-CEa",texto:"Selecciona los esquemas y guías de montaje indicados para un modelo determinado de conexión."},
+      {id:"3015-P15",ce:"RA4-CEb",texto:"Selecciona las herramientas indicadas en los esquemas y guías de conexión."},
+      {id:"3015-P16",ce:"RA4-CEc",texto:"Dispone y coloca las piezas del conector y los cables."},
+      {id:"3015-P17",ce:"RA4-CEd",texto:"Dispone y coloca las protecciones personales y de los elementos."},
+      {id:"3015-P18",ce:"RA4-CEe",texto:"Acondiciona los cables (pelar, estirar, ordenar) siguiendo procedimientos."},
+      {id:"3015-P19",ce:"RA4-CEf",texto:"Inserta las piezas del conector en el orden correcto y une los cables (soldar, crimpar, embornar…) según el procedimiento."},
+      {id:"3015-P20",ce:"RA4-CEg",texto:"Realiza la conexión (soldadura, embornado, conector) según el procedimiento establecido."},
+      {id:"3015-P21",ce:"RA4-CEh",texto:"Cumple las medidas de seguridad en la utilización de equipos y herramientas."},
+      {id:"3015-P22",ce:"RA4-CEi",texto:"Coloca las etiquetas en los cables según el procedimiento establecido."},
+      {id:"3015-P23",ce:"RA4-CEj",texto:"Trata los residuos generados de acuerdo con la normativa medioambiental."},
+      {id:"3015-P24",ce:"RA5-CEa",texto:"Selecciona los esquemas y guías indicados para un modelo determinado."},
+      {id:"3015-P25",ce:"RA5-CEb",texto:"Selecciona las herramientas según las operaciones a realizar."},
+      {id:"3015-P26",ce:"RA5-CEc",texto:"Identifica los elementos a sustituir."},
+      {id:"3015-P27",ce:"RA5-CEd",texto:"Acopia los elementos de sustitución."},
+      {id:"3015-P28",ce:"RA5-CEe",texto:"Selecciona las herramientas necesarias para las operaciones a realizar."},
+      {id:"3015-P29",ce:"RA5-CEf",texto:"Desmonta los elementos a sustituir con las técnicas y herramientas apropiadas."},
+      {id:"3015-P30",ce:"RA5-CEg",texto:"Monta los elementos de sustitución con las técnicas y herramientas apropiadas."},
+      {id:"3015-P31",ce:"RA5-CEh",texto:"Realiza las operaciones cumpliendo las medidas de seguridad previstas para los componentes y las personas."},
+      {id:"3015-P32",ce:"RA5-CEi",texto:"Elabora un informe de las operaciones realizadas con el formato establecido."}
+    ],
+    IND_A: [],
+    IND_T: [
+      {id:"3015-T01",ce:"RA1-CEa",texto:"Identificado y clasificado los elementos y componentes tipo de un equipo eléctrico o electrónico."},
+      {id:"3015-T02",ce:"RA1-CEb",texto:"Identificado y clasificado los anclajes y sujeciones tipo (tornillos, clips, pestañas…) de un equipo eléctrico o electrónico según su aplicación, rigidez y estabilidad."},
+      {id:"3015-T03",ce:"RA1-CEc",texto:"Identificado y clasificado las herramientas empleadas en el ensamblado de un equipo eléctrico o electrónico según su aplicación e idoneidad."},
+      {id:"3015-T04",ce:"RA1-CEd",texto:"Identificado y clasificado los medios y equipos de seguridad personal según su aplicación y las herramientas a utilizar."},
+      {id:"3015-T05",ce:"RA2-CEa",texto:"Reconocido la simbología de representación gráfica de los elementos y componentes de los equipos eléctricos y electrónicos."},
+      {id:"3015-T06",ce:"RA2-CEd",texto:"Identificado el procedimiento y la secuencia de montaje/conexión de los distintos elementos (inserción de tarjetas, fijación de elementos…)."}
+    ]
+  },
+
+  // ────────────────────────────────────────────────────────────
+  // MOD3020 · Operaciones básicas de fabricación (FPB Fabricación de Elementos Metálicos) · 160h
+  // ────────────────────────────────────────────────────────────
+  MOD3020: {
+    IND_P: [
+      {id:"3020-P01",ce:"RA1-CEa",texto:"Interpreta la simbología normalizada aplicable en fabricación mecánica."},
+      {id:"3020-P02",ce:"RA1-CEb",texto:"Comprende las instrucciones recibidas (orales y escritas) para realizar el trabajo."},
+      {id:"3020-P03",ce:"RA1-CEc",texto:"Extrae de hojas de trabajo, catálogos… la información necesaria para el proceso de trabajo."},
+      {id:"3020-P04",ce:"RA1-CEd",texto:"Realiza a mano alzada dibujos sencillos de los productos a obtener."},
+      {id:"3020-P05",ce:"RA1-CEf",texto:"Tiene en cuenta las especificaciones de prevención de riesgos laborales y medioambientales al organizar el trabajo."},
+      {id:"3020-P06",ce:"RA2-CEa",texto:"Realiza el acopio de los materiales necesarios para el proceso de mecanizado."},
+      {id:"3020-P07",ce:"RA2-CEb",texto:"Ajusta el acopio de material, herramientas y equipo al ritmo de la intervención."},
+      {id:"3020-P08",ce:"RA2-CEc",texto:"Comprueba que medios, herramientas y equipos están en condiciones de uso para optimizar su rendimiento."},
+      {id:"3020-P09",ce:"RA2-CEd",texto:"Selecciona herramientas, útiles y máquinas según el tipo de material y la calidad requerida."},
+      {id:"3020-P10",ce:"RA2-CEe",texto:"Transporta materiales y equipos aplicando las normas de seguridad requeridas."},
+      {id:"3020-P11",ce:"RA2-CEf",texto:"Realiza el mantenimiento y cuidado de los medios empleados al finalizar el proceso."},
+      {id:"3020-P12",ce:"RA2-CEg",texto:"Aplica las medidas de prevención de riesgos laborales requeridas."},
+      {id:"3020-P13",ce:"RA3-CEa",texto:"Prepara y limpia las superficies de las piezas a mecanizar."},
+      {id:"3020-P14",ce:"RA3-CEb",texto:"Traza y marca las piezas según las especificaciones o instrucciones recibidas."},
+      {id:"3020-P15",ce:"RA3-CEc",texto:"Manipula y coloca las piezas con los útiles y herramientas apropiados."},
+      {id:"3020-P16",ce:"RA3-CEd",texto:"Ajusta los parámetros de mecanizado según el material, la pieza y las herramientas."},
+      {id:"3020-P17",ce:"RA3-CEe",texto:"Realiza las operaciones de mecanizado con el equipo adecuado según el material y la calidad requerida."},
+      {id:"3020-P18",ce:"RA3-CEf",texto:"Realiza las operaciones de mecanizado siguiendo las especificaciones recibidas."},
+      {id:"3020-P19",ce:"RA3-CEg",texto:"Aplica la normativa de prevención de riesgos laborales en las operaciones de mecanizado."},
+      {id:"3020-P20",ce:"RA4-CEd",texto:"Ajusta los parámetros de operación según las instrucciones recibidas."},
+      {id:"3020-P21",ce:"RA4-CEe",texto:"Carga y descarga máquinas automáticas según las especificaciones requeridas."},
+      {id:"3020-P22",ce:"RA4-CEf",texto:"Vigila el sistema automatizado y lo detiene ante cualquier anomalía que ponga en riesgo la calidad."},
+      {id:"3020-P23",ce:"RA4-CEg",texto:"Comunica las incidencias surgidas y las registra en el documento apropiado."},
+      {id:"3020-P24",ce:"RA4-CEh",texto:"Aplica la normativa de prevención de riesgos laborales en la manipulación de máquinas y equipos."},
+      {id:"3020-P25",ce:"RA4-CEi",texto:"Aplica los requerimientos de seguridad en la manipulación y transporte de cargas."},
+      {id:"3020-P26",ce:"RA5-CEb",texto:"Elige los instrumentos de medida y control según las magnitudes a verificar."},
+      {id:"3020-P27",ce:"RA5-CEc",texto:"Opera con los instrumentos de verificación y control según los procedimientos establecidos."},
+      {id:"3020-P28",ce:"RA5-CEd",texto:"Compara las mediciones realizadas con lo indicado en el plano u hojas de verificación."},
+      {id:"3020-P29",ce:"RA5-CEe",texto:"Registra los resultados en las fichas y documentos apropiados."},
+      {id:"3020-P30",ce:"RA5-CEf",texto:"Refleja en los informes las incidencias del control de materias primas, operaciones y piezas mecanizadas."},
+      {id:"3020-P31",ce:"RA5-CEg",texto:"Realiza el mantenimiento de uso de los aparatos utilizados."}
+    ],
+    IND_A: [
+      {id:"3020-A01",ce:"RA1-CEg",texto:"Mantiene las zonas de trabajo de su responsabilidad en condiciones de orden, limpieza y seguridad."},
+      {id:"3020-A02",ce:"RA1-CEh",texto:"Trabaja con autonomía en las actividades propuestas."},
+      {id:"3020-A03",ce:"RA2-CEh",texto:"Planifica metódicamente las tareas, previendo las dificultades y el modo de superarlas."},
+      {id:"3020-A04",ce:"RA3-CEh",texto:"Realiza los trabajos con orden y limpieza."},
+      {id:"3020-A05",ce:"RA4-CEj",texto:"Mantiene hábitos de orden y limpieza."},
+      {id:"3020-A06",ce:"RA4-CEk",texto:"Muestra una actitud responsable e interés por la mejora del proceso."},
+      {id:"3020-A07",ce:"RA5-CEh",texto:"Trabaja con rigor en los procedimientos desarrollados."}
+    ],
+    IND_T: [
+      {id:"3020-T01",ce:"RA1-CEe",texto:"Explicado las operaciones a realizar de forma que permitan el proceso ajustándose a las especificaciones."},
+      {id:"3020-T02",ce:"RA4-CEa",texto:"Descrito los procesos auxiliares de fabricación mecánica en mecanizado, soldadura, calderería y otros."},
+      {id:"3020-T03",ce:"RA4-CEb",texto:"Descrito los procedimientos de manipulación de cargas."},
+      {id:"3020-T04",ce:"RA4-CEc",texto:"Analizado los procedimientos de alimentación y descarga de sistemas automáticos de fabricación mecánica."},
+      {id:"3020-T05",ce:"RA5-CEa",texto:"Identificado y descrito los instrumentos básicos de medida y control y su funcionamiento."}
+    ]
+  },
+  // ────────────────────────────────────────────────────────────
+  // MOD3021 · Soldadura y carpintería metálica (FPB Fabricación de Elementos Metálicos) · 160h
+  // ────────────────────────────────────────────────────────────
+  MOD3021: {
+    IND_P: [
+      {id:"3021-P01",ce:"RA1-CEb",texto:"Selecciona los materiales a emplear en el proceso."},
+      {id:"3021-P02",ce:"RA1-CEd",texto:"Comprueba las características de los perfiles, herrajes y medios de unión."},
+      {id:"3021-P03",ce:"RA1-CEe",texto:"Realiza croquis, vistas y secciones de las piezas individuales que forman el conjunto."},
+      {id:"3021-P04",ce:"RA1-CEg",texto:"Aplica las especificaciones de prevención de riesgos laborales y medioambientales requeridas."},
+      {id:"3021-P05",ce:"RA2-CEc",texto:"Selecciona y monta los accesorios y herramientas según las operaciones a realizar."},
+      {id:"3021-P06",ce:"RA2-CEd",texto:"Comprueba el estado de funcionalidad de los accesorios y herramientas para un correcto mecanizado."},
+      {id:"3021-P07",ce:"RA2-CEe",texto:"Realiza el reglaje y ajuste de equipos y herramientas en función de la operación a ejecutar."},
+      {id:"3021-P08",ce:"RA2-CEf",texto:"Realiza la limpieza, lubricación y mantenimiento de primer nivel de equipos y herramientas."},
+      {id:"3021-P09",ce:"RA2-CEg",texto:"Aplica las medidas de prevención de riesgos laborales requeridas."},
+      {id:"3021-P10",ce:"RA3-CEc",texto:"Regula las variables de trabajo (presión, intensidad y dardo de la llama) según el trabajo a realizar."},
+      {id:"3021-P11",ce:"RA3-CEd",texto:"Selecciona los electrodos según las características técnicas de los elementos a unir."},
+      {id:"3021-P12",ce:"RA3-CEe",texto:"Selecciona y monta los accesorios según las operaciones a realizar."},
+      {id:"3021-P13",ce:"RA3-CEf",texto:"Realiza las uniones soldadas utilizando las técnicas normalizadas."},
+      {id:"3021-P14",ce:"RA3-CEg",texto:"Realiza la limpieza, lubricación y mantenimiento de primer nivel de los equipos de soldadura."},
+      {id:"3021-P15",ce:"RA3-CEj",texto:"Utiliza los equipos de protección individual adecuados en cada fase de la preparación."},
+      {id:"3021-P16",ce:"RA4-CEb",texto:"Establece un orden de ejecución que optimiza los recursos."},
+      {id:"3021-P17",ce:"RA4-CEc",texto:"Realiza el corte, recalcado, estirado, aplanado, curvado y doblado de perfiles y chapas según procedimientos normalizados."},
+      {id:"3021-P18",ce:"RA4-CEd",texto:"Prepara los bordes de las piezas a unir."},
+      {id:"3021-P19",ce:"RA4-CEe",texto:"Alimenta correctamente las máquinas manuales teniendo en cuenta las propiedades de los materiales."},
+      {id:"3021-P20",ce:"RA4-CEf",texto:"Alimenta las máquinas automáticas teniendo en cuenta el proceso y los parámetros de la máquina."},
+      {id:"3021-P21",ce:"RA4-CEg",texto:"Ejecuta los procesos de soldeo y uniones de acuerdo con las características técnicas de los productos."},
+      {id:"3021-P22",ce:"RA4-CEh",texto:"Verifica con plantillas o mediciones las piezas obtenidas y corrige los posibles defectos."},
+      {id:"3021-P23",ce:"RA4-CEi",texto:"Aplica las normas de seguridad y salud laboral usando correctamente las protecciones de las máquinas y los EPI."},
+      {id:"3021-P24",ce:"RA5-CEa",texto:"Realiza el plano de montaje del producto a obtener."},
+      {id:"3021-P25",ce:"RA5-CEc",texto:"Selecciona los accesorios, medios de unión y herramientas en función de la orden de ejecución."},
+      {id:"3021-P26",ce:"RA5-CEd",texto:"Posiciona las piezas a montar para obtener un producto de calidad."},
+      {id:"3021-P27",ce:"RA5-CEe",texto:"Realiza las uniones fijas y desmontables con criterios de seguridad, funcionalidad y economía."},
+      {id:"3021-P28",ce:"RA5-CEf",texto:"Verifica las características dimensionales y geométricas de los productos y corrige los posibles defectos."},
+      {id:"3021-P29",ce:"RA5-CEh",texto:"Aplica las normas de seguridad y salud laboral usando correctamente las protecciones de las máquinas y los EPI."},
+      {id:"3021-P30",ce:"RA6-CEa",texto:"Selecciona los productos de embalaje de acuerdo con las características del producto final."},
+      {id:"3021-P31",ce:"RA6-CEb",texto:"Selecciona los soportes y medios de amarre adecuados para inmovilizar la carga durante el transporte."},
+      {id:"3021-P32",ce:"RA6-CEc",texto:"Embala los productos con los materiales apropiados, protegiendo los puntos débiles."},
+      {id:"3021-P33",ce:"RA6-CEd",texto:"Identifica los productos embalados mediante etiquetas u otros medios especificados."},
+      {id:"3021-P34",ce:"RA6-CEe",texto:"Manipula el producto embalado con seguridad y cuidado hasta su ubicación en el medio de transporte."},
+      {id:"3021-P35",ce:"RA6-CEf",texto:"Realiza las sujeciones con los medios adecuados y verifica la inmovilización."},
+      {id:"3021-P36",ce:"RA6-CEg",texto:"Realiza la descarga y desembalaje según normas de seguridad, sin deteriorar el producto."},
+      {id:"3021-P37",ce:"RA6-CEh",texto:"Aplica las medidas de prevención de riesgos laborales en el embalaje y transporte de cargas."}
+    ],
+    IND_A: [
+      {id:"3021-A01",ce:"RA1-CEf",texto:"Transmite la información con claridad, de manera ordenada y estructurada."},
+      {id:"3021-A02",ce:"RA1-CEh",texto:"Mantiene una actitud ordenada y metódica."},
+      {id:"3021-A03",ce:"RA2-CEh",texto:"Mantiene el área de trabajo con el grado apropiado de orden y limpieza."},
+      {id:"3021-A04",ce:"RA2-CEi",texto:"Mantiene una actitud metódica y ordenada en el proceso de preparación."},
+      {id:"3021-A05",ce:"RA3-CEh",texto:"Mantiene el área de trabajo con el grado apropiado de orden y limpieza."},
+      {id:"3021-A06",ce:"RA3-CEi",texto:"Mantiene una actitud metódica y ordenada en el proceso de preparación."},
+      {id:"3021-A07",ce:"RA4-CEj",texto:"Mantiene el área de trabajo con el grado apropiado de orden y limpieza."},
+      {id:"3021-A08",ce:"RA5-CEg",texto:"Mantiene el área de trabajo con el grado apropiado de orden y limpieza."},
+      {id:"3021-A09",ce:"RA5-CEi",texto:"Mantiene una actitud metódica y ordenada en el proceso de preparación."},
+      {id:"3021-A10",ce:"RA6-CEi",texto:"Mantiene una actitud metódica y ordenada en el proceso de embalaje y transporte."}
+    ],
+    IND_T: [
+      {id:"3021-T01",ce:"RA1-CEa",texto:"Identificado los materiales a utilizar, perfiles, herrajes y medios de unión, de acuerdo con los elementos a construir."},
+      {id:"3021-T02",ce:"RA1-CEc",texto:"Descrito las características básicas de los perfiles, herrajes y medios de unión."},
+      {id:"3021-T03",ce:"RA2-CEa",texto:"Identificado y clasificado las máquinas y herramientas en función de sus prestaciones en el proceso de fabricación."},
+      {id:"3021-T04",ce:"RA2-CEb",texto:"Identificado los dispositivos de las máquinas y sus sistemas de control."},
+      {id:"3021-T05",ce:"RA3-CEa",texto:"Identificado los componentes de un puesto de trabajo de soldadura por arco eléctrico y de soldadura oxiacetilénica."},
+      {id:"3021-T06",ce:"RA3-CEb",texto:"Descrito el funcionamiento de los componentes de un puesto de trabajo de soldadura por arco y oxiacetilénica."},
+      {id:"3021-T07",ce:"RA4-CEa",texto:"Descrito las fases del proceso de mecanizado en función de las características del material y de la técnica de mecanizado."},
+      {id:"3021-T08",ce:"RA5-CEb",texto:"Descrito las fases del proceso de montaje en función de las piezas a unir."}
+    ]
+  },
+  // ────────────────────────────────────────────────────────────
+  // MOD3022 · Carpintería de aluminio y PVC (FPB Fabricación de Elementos Metálicos) · 156h
+  // ────────────────────────────────────────────────────────────
+  MOD3022: {
+    IND_P: [
+      {id:"3022-P01",ce:"RA1-CEb",texto:"Selecciona los materiales a emplear en el proceso."},
+      {id:"3022-P02",ce:"RA1-CEd",texto:"Comprueba las características de los perfiles, herrajes y medios de unión."},
+      {id:"3022-P03",ce:"RA1-CEe",texto:"Realiza croquis, vistas y secciones de las piezas individuales que forman el conjunto."},
+      {id:"3022-P04",ce:"RA1-CEg",texto:"Aplica las especificaciones de prevención de riesgos laborales y medioambientales requeridas."},
+      {id:"3022-P05",ce:"RA2-CEc",texto:"Selecciona y monta los accesorios y herramientas según las operaciones a realizar."},
+      {id:"3022-P06",ce:"RA2-CEd",texto:"Comprueba el estado de funcionalidad de los accesorios y herramientas para un correcto mecanizado."},
+      {id:"3022-P07",ce:"RA2-CEe",texto:"Realiza el reglaje y ajuste de equipos y herramientas en función de la operación a ejecutar."},
+      {id:"3022-P08",ce:"RA2-CEf",texto:"Realiza la limpieza, lubricación y mantenimiento de primer nivel de equipos y herramientas."},
+      {id:"3022-P09",ce:"RA2-CEg",texto:"Aplica las medidas de prevención de riesgos laborales requeridas."},
+      {id:"3022-P10",ce:"RA3-CEb",texto:"Establece un orden de ejecución que optimiza los recursos."},
+      {id:"3022-P11",ce:"RA3-CEc",texto:"Sujeta los perfiles de aluminio y PVC en las condiciones de seguridad requeridas."},
+      {id:"3022-P12",ce:"RA3-CEd",texto:"Realiza el tronzado, troquelado, encastrado, fresado, taladrado y roscado de perfiles y chapas de aluminio y PVC según procedimientos normalizados."},
+      {id:"3022-P13",ce:"RA3-CEe",texto:"Realiza el acabado de las piezas mecanizadas para su posterior ensamblado."},
+      {id:"3022-P14",ce:"RA3-CEf",texto:"Verifica con plantillas o mediciones las piezas obtenidas y corrige los posibles defectos."},
+      {id:"3022-P15",ce:"RA3-CEh",texto:"Aplica las normas de seguridad y salud laboral usando correctamente las protecciones de las máquinas y los EPI."},
+      {id:"3022-P16",ce:"RA4-CEb",texto:"Selecciona los accesorios, medios de unión y herramientas en función del orden de ejecución."},
+      {id:"3022-P17",ce:"RA4-CEc",texto:"Monta bisagras, herrajes y accesorios sobre los elementos mecanizados."},
+      {id:"3022-P18",ce:"RA4-CEd",texto:"Realiza las uniones fijas y desmontables con criterios de seguridad, funcionalidad y economía."},
+      {id:"3022-P19",ce:"RA4-CEe",texto:"Ensambla los componentes de la estructura comprobando su rigidez y funcionalidad."},
+      {id:"3022-P20",ce:"RA4-CEf",texto:"Verifica las características dimensionales y geométricas de los productos y corrige los posibles defectos."},
+      {id:"3022-P21",ce:"RA4-CEh",texto:"Aplica las normas de seguridad requeridas en el montaje de productos no férricos."},
+      {id:"3022-P22",ce:"RA5-CEa",texto:"Selecciona los productos de embalaje de acuerdo con las características del producto final."},
+      {id:"3022-P23",ce:"RA5-CEb",texto:"Selecciona los soportes y medios de amarre adecuados para inmovilizar la carga durante el transporte."},
+      {id:"3022-P24",ce:"RA5-CEc",texto:"Embala los productos con los materiales apropiados, protegiendo los puntos débiles."},
+      {id:"3022-P25",ce:"RA5-CEd",texto:"Identifica los productos embalados mediante etiquetas u otros medios especificados."},
+      {id:"3022-P26",ce:"RA5-CEe",texto:"Manipula el producto embalado con seguridad y cuidado hasta su ubicación en el medio de transporte."},
+      {id:"3022-P27",ce:"RA5-CEf",texto:"Realiza las sujeciones con los medios adecuados y verifica la inmovilización."},
+      {id:"3022-P28",ce:"RA5-CEg",texto:"Realiza la descarga y desembalaje según normas de seguridad, sin deteriorar el producto."},
+      {id:"3022-P29",ce:"RA5-CEh",texto:"Aplica las medidas de prevención de riesgos laborales en el embalaje y transporte de cargas."}
+    ],
+    IND_A: [
+      {id:"3022-A01",ce:"RA1-CEf",texto:"Transmite la información con claridad, de manera ordenada y estructurada."},
+      {id:"3022-A02",ce:"RA1-CEh",texto:"Mantiene una actitud ordenada y metódica."},
+      {id:"3022-A03",ce:"RA2-CEh",texto:"Mantiene el área de trabajo con el grado apropiado de orden y limpieza."},
+      {id:"3022-A04",ce:"RA2-CEi",texto:"Mantiene una actitud metódica y ordenada en el proceso de preparación."},
+      {id:"3022-A05",ce:"RA3-CEg",texto:"Mantiene el área de trabajo con el grado apropiado de orden y limpieza."},
+      {id:"3022-A06",ce:"RA4-CEg",texto:"Mantiene el área de trabajo con el grado apropiado de orden y limpieza."},
+      {id:"3022-A07",ce:"RA4-CEi",texto:"Mantiene una actitud metódica y ordenada en el proceso."},
+      {id:"3022-A08",ce:"RA5-CEi",texto:"Mantiene una actitud metódica y ordenada en el proceso de embalaje y transporte."}
+    ],
+    IND_T: [
+      {id:"3022-T01",ce:"RA1-CEa",texto:"Identificado los materiales a utilizar, perfiles, herrajes y medios de unión, de acuerdo con los elementos a construir."},
+      {id:"3022-T02",ce:"RA1-CEc",texto:"Descrito las características básicas de los perfiles, herrajes y medios de unión."},
+      {id:"3022-T03",ce:"RA2-CEa",texto:"Identificado y clasificado las máquinas y herramientas en función de sus prestaciones en el proceso de fabricación."},
+      {id:"3022-T04",ce:"RA2-CEb",texto:"Identificado los dispositivos de las máquinas y sus sistemas de control."},
+      {id:"3022-T05",ce:"RA3-CEa",texto:"Descrito las fases del proceso de mecanizado en función de las características del material y de la técnica de mecanizado."},
+      {id:"3022-T06",ce:"RA4-CEa",texto:"Descrito las fases del proceso de ensamblado y montaje en función de las piezas a unir."}
+    ]
+  },
+
+  // ────────────────────────────────────────────────────────────
+  // MOD3073 · Operaciones básicas de calderería ligera (FPB Fabricación de Elementos Metálicos) · 260h
+  // ────────────────────────────────────────────────────────────
+  MOD3073: {
+    IND_P: [
+      {id:"3073-P01",ce:"RA1-CEa",texto:"Identifica y traslada al material la información de escalas y cotas de la documentación técnica."},
+      {id:"3073-P02",ce:"RA1-CEb",texto:"Interpreta y traslada al material los tipos de superficies, cortes y uniones de la documentación técnica."},
+      {id:"3073-P03",ce:"RA1-CEc",texto:"Utiliza las diferentes vistas y detalles de la pieza para tener una visión completa de la tarea."},
+      {id:"3073-P04",ce:"RA1-CEd",texto:"Interpreta y traslada al material de forma coherente la información verbal, escrita o gráfica del encargado."},
+      {id:"3073-P05",ce:"RA1-CEe",texto:"Elimina errores de interpretación dibujando bocetos y croquis acotados de las tareas a realizar."},
+      {id:"3073-P06",ce:"RA1-CEf",texto:"Traza planos sencillos, acotados y a escala a partir de ideas, bocetos y croquis, siguiendo la normativa UNE."},
+      {id:"3073-P07",ce:"RA1-CEg",texto:"Elabora vistas y detalles que complementan la información general."},
+      {id:"3073-P08",ce:"RA1-CEh",texto:"Elabora la nota de materiales y la hoja de procesos a partir de la documentación gráfica, optimizando recursos y tiempos."},
+      {id:"3073-P09",ce:"RA2-CEd",texto:"Opera equipos de corte térmico con las protecciones personales y de entorno requeridas, describiendo los defectos típicos."},
+      {id:"3073-P10",ce:"RA2-CEe",texto:"Aplica las medidas de seguridad del plan de prevención de riesgos laborales y protección del medio ambiente."},
+      {id:"3073-P11",ce:"RA3-CEd",texto:"Opera los equipos de corte mecánico con los medios de protección del plan de prevención, describiendo los defectos típicos."},
+      {id:"3073-P12",ce:"RA3-CEe",texto:"Aplica las medidas de seguridad del plan de prevención en el uso de los equipos de corte mecánico."},
+      {id:"3073-P13",ce:"RA4-CEa",texto:"Sujeta las piezas según los procesos establecidos."},
+      {id:"3073-P14",ce:"RA4-CEb",texto:"Mide, traza, marca, granetea, corta, pliega y curva chapas y perfiles siguiendo instrucciones."},
+      {id:"3073-P15",ce:"RA4-CEc",texto:"Ajusta los parámetros de trabajo (presión, velocidad, avance…) a las especificaciones e instrucciones recibidas."},
+      {id:"3073-P16",ce:"RA4-CEd",texto:"Posiciona los materiales teniendo en cuenta el proceso de curvado y sus limitaciones."},
+      {id:"3073-P17",ce:"RA4-CEe",texto:"Ajusta la boquilla y la mezcla de gases según las instrucciones de trabajo."},
+      {id:"3073-P18",ce:"RA4-CEf",texto:"Calienta las zonas a conformar o enderezar siguiendo instrucciones, sin sobrepasar las temperaturas máximas."},
+      {id:"3073-P19",ce:"RA4-CEg",texto:"Controla cotas y ángulos y el posicionado de las plantillas para un correcto conformado."},
+      {id:"3073-P20",ce:"RA4-CEh",texto:"Aplica las medidas de seguridad del plan de prevención en el uso de los equipos de conformado."}
+    ],
+    IND_A: [],
+    IND_T: [
+      {id:"3073-T01",ce:"RA2-CEa",texto:"Relacionado los distintos equipos de corte con los acabados exigidos, expresando sus prestaciones."},
+      {id:"3073-T02",ce:"RA2-CEb",texto:"Identificado y descrito los componentes de los equipos de corte térmico, la función de cada uno y su interrelación en el conjunto."},
+      {id:"3073-T03",ce:"RA2-CEc",texto:"Relacionado los parámetros del procedimiento de corte entre sí y con los resultados que se pretenden obtener."},
+      {id:"3073-T04",ce:"RA3-CEa",texto:"Relacionado los distintos equipos de corte mecánico con los acabados exigidos, describiendo sus prestaciones."},
+      {id:"3073-T05",ce:"RA3-CEb",texto:"Identificado y descrito los componentes de los equipos de corte mecánico, la función de cada uno y su interrelación en el conjunto."},
+      {id:"3073-T06",ce:"RA3-CEc",texto:"Relacionado los parámetros del procedimiento entre sí y con los resultados que se pretenden obtener."}
     ]
   }
 };
 
+// Enunciados de los resultados de aprendizaje (Orden 7/07/2009 CFGM y Orden 8/11/2016 Anexo XXIV FPB)
+const RA_TEXTOS = {
+  MOD3015: {
+    1:"Identifica el material, herramientas y equipo necesarios para el montaje y ensamblado de equipos eléctricos y electrónicos, describiendo sus principales características y funcionalidad.",
+    2:"Determina la secuencia de las operaciones de montaje y desmontaje de equipos eléctricos y electrónicos, interpretando esquemas e identificando los pasos a seguir.",
+    3:"Monta y desmonta elementos de equipos eléctricos o electrónicos, interpretando esquemas y guías de montaje.",
+    4:"Conexiona elementos en equipos eléctricos o electrónicos aplicando técnicas básicas y verificando la continuidad.",
+    5:"Realiza el mantenimiento básico de equipos eléctricos y electrónicos, aplicando las técnicas establecidas en condiciones de calidad y seguridad."
+  },
+  MOD3020: {
+    1:"Organiza su trabajo en la ejecución del mecanizado, interpretando la información contenida en las especificaciones del producto a mecanizar.",
+    2:"Prepara materiales, útiles y equipos de mecanizado, reconociendo sus características y aplicaciones.",
+    3:"Realiza operaciones básicas de fabricación, seleccionando las herramientas y equipos y aplicando las técnicas de fabricación.",
+    4:"Manipula cargas en la alimentación y descarga de máquinas y sistemas automáticos para la realización de operaciones de fabricación, describiendo los dispositivos y el proceso.",
+    5:"Realiza operaciones de verificación sobre las piezas obtenidas, relacionando las características del producto final con las especificaciones técnicas."
+  },
+  MOD0006: {
+    1:"Prepara instrumentos, equipos de verificación y de ensayos destructivos y no destructivos, seleccionando los útiles y aplicando las técnicas o procedimientos requeridos.",
+    2:"Controla dimensiones, geometrías y superficies de productos, calculando las medidas y comparándolas con las especificaciones del producto.",
+    3:"Controla características y propiedades del producto fabricado, calculando el valor del parámetro y comparando los resultados con las especificaciones del producto.",
+    4:"Detecta desviaciones en procesos automáticos, analizando e interpretando los gráficos de control de procesos.",
+    5:"Actúa de acuerdo con procedimientos y normas de calidad asociadas a las competencias del perfil profesional, relacionándolas con los sistemas y modelos de calidad."
+  },
+  MOD0007: {
+    1:"Determina la forma y dimensiones de productos a construir interpretando la simbología representada en los planos de fabricación.",
+    2:"Identifica tolerancias de formas y dimensiones y otras características de los productos que se quieren fabricar, analizando e interpretando la información técnica contenida en los planos de fabricación.",
+    3:"Realiza croquis de utillajes y herramientas para la ejecución de los procesos, definiendo las soluciones constructivas en cada caso.",
+    4:"Interpreta esquemas de automatización de máquinas y equipos identificando los elementos representados en instalaciones neumáticas, hidráulicas, eléctricas, programables y no programables."
+  },
+  MOD0091: {
+    1:"Organiza su trabajo en la ejecución del trazado, corte y conformado, describiendo la secuencia de las operaciones a realizar.",
+    2:"Prepara materiales, equipos y máquinas para trazar, cortar y conformar chapas, perfiles y tuberías, definiendo sus funciones y relacionándolas con las formas o piezas a obtener.",
+    3:"Traza desarrollos de formas geométricas e intersecciones sobre chapas, perfiles comerciales y tubos, determinando las formas que se pueden construir y aplicando las técnicas de trazado.",
+    4:"Opera equipos y máquinas de corte térmico, tanto convencionales como de control numérico (CNC), identificando los parámetros a controlar y relacionándolos con el producto a obtener.",
+    5:"Opera equipos y máquinas de conformado térmico, tanto convencionales como de CNC, reconociendo los parámetros a controlar y relacionándolos con el producto a obtener.",
+    6:"Opera equipos y máquinas de conformado mecánico, tanto convencionales como CNC, identificando los parámetros a controlar y relacionándolos con el producto a obtener.",
+    7:"Realiza el mantenimiento de primer nivel de las máquinas herramientas y su utillaje relacionándolo con su funcionalidad.",
+    8:"Cumple las normas de prevención de riesgos laborales y de protección ambiental, identificando los riesgos asociados y las medidas y equipos para prevenirlos."
+  },
+  MOD0092: {
+    1:"Organiza su trabajo en la ejecución del mecanizado, describiendo la secuencia de las operaciones a realizar.",
+    2:"Prepara materiales, equipos, herramientas y elementos de protección, identificando los parámetros que se han de ajustar y su relación con las características del producto a obtener.",
+    3:"Realiza operaciones manuales de mecanizado, relacionando los procedimientos con el producto a obtener y aplicando las técnicas operativas.",
+    4:"Opera máquinas convencionales y de control numérico para el mecanizado, relacionando su funcionamiento y las instrucciones de programación con las condiciones del proceso y las características del producto a obtener.",
+    5:"Realiza el mantenimiento de primer nivel de las máquinas, equipos y herramientas, relacionándolo con su funcionalidad.",
+    6:"Cumple las normas de prevención de riesgos laborales y de protección ambiental, identificando los riesgos asociados y las medidas y equipos para prevenirlos."
+  },
+  MOD0093: {
+    1:"Organiza su trabajo en la ejecución de la soldadura, recargue y proyección analizando la hoja de procesos o el procedimiento correspondiente y elaborando la documentación necesaria.",
+    2:"Prepara los equipos de soldeo por oxigás, electrodo y resistencia así como los de proyección por oxigás, identificando los parámetros, gases y combustibles que se han de regular y su relación con las características del producto a obtener.",
+    3:"Opera con equipos de soldeo por oxigás, electrodo y resistencia así como los de proyección por oxigás de forma manual, relacionando su funcionamiento con las condiciones del proceso y las características del producto final.",
+    4:"Realiza el mantenimiento de primer nivel de los equipos de soldeo, recargue y sus accesorios, relacionándolo con su funcionalidad.",
+    5:"Cumple las normas de prevención de riesgos laborales y de protección ambiental, identificando los riesgos asociados y las medidas y equipos para prevenirlos."
+  },
+  MOD0094: {
+    1:"Organiza su trabajo en la ejecución de la soldadura, recargue y proyección analizando la hoja de procesos o el procedimiento correspondiente y elaborando la documentación necesaria.",
+    2:"Prepara los equipos de soldeo por TIG, MAG/MIG, así como los de proyección por arco, identificando los parámetros y gases que se han de regular y su relación con las características del producto a obtener.",
+    3:"Programa robots de soldadura, analizando las especificaciones del proceso y los requerimientos del producto.",
+    4:"Opera con equipos de soldeo por TIG, MAG/MIG, así como con los de proyección por arco de forma manual, relacionando su funcionamiento con las condiciones del proceso y las características del producto final.",
+    5:"Opera con equipos de soldeo por arco sumergido (SAW) relacionando su funcionamiento con las condiciones del proceso y las características del producto final.",
+    6:"Realiza el mantenimiento de primer nivel de los equipos de soldeo, robot, recargue, proyección y sus accesorios, relacionándolo con su funcionalidad.",
+    7:"Cumple las normas de prevención de riesgos laborales y de protección ambiental, identificando los riesgos asociados y las medidas y equipos para prevenirlos."
+  },
+  MOD0095: {
+    1:"Acondiciona el área de trabajo, analizando el proceso de montaje y seleccionando los materiales, equipos, herramientas, medios auxiliares y de protección.",
+    2:"Elabora el plan de montaje, identificando y caracterizando las distintas fases del mismo.",
+    3:"Monta instalaciones de tuberías, construcciones y carpintería metálicas, analizando los procedimientos de montaje y aplicando las técnicas operativas de posicionado, alineación y unión.",
+    4:"Aplica tratamientos de acabado, relacionando las características de los mismos, con los requerimientos de la instalación.",
+    5:"Realiza el mantenimiento de primer nivel de los equipos y herramientas, relacionándolo con su funcionalidad.",
+    6:"Cumple las normas de prevención de riesgos laborales y de protección ambiental, identificando los riesgos asociados y las medidas y equipos para prevenirlos."
+  },
+  MOD3021: {
+    1:"Prepara materiales de carpintería metálica férrica, relacionándolos con las características del producto final e interpretando la documentación técnica.",
+    2:"Prepara las máquinas y herramientas de construcciones metálicas, reconociendo sus características y aplicaciones.",
+    3:"Prepara los equipos de soldadura por arco eléctrico y oxiacetilénica, reconociendo sus características y aplicaciones.",
+    4:"Realiza las operaciones básicas de mecanizado por conformado y soldeo sobre materiales férricos, relacionando la técnica a utilizar con las características del producto final.",
+    5:"Realiza las operaciones básicas de montaje de productos férricos relacionando las fases del mismo con las características del producto final.",
+    6:"Transporta productos de carpintería metálica férrica, seleccionando los embalajes y útiles de transportes."
+  },
+  MOD3022: {
+    1:"Prepara materiales de carpintería metálica no férrica, relacionándolos con las características del producto final e interpretando la documentación técnica.",
+    2:"Prepara las máquinas y herramientas de construcciones metálicas no férricas, reconociendo sus características y aplicaciones.",
+    3:"Realiza las operaciones de mecanizado sobre materiales no férricos, relacionando la técnica a utilizar con las características del producto final.",
+    4:"Realiza las operaciones de montaje de productos no férricos, relacionando las fases del mismo con las características del producto final.",
+    5:"Transporta productos de carpintería metálica no férrica, seleccionando los embalajes y útiles de transporte."
+  },
+  MOD3073: {
+    1:"Interpreta documentación técnica distinguiendo vistas, piezas, uniones, detalles, perfiles y cotas.",
+    2:"Opera equipos (manuales y semiautomáticos) de corte térmico, para obtener chapas y perfiles de formas definidas, cumpliendo el plan de seguridad personal y ambiental.",
+    3:"Opera los equipos de corte mecánico, para obtener chapas y perfiles de formas definidas, aplicando el plan de prevención de riesgos laborales y ambientales.",
+    4:"Realiza, siguiendo instrucciones, operaciones básicas de conformado y enderezado de chapas y perfiles, para obtener los productos, cumpliendo las normas de calidad, Prevención de Riesgos Laborales y Medio Ambiente."
+  },
+};
+
 // ── Helpers ─────────────────────────────────────────────
-function getIndP() { return (TODOS_INDICADORES[S.moduloId] || TODOS_INDICADORES['MOD0092']).IND_P; }
-function getIndA() { return (TODOS_INDICADORES[S.moduloId] || TODOS_INDICADORES['MOD0092']).IND_A; }
-function getIndT() {
-  const mod = TODOS_INDICADORES[S.moduloId] || TODOS_INDICADORES['MOD0092'];
-  return mod.IND_T || [];
+const indsModulo = modId => TODOS_INDICADORES[modId] || TODOS_INDICADORES['MOD0092'];
+// Criterios que el profesor trabaja en cada módulo (S.settings.critsActivos[modId]).
+// Sin lista guardada = todos. Desmarcar un criterio no borra sus notas: solo deja de mostrarse y de computar.
+function critActivo(id, modId = S.moduloId) {
+  const lista = S.settings.critsActivos?.[modId];
+  return !lista || lista.includes(id);
 }
+const soloActivos = (inds, modId = S.moduloId) => (inds || []).filter(i => critActivo(i.id, modId));
+function getIndP() { return soloActivos(indsModulo(S.moduloId).IND_P); }
+function getIndA() { return soloActivos(indsModulo(S.moduloId).IND_A); }
+function getIndT() { return soloActivos(indsModulo(S.moduloId).IND_T); }
 
 // ═══════════════════════════════════════════════════════════════
 // ═══════════ STATE ═══════════
@@ -1272,70 +1829,139 @@ let S = {
   actividades:{}, observaciones:{}, notas:{},
   stuPhotos:{}, configActs:{}, photoActTmp:null, _editingStu:null,
   obsProfesor:{}, // observaciones del profesor por clave alumnoId_moduloId
-  alumnos: { CL001: [], CL002: [] }, // clases vacías por defecto
+  alumnos: { CL001: [], CL002: [], CL003: [], CL004: [] }, // clases vacías por defecto
   _editAluId: null, _delAluId: null, openActIdx: null,
-  settings: { year:'2025-2026', centro:'', profesor:'',
+  settings: { year:'2026-2027', centro:'', profesor:'',
     modulosActivos: { CL001:['MOD0091','MOD0092','MOD0007','MOD0093'],
-                      CL002:['MOD0094','MOD0095','MOD0006'] } },
+                      CL002:['MOD0094','MOD0095','MOD0006'],
+                      CL003:['MOD3020','MOD3021','MOD3015'],
+                      CL004:['MOD3022','MOD3073'] },
+    critsActivos: {},
+    modulosVistos: CLASES.flatMap(c => modsDeClase(c).map(m => m.id)) },
 };
 let navHistory = ['screen-clases'];
 const akey = ()=>`${S.alumnoId}_${S.moduloId}`;
 
 // ═══════════ SCORING ═══════════
-function scoreRubrica(key) {
-  const acts=S.actividades[key]||[];
-  if (!acts.length) return null;
-  let total=0,count=0;
-  acts.forEach(a=>Object.values(a.scores||{}).forEach(v=>{if(v>0){total+=v;count++;}}));
-  if (!count) return null;
-  return +(((total/count)-1)/3*10).toFixed(1);
+// Las claves son `${alumnoId}_${moduloId}` y el id de alumno puede llevar '_' (ALU_123…)
+const modDeKey = key => key.slice(key.lastIndexOf('_') + 1);
+// Valores de un mapa {critId: valor} limitados a los criterios activos del módulo
+const valoresActivos = (mapa, modId) =>
+  Object.entries(mapa || {}).filter(([id]) => critActivo(id, modId)).map(([, v]) => v);
+
+// ── Modelo de calificación (Orden 18/09/2025, arts. 2.7, 18 y 19) ──
+// 1. Nota de cada criterio (0-10) = media de todo lo evaluado en él:
+//    prácticas (0-10), observación (Sí = 10, No = 0) y exámenes (nota del examen).
+// 2. Nota de cada RA = media de sus criterios evaluados (todos pesan lo mismo).
+// 3. Nota del módulo = media de los RA ponderada por el peso de cada RA (por defecto, iguales).
+// 4. Para aprobar: todos los RA ≥ 5 y cada parte (prácticas, actitud, teoría) ≥ 5. Si no, máximo 4.
+// 5. La nota final es entera, de 1 a 10.
+const mediaDe = vals => vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+const raDe = ind => ind.ce.match(/^RA(\d+)/)[1];
+const esNota = v => typeof v === 'number' && !isNaN(v);
+
+// Criterios P activos que cubre una práctica (sin lista = todos los P del módulo)
+function critsPractica(act, modId = S.moduloId) {
+  const idsP = soloActivos(indsModulo(modId).IND_P, modId).map(i => i.id);
+  return act.crits && act.crits.length ? act.crits.filter(id => idsP.includes(id)) : idsP;
 }
-function scoreObs(key) {
-  const sessions=Object.keys(S.observaciones).filter(k=>k.startsWith(key+'_'));
-  if (!sessions.length) return null;
-  let si=0,tot=0;
-  sessions.forEach(k=>Object.values(S.observaciones[k]||{}).forEach(v=>{if(v){tot++;if(v==='Sí')si++;}}));
-  if (!tot) return null;
-  return +(si/tot*10).toFixed(1);
-}
-function scoreEscrita(key) {
-  const n = S.notas[key];
-  if (!n) return null;
-  // Retrocompatibilidad: formato antiguo {nota, obs}
-  if (typeof n.nota === 'number') return n.nota;
-  // Formato nuevo: {pruebas:[{fecha,nota}]}
-  const pruebas = (n.pruebas||[]).filter(p=>p.nota!==null && p.nota!==undefined);
-  if (!pruebas.length) return null;
-  return +(pruebas.reduce((a,b)=>a+b.nota,0)/pruebas.length).toFixed(1);
-}
-function scoreGlobal(key) {
-  const r = scoreRubrica(key);
-  const o = scoreObs(key);
-  const e = scoreEscrita(key);
-  const scores = [r, o, e].filter(v => v !== null);
-  if (!scores.length) return null;
-  const media = +(scores.reduce((a,b) => a+b, 0) / scores.length).toFixed(1);
-  // Condición: si los tres bloques están evaluados y alguno suspende → nota <5
-  if (r !== null && o !== null && e !== null) {
-    if (r < 5 || o < 5 || e < 5) return +Math.min(media, 4.9).toFixed(1);
-  }
-  return media;
+// Prácticas puntuadas de 0 a 10 (act.escala = 10). scores[id] = nota ajustada a mano de un criterio,
+// rapida = nota de toda la práctica. Sin valor (o null) = sin nota.
+const tieneAjuste = (act, id) => esNota(act.scores?.[id]);
+// Nota de un criterio en una práctica: la ajustada a mano o, si no, la nota rápida de la práctica
+function puntoAct(act, id) {
+  const v = tieneAjuste(act, id) ? act.scores[id] : act.rapida;
+  return esNota(v) ? v : null;
 }
 
-// Indica si hay algún bloque suspenso (para mostrar aviso)
-function hayBloqueSuspenso(key) {
-  const r = scoreRubrica(key);
-  const o = scoreObs(key);
-  const e = scoreEscrita(key);
-  if (r !== null && o !== null && e !== null) {
-    return [r, o, e].some(v => v < 5);
-  }
-  return false;
+// Las versiones anteriores puntuaban de 1 a 4 (0 = sin nota). Equivalencia: 1→2, 2→4, 3→7, 4→10.
+const NIVEL_A_NOTA = { 1: 2, 2: 4, 3: 7, 4: 10 };
+function migrarEscala10() {
+  let n = 0;
+  Object.values(S.actividades || {}).forEach(lista => (lista || []).forEach(act => {
+    if (act.escala === 10) return;
+    const scores = {};
+    Object.entries(act.scores || {}).forEach(([id, v]) => { if (NIVEL_A_NOTA[v] !== undefined) scores[id] = NIVEL_A_NOTA[v]; });
+    act.scores = scores;
+    act.rapida = NIVEL_A_NOTA[act.rapida] ?? null;
+    act.escala = 10;
+    n++;
+  }));
+  return n;
 }
-function actScore(act) {
-  const vals=Object.values(act.scores||{}).filter(v=>v>0);
-  if (!vals.length) return null;
-  return +(((vals.reduce((a,b)=>a+b,0)/vals.length)-1)/3*10).toFixed(1);
+
+// Peso de cada RA del módulo: el guardado en ajustes o, si no, reparto a partes iguales
+function pesosRA(modId, ras) {
+  const guardados = S.settings.pesosRA?.[modId] || {};
+  const igual = ras.length ? 100 / ras.length : 0;
+  return Object.fromEntries(ras.map(ra => [ra, typeof guardados[ra] === 'number' ? guardados[ra] : igual]));
+}
+
+function evalModulo(key) {
+  const modId = modDeKey(key);
+  const m = indsModulo(modId);
+  const acts = S.actividades[key] || [];
+  const sesiones = Object.keys(S.observaciones).filter(k => k.startsWith(key + '_')).map(k => S.observaciones[k] || {});
+  const pruebas = getPruebas(key).filter(p => p.nota !== null && p.nota !== undefined);
+  const idsT = soloActivos(m.IND_T, modId).map(i => i.id);
+
+  const criterios = [
+    ...soloActivos(m.IND_P, modId).map(i => ({ ...i, tipo:'p', nota: mediaDe(acts
+      .filter(a => critsPractica(a, modId).includes(i.id))
+      .map(a => puntoAct(a, i.id)).filter(v => v !== null)) })),
+    ...soloActivos(m.IND_A, modId).map(i => ({ ...i, tipo:'a', nota: mediaDe(sesiones
+      .map(s => s[i.id]).filter(Boolean).map(v => v === 'Sí' ? 10 : 0)) })),
+    // Un examen sin criterios marcados cuenta para todos los criterios T activos
+    ...soloActivos(m.IND_T, modId).map(i => ({ ...i, tipo:'t', nota: mediaDe(pruebas
+      .filter(p => (p.crits && p.crits.length ? p.crits : idsT).includes(i.id))
+      .map(p => p.nota)) })),
+  ];
+
+  const evaluados = t => criterios.filter(c => (!t || c.tipo === t) && c.nota !== null).map(c => c.nota);
+  const bloques = { p: mediaDe(evaluados('p')), a: mediaDe(evaluados('a')), t: mediaDe(evaluados('t')) };
+  // Partes del módulo que tienen criterios activos pero aún ninguna nota: la nota es provisional
+  const faltan = [['p','prácticas'], ['a','actitud'], ['t','teoría']]
+    .filter(([t]) => criterios.some(c => c.tipo === t) && bloques[t] === null).map(([, nombre]) => nombre);
+
+  const grupos = {};
+  criterios.forEach(c => (grupos[raDe(c)] = grupos[raDe(c)] || []).push(c));
+  const listaRA = Object.keys(grupos).sort((a, b) => a - b);
+  const pesos = pesosRA(modId, listaRA);
+  const ras = listaRA.map(ra => {
+    const nota = mediaDe(grupos[ra].filter(c => c.nota !== null).map(c => c.nota));
+    return { ra, nota, peso: pesos[ra], total: grupos[ra].length,
+             evaluados: grupos[ra].filter(c => c.nota !== null).length,
+             superado: nota === null ? null : nota >= 5 };
+  });
+
+  const conNota = ras.filter(r => r.nota !== null);
+  if (!conNota.length) return { criterios, bloques, ras, notaExacta: null, nota: null, motivos: [], faltan, provisional: true };
+  const sumaPesos = conNota.reduce((s, r) => s + r.peso, 0);
+  const notaExacta = sumaPesos > 0
+    ? conNota.reduce((s, r) => s + r.nota * r.peso, 0) / sumaPesos
+    : mediaDe(conNota.map(r => r.nota));
+
+  const motivos = ras.filter(r => r.superado === false).map(r => `RA${r.ra}`);
+  [['p','prácticas'], ['a','actitud'], ['t','teoría']].forEach(([t, nombre]) => {
+    if (bloques[t] !== null && bloques[t] < 5) motivos.push(nombre);
+  });
+  let nota = Math.min(10, Math.max(1, Math.round(notaExacta)));
+  if (motivos.length) nota = Math.min(nota, 4);
+  return { criterios, bloques, ras, notaExacta, nota, motivos, faltan, provisional: faltan.length > 0 };
+}
+
+const redondea1 = v => v === null ? null : +v.toFixed(1);
+function scoreRubrica(key) { return redondea1(evalModulo(key).bloques.p); }
+function scoreObs(key)     { return redondea1(evalModulo(key).bloques.a); }
+function scoreEscrita(key) { return redondea1(evalModulo(key).bloques.t); }
+// Calificación del módulo: entera de 1 a 10 (art. 19.2), o null si aún no hay nada evaluado
+function scoreGlobal(key)  { return evalModulo(key).nota; }
+// Hay algún RA o alguna parte (P, A, T) por debajo de 5
+function hayBloqueSuspenso(key) { return evalModulo(key).motivos.length > 0; }
+
+function actScore(act, modId = S.moduloId) {
+  const vals = critsPractica(act, modId).map(id => puntoAct(act, id)).filter(v => v !== null);
+  return vals.length ? redondea1(mediaDe(vals)) : null;
 }
 function scoreColor(v) {
   if (v===null||v===undefined) return 'var(--muted)';
@@ -1355,7 +1981,7 @@ function showScreen(id,title,sub,showConf=false) {
   const isHome = (id === 'screen-clases');
   if (isHome) {
     _titleEl.innerHTML = 'NEXUS <span style="font-weight:300;font-size:14px;opacity:.75;letter-spacing:.03em">by Xurxo</span>';
-    _subEl.textContent = `Soldadura y Calderería · ${S.settings.year || '2025-2026'}`;
+    _subEl.textContent = `Departamento de Fabricación Mecánica · ${S.settings.year || '2026-2027'}`;
     _subEl.style.display = '';
   } else {
     _titleEl.textContent = title;
@@ -1376,30 +2002,46 @@ function goBack() {
   navHistory.pop();
   const prev=navHistory[navHistory.length-1];
   const m={
-    'screen-clases':['NEXUS',`Soldadura y Calderería · ${S.settings.year}`,false],
+    'screen-clases':['NEXUS',`Departamento de Fabricación Mecánica · ${S.settings.year}`,false],
     'screen-modulos':[getClase()?.nombre,'Módulos profesionales',false],
     'screen-alumnos':[getModulo()?.nombre,getClase()?.nombre,true],
     'screen-alumno':[getAlumno()?.nombre+' '+getAlumno()?.apellidos,getModulo()?.nombre,false],
-    'screen-config':['Configurar prácticas',getModulo()?.nombre,false],
+    'screen-config':['Criterios y prácticas',getModulo()?.nombre,false],
+    'screen-clase-practica':['Evaluar a toda la clase',getModulo()?.nombre,false],
   };
   const t=m[prev]||['NEXUS','',false];
   showScreen(prev,t[0],t[1],t[2]);
   if (prev==='screen-alumno') renderAlumnoScreen();
   if (prev==='screen-alumnos') renderAlumnos();
+  if (prev==='screen-clase-practica') renderClasePractica();
 }
 const getClase  = ()=>CLASES.find(c=>c.id===S.claseId);
 const getModulo = ()=>Object.values(MODULOS).flat().find(m=>m.id===S.moduloId);
 const getAlumno = ()=>(S.alumnos[S.claseId]||[]).find(a=>a.id===S.alumnoId);
 
 // ═══════════ CLASES ═══════════
+// Módulos que el profesor imparte en una clase (los marcados en ⚙ Ajustes)
+const modsActivosDe = c => modsDeClase(c).filter(m => (S.settings.modulosActivos[c.id] || []).includes(m.id));
+
 function renderClases() {
-  document.getElementById('clasesList').innerHTML = CLASES.map(c=>`
+  // Solo se muestran las clases en las que se imparte algún módulo
+  const clases = CLASES.filter(c => modsActivosDe(c).length);
+  if (!clases.length) {
+    document.getElementById('clasesList').innerHTML = `<div class="card empty" style="padding:28px 20px">
+      <div class="empty-icon">📚</div>
+      <p>No tienes ningún módulo marcado como impartido.<br>Elige en Ajustes los módulos que das este curso.</p>
+      <button class="btn-principal" style="margin-top:14px" onclick="openSettings()">⚙ Elegir mis módulos</button>
+    </div>`;
+    return;
+  }
+  document.getElementById('clasesList').innerHTML = clases.map(c=>`
     <div class="clase-banner" onclick="selectClase('${c.id}')" style="background:linear-gradient(135deg,${c.color1},${c.color2})">
       <div class="clase-banner-inner">
-        <div class="clase-icon-big">${c.emoji}</div>
+        <div class="clase-badge" style="color:${c.color1}">${iconoClase(c)}</div>
         <div class="clase-banner-info">
           <h2>${c.nombre}</h2>
-          <p>${(S.settings.modulosActivos[c.id]||[]).length} módulo(s) activo(s) · ${S.alumnos[c.id].length} alumnos · ${S.settings.year}</p>
+          <p>${c.titulo}</p>
+          <p>${modsActivosDe(c).length} módulo(s) · ${(S.alumnos[c.id]||[]).length} alumnos</p>
         </div>
         <div class="clase-banner-arrow">›</div>
       </div>
@@ -1412,27 +2054,20 @@ function selectClase(id) {
 
 // ═══════════ MÓDULOS ═══════════
 function renderModulos() {
-  const mods = MODULOS[getClase().curso] || [];
-  const activos = S.settings.modulosActivos[S.claseId] || [];
-  document.getElementById('modulosList').innerHTML = mods.map(m => {
-    const isActivo = activos.includes(m.id);
-    return `
-    <div class="${isActivo ? 'card-list-item' : 'card-list-item-blocked'}"
-         ${isActivo ? `onclick="selectModulo('${m.id}')"` : ''}
+  // Solo los módulos que se imparten; los demás se activan en ⚙ Ajustes
+  const mods = modsActivosDe(getClase());
+  document.getElementById('modulosList').innerHTML = mods.map(m => `
+    <div class="card-list-item" onclick="selectModulo('${m.id}')"
          style="display:flex;align-items:center;gap:18px;padding:18px 20px;
-                border-bottom:1px solid var(--border);min-height:80px;
-                ${!isActivo ? 'opacity:0.38;cursor:not-allowed;user-select:none;' : 'cursor:pointer;'}
-                transition:background .15s;">
-      <div class="item-icon" style="background:${isActivo ? m.bg : '#E0E0E0'}">${isActivo ? m.icon : '🔒'}</div>
+                border-bottom:1px solid var(--border);min-height:80px;cursor:pointer;transition:background .15s;">
+      <div class="item-icon" style="background:${m.bg}">${m.icon}</div>
       <div class="item-body">
-        <h3 style="color:${isActivo ? 'var(--text)' : 'var(--muted)'}">${m.nombre}</h3>
-        <p>Cód. ${m.codigo} · ${m.horas}h · ${isActivo ? 'Activo este curso' : 'No impartido este curso'}</p>
+        <h3>${m.nombre}</h3>
+        <p>Cód. ${m.codigo} · ${m.horas}h</p>
       </div>
-      ${isActivo
-        ? '<span class="item-arrow">›</span>'
-        : '<span style="font-size:16px;color:var(--muted);flex-shrink:0">🔒</span>'}
-    </div>`;
-  }).join('');
+      <span class="item-arrow">›</span>
+    </div>`).join('')
+    || `<div class="empty" style="padding:24px"><p>No impartes ningún módulo en esta clase.</p></div>`;
 }
 function selectModulo(id) {
   S.moduloId=id; renderAlumnos();
@@ -1448,7 +2083,7 @@ function openConfig() {
   if (S._configModId) {
     selectConfigMod(S._configModId);
     if (selectorWrap) selectorWrap.style.display = 'none';
-    navigate('screen-config', `Prácticas · ${getModulo().nombre}`, `Cód. ${getModulo().codigo}`);
+    navigate('screen-config', `Configurar · ${getModulo().nombre}`, `Cód. ${getModulo().codigo}`);
   } else {
     if (selectorWrap) selectorWrap.style.display = 'flex';
     navigate('screen-config', 'Añadir prácticas', getClase()?.nombre);
@@ -1456,8 +2091,64 @@ function openConfig() {
 }
 
 // Modal de añadir práctica predefinida: carga el selector de criterios
+// ── Imagen de referencia de una práctica predefinida ──
+// S._configImg: imagen que se guardará al pulsar Añadir/Guardar (null = sin imagen)
+function setConfigImg(dataURL) {
+  S._configImg = dataURL || null;
+  const prev = document.getElementById('config-img-preview');
+  prev.src = S._configImg || '';
+  prev.style.display = S._configImg ? 'block' : 'none';
+  document.getElementById('config-img-label').textContent = S._configImg
+    ? 'Toca para cambiar la imagen'
+    : '📐 Toca para añadir un plano, croquis o foto de la pieza';
+  document.getElementById('config-img-drop').classList.toggle('has-photo', !!S._configImg);
+  document.getElementById('config-img-quitar').style.display = S._configImg ? '' : 'none';
+  document.getElementById('config-img-file').value = '';
+}
+function handleConfigImg(input) {
+  if (!input.files[0]) return;
+  const r = new FileReader();
+  // Más resolución que las fotos de alumnos para que se lean las cotas de un plano
+  r.onload = e => compressImage(e.target.result, setConfigImg, 1600, 0.82);
+  r.readAsDataURL(input.files[0]);
+}
+// Imagen de la práctica predefinida con ese nombre en el módulo actual
+const imagenPractica = nombre => (S.configActs[S.moduloId] || []).find(d => d.nombre === nombre)?.imagen || null;
+
+// Visor a pantalla completa para consultar o enseñar la imagen de una práctica
+function verImagenPractica(nombre, imagen = imagenPractica(nombre)) {
+  if (!imagen) return;
+  cerrarVisor();
+  const v = document.createElement('div');
+  v.className = 'visor';
+  v.id = 'visor';
+  v.onclick = cerrarVisor;
+  v.innerHTML = `<div class="visor-bar"><span></span><button title="Cerrar">✕</button></div><img alt="" />`;
+  v.querySelector('span').textContent = nombre;
+  v.querySelector('img').src = imagen;
+  document.body.appendChild(v);
+}
+function cerrarVisor() { document.getElementById('visor')?.remove(); }
+// Se llama por índice para no meter nombres de práctica (con comillas, tildes…) dentro de onclick
+function verImagenDef(i) {
+  const d = (S.configActs[S.moduloId] || [])[i];
+  if (d) verImagenPractica(d.nombre, d.imagen);
+}
+function verImagenDeAct(ai) {
+  const act = (S.actividades[akey()] || [])[ai];
+  if (act) verImagenPractica(act.nombre);
+}
+const botonVerPractica = (onclick, imagen) => imagen
+  ? `<button class="ver-practica-btn" onclick="event.stopPropagation();${onclick}"><img src="${imagen}" alt="" />📐 Ver la práctica</button>`
+  : '';
+function verImagenConfig(i) {
+  const d = (S.configActs[S._configModId] || [])[i];
+  if (d) verImagenPractica(d.nombre, d.imagen);
+}
+
 function openConfigAct() {
   S._editingConfigActIdx = null; // nueva práctica
+  setConfigImg(null);
   document.getElementById('config-act-name').value = '';
   document.getElementById('modal-config-title').textContent = 'Nueva práctica predefinida';
   document.getElementById('config-save-btn').textContent = 'Añadir';
@@ -1473,6 +2164,7 @@ function editConfigAct(idx) {
   const act = acts[idx];
   if (!act) return;
   S._editingConfigActIdx = idx;
+  setConfigImg(act.imagen);
   document.getElementById('config-act-name').value = act.nombre || '';
   document.getElementById('modal-config-title').textContent = 'Editar práctica predefinida';
   document.getElementById('config-save-btn').textContent = 'Guardar';
@@ -1557,7 +2249,7 @@ function toggleAllCritAct(on) {
 }
 
 function renderConfigModSelector() {
-  const mods = MODULOS[getClase()?.curso] || [];
+  const mods = modsDeClase(getClase());
   document.getElementById('config-mod-selector').innerHTML = mods.map(m => `
     <div class="card-list-item ${S._configModId===m.id?'config-mod-active':''}"
          onclick="selectConfigMod('${m.id}')"
@@ -1576,7 +2268,128 @@ function selectConfigMod(modId) {
   document.getElementById('config-mod-label').textContent =
     `${mod.icon} ${mod.nombre} · Prácticas`;
   document.getElementById('config-selected-mod').style.display = 'flex';
+  renderCritsModulo();
   renderConfig();
+}
+
+// ── Criterios trabajados por módulo ──────────────────────
+// Todos los indicadores del módulo (P, A y T) agrupados por RA y ordenados por letra de CE
+function critsPorRA(modId) {
+  const m = indsModulo(modId);
+  const todos = [
+    ...(m.IND_P || []).map(i => ({ ...i, tipo:'p' })),
+    ...(m.IND_A || []).map(i => ({ ...i, tipo:'a' })),
+    ...(m.IND_T || []).map(i => ({ ...i, tipo:'t' })),
+  ];
+  const grupos = {};
+  todos.forEach(i => {
+    const [, ra, letra] = i.ce.match(/^RA(\d+)-CE(.)$/) || [];
+    (grupos[ra] = grupos[ra] || []).push({ ...i, letra });
+  });
+  return Object.keys(grupos).sort((a, b) => a - b).map(ra => ({
+    ra, items: grupos[ra].sort((x, y) => x.letra.localeCompare(y.letra, 'es')),
+  }));
+}
+
+function renderCritsModulo() {
+  const modId = S._configModId;
+  const el = document.getElementById('config-crits-ra');
+  if (!el || !modId) return;
+  S._raAbiertos = S._raAbiertos || new Set();
+  const grupos = critsPorRA(modId);
+  const total = grupos.reduce((n, g) => n + g.items.length, 0);
+  const activos = grupos.reduce((n, g) => n + g.items.filter(i => critActivo(i.id, modId)).length, 0);
+  document.getElementById('config-crits-label').textContent =
+    `Criterios que trabajo en este módulo · ${activos} de ${total}`;
+
+  // Pesos de los RA con algún criterio activo (los demás no cuentan en la nota)
+  const rasActivos = grupos.filter(g => g.items.some(i => critActivo(i.id, modId))).map(g => g.ra);
+  const pesos = pesosRA(modId, rasActivos);
+  const guardados = S.settings.pesosRA?.[modId] || {};
+  const hayPersonalizados = rasActivos.some(ra => typeof guardados[ra] === 'number');
+  const suma = rasActivos.reduce((s, ra) => s + pesos[ra], 0);
+  document.getElementById('config-calif').innerHTML = `
+    <strong>Cómo se calcula la nota del módulo</strong>
+    <ul>
+      <li>Cada RA: media de sus criterios activos.</li>
+      <li>Módulo: media de los RA según su peso (por defecto, todos iguales).</li>
+      <li>Para aprobar: <strong>todos los RA ≥ 5</strong> y <strong>prácticas, actitud y teoría ≥ 5</strong> cada una. Si no, nota máxima 4.</li>
+      <li>Nota final entera, de 1 a 10.</li>
+    </ul>
+    <div class="calif-pesos">
+      Pesos: ${hayPersonalizados ? 'personalizados' : 'iguales'} · suman
+      <span class="${Math.abs(suma - 100) > 0.5 ? 'aviso-suma' : ''}">${Math.round(suma * 10) / 10} %</span>
+      ${Math.abs(suma - 100) > 0.5 ? '<span class="aviso-suma">(deberían sumar 100 %)</span>' : ''}
+      ${hayPersonalizados ? '<button class="examen-crit-mini-btn" onclick="resetPesosRA()">Volver a pesos iguales</button>' : ''}
+    </div>`;
+
+  const tipos = { p:'Práctica', a:'Actitud (observación)', t:'Teoría (examen)' };
+  el.innerHTML = grupos.map(g => {
+    const on = g.items.filter(i => critActivo(i.id, modId)).length;
+    const cls = on === g.items.length ? 'full' : on === 0 ? 'none' : '';
+    const peso = on ? Math.round(pesos[g.ra] * 10) / 10 : null;
+    return `<details class="ra-block" data-ra="${g.ra}" ${S._raAbiertos.has(g.ra) ? 'open' : ''}
+              ontoggle="S._raAbiertos[this.open ? 'add' : 'delete'](this.dataset.ra)">
+      <summary>
+        <span class="ra-num">RA${g.ra}</span>
+        <span class="ra-text">${RA_TEXTOS[modId]?.[g.ra] || ''}</span>
+        <span class="ra-count ${cls}">${on}/${g.items.length}</span>
+      </summary>
+      <div class="ra-actions">
+        <button class="examen-crit-mini-btn" onclick="setCritsRA('${g.ra}',true)">✓ Todos</button>
+        <button class="examen-crit-mini-btn" onclick="setCritsRA('${g.ra}',false)">✕ Ninguno</button>
+        <label class="ra-peso">Peso
+          <input type="number" min="0" max="100" step="1" inputmode="decimal"
+                 class="${typeof guardados[g.ra] === 'number' ? 'custom' : ''}"
+                 value="${peso ?? ''}" ${on ? '' : 'disabled'}
+                 onchange="setPesoRA('${g.ra}', this.value)" /> %
+        </label>
+      </div>
+      ${g.items.map(i => {
+        const act = critActivo(i.id, modId);
+        return `<label class="ra-crit ${act ? '' : 'off'}">
+        <input type="checkbox" ${act ? 'checked' : ''} onchange="setCritsModulo(['${i.id}'],this.checked)" />
+        <span class="crit-badge crit-${i.tipo}" title="${tipos[i.tipo]}">${i.tipo.toUpperCase()}</span>
+        <span class="ra-crit-text"><span class="ce-tag">CE${i.letra}</span>${i.texto}</span>
+      </label>`;
+      }).join('')}
+    </details>`;
+  }).join('');
+}
+
+function setCritsModulo(ids, on) {
+  const modId = S._configModId;
+  const todos = critsPorRA(modId).flatMap(g => g.items.map(i => i.id));
+  const sel = new Set(S.settings.critsActivos?.[modId] || todos);
+  ids.forEach(id => on ? sel.add(id) : sel.delete(id));
+  if (!S.settings.critsActivos) S.settings.critsActivos = {};
+  // Con todos marcados no se guarda lista, así un criterio añadido en otra versión aparece activo
+  if (todos.every(id => sel.has(id))) delete S.settings.critsActivos[modId];
+  else S.settings.critsActivos[modId] = todos.filter(id => sel.has(id));
+  scheduleSave();
+  renderCritsModulo();
+  renderConfig();
+}
+function setCritsRA(ra, on) {
+  const g = critsPorRA(S._configModId).find(g => g.ra === ra);
+  if (g) setCritsModulo(g.items.map(i => i.id), on);
+}
+// Peso (%) de un RA según la programación. Vacío = vuelve al reparto a partes iguales.
+function setPesoRA(ra, valor) {
+  const modId = S._configModId;
+  if (!S.settings.pesosRA) S.settings.pesosRA = {};
+  const pesos = S.settings.pesosRA[modId] = S.settings.pesosRA[modId] || {};
+  const n = parseFloat(String(valor).replace(',', '.'));
+  if (valor === '' || isNaN(n)) delete pesos[ra];
+  else pesos[ra] = Math.max(0, Math.min(100, n));
+  if (!Object.keys(pesos).length) delete S.settings.pesosRA[modId];
+  scheduleSave();
+  renderCritsModulo();
+}
+function resetPesosRA() {
+  if (S.settings.pesosRA) delete S.settings.pesosRA[S._configModId];
+  scheduleSave();
+  renderCritsModulo();
 }
 
 // ═══════════ ALUMNOS ═══════════
@@ -1585,7 +2398,25 @@ function renderAlumnos() {
   const aluLabel = document.getElementById('alumnos-label');
   if (!aluLabel) return;
   const alus=S.alumnos[S.claseId]||[];
+  const defs=S.configActs[S.moduloId]||[];
   aluLabel.textContent=`Alumnos · ${alus.length}`;
+
+  // Primeros pasos: mientras falten prácticas definidas o alumnos, se guía al profesor
+  const pasos = document.getElementById('primeros-pasos');
+  if (!defs.length || !alus.length) {
+    const paso = (hecho, num, texto, boton) => `<div class="paso ${hecho?'hecho':''}">
+      <span class="paso-num">${hecho?'✓':num}</span><span class="paso-txt">${texto}</span>${hecho?'':boton}</div>`;
+    pasos.innerHTML = `<div class="paso-tit">Primeros pasos en este módulo</div>
+      ${paso(defs.length, 1, 'Define las prácticas y qué criterios evalúa cada una', '<button onclick="openConfig()">⚙ Definir</button>')}
+      ${paso(alus.length, 2, 'Añade a tus alumnos', '<button onclick="openAddAlumno()">＋ Añadir</button>')}
+      ${paso(false, 3, 'Evalúa: una práctica a toda la clase, o alumno por alumno', '')}`;
+    pasos.style.display = '';
+  } else {
+    pasos.style.display = 'none';
+  }
+  // La evaluación de toda la clase es lo más usado: arriba, en cuanto hay alumnos y prácticas
+  document.getElementById('btn-clase-practica').style.display = alus.length && defs.length ? '' : 'none';
+  document.getElementById('btn-resumen').style.display = alus.length ? '' : 'none';
 
   const getInitials = (a) => {
     const n = (a.nombre||'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
@@ -1593,25 +2424,24 @@ function renderAlumnos() {
     return ((n[0]||'?') + (ap[0]||'')).toUpperCase();
   };
 
-  const getEstado = (key, numActs) => {
-    if (numActs === 0) return { color:'#BDBDBD', label:'sin evaluar' };
-    const g = scoreGlobal(key);
-    const susp = hayBloqueSuspenso(key);
-    if (g === null) return { color:'#BDBDBD', label:'en proceso' };
-    if (susp) return { color:'#EF4444', label:'bloque suspenso' };
-    if (g < 5) return { color:'#EF4444', label:'suspenso' };
-    if (g < 6) return { color:'#F59E0B', label:'aprobado justo' };
+  const getEstado = (ev, numActs) => {
+    if (numActs === 0 && ev.nota === null) return { color:'#BDBDBD', label:'sin evaluar' };
+    if (ev.nota === null) return { color:'#BDBDBD', label:'en proceso' };
+    if (ev.motivos.length) return { color:'#EF4444', label:'RA o parte suspensa' };
+    if (ev.nota < 5) return { color:'#EF4444', label:'suspenso' };
+    if (ev.nota < 6) return { color:'#F59E0B', label:'aprobado justo' };
     return { color:'#10B981', label:'aprobado' };
   };
 
-  document.getElementById('alumnosList').innerHTML = alus.map((a,i)=>{
+  document.getElementById('alumnosList').innerHTML = alus.map(a=>{
     const key=`${a.id}_${S.moduloId}`;
-    const g=scoreGlobal(key);
+    const ev=evalModulo(key);
+    const g=ev.nota;
     const photo=S.stuPhotos[a.id];
     const initials = getInitials(a);
     const isRepetidor=a.apellidos.includes('★');
     const numActs=(S.actividades[key]||[]).length;
-    const estado = getEstado(key, numActs);
+    const estado = getEstado(ev, numActs);
     return `
     <div class="card-list-item" onclick="selectAlumno('${a.id}')"
          style="position:relative;padding-left:22px">
@@ -1621,21 +2451,15 @@ function renderAlumnos() {
                :`<span>${initials}</span>`}
       </div>
       <div class="item-body">
-        <h3>${a.nombre} ${a.apellidos}${isRepetidor?' <span style="font-size:13px;color:var(--amber)">★</span>':''}</h3>
+        <h3>${escHTML(a.nombre)} ${escHTML(a.apellidos)}${isRepetidor?' <span style="font-size:13px;color:var(--amber)">★</span>':''}</h3>
         <div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap">
           <span style="font-size:var(--fs-sm);color:var(--muted)">${numActs} práctica(s)</span>
-          ${g!==null?`<span class="chip" style="background:${scoreColor(g)}22;color:${scoreColor(g)}">${g}/10</span>`:''}
-          ${estado.label==='bloque suspenso'?`<span style="font-size:12px;color:var(--red);font-weight:700">⚠</span>`:''}
+          ${g!==null?`<span class="chip ${ev.provisional?'chip-prov':''}" style="background:${scoreColor(g)}22;color:${scoreColor(g)}"
+              title="${ev.provisional?'Provisional: faltan '+ev.faltan.join(', '):''}">${g}/10${ev.provisional?' · prov.':''}</span>`:''}
+          ${ev.motivos.length?`<span style="font-size:12px;color:var(--red);font-weight:700" title="No supera: ${ev.motivos.join(', ')}">⚠</span>`:''}
         </div>
       </div>
-      <div style="display:flex;align-items:center;flex-shrink:0">
-        <button onclick="event.stopPropagation();openEditAlumno('${a.id}')"
-          style="background:none;border:none;font-size:22px;cursor:pointer;padding:6px 8px;border-radius:10px;color:var(--muted);min-width:48px;min-height:48px;display:flex;align-items:center;justify-content:center"
-          title="Editar alumno">✏</button>
-        <button onclick="event.stopPropagation();openDeleteAlumno('${a.id}')"
-          style="background:none;border:none;font-size:22px;cursor:pointer;padding:6px 8px;border-radius:10px;color:var(--red);min-width:48px;min-height:48px;display:flex;align-items:center;justify-content:center"
-          title="Borrar alumno">🗑</button>
-      </div>
+      <span class="item-arrow">›</span>
     </div>`;
   }).join('');
 
@@ -1649,6 +2473,7 @@ function renderAlumnos() {
       <span><span class="legend-dot" style="background:#BDBDBD"></span>Pendiente</span>
     </div>`;
   }
+  document.getElementById('alumnosList').style.display = alus.length ? '' : 'none';
 }
 function selectAlumno(id) {
   S.alumnoId=id;
@@ -1670,6 +2495,7 @@ function renderAlumnoScreen() {
   });
   renderRubrica(); renderObs(); renderEscrita();
 }
+
 function updateHeader() {
   const a=getAlumno(), key=akey();
   if (!a) return;
@@ -1678,28 +2504,49 @@ function updateHeader() {
   const n = (a.nombre||'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   const ap = (a.apellidos||'').replace(/[★☆]/g,'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   const initials = ((n[0]||'?') + (ap[0]||'')).toUpperCase();
-  const r=scoreLabel(scoreRubrica(key)),o=scoreLabel(scoreObs(key)),
-        e=scoreLabel(scoreEscrita(key)),g=scoreGlobal(key);
-  const hasSusp = hayBloqueSuspenso(key);
+  const ev = evalModulo(key);
+  const g = ev.nota;
+  // Una línea de estado bajo el nombre: lo único que hace falta ver de un vistazo.
+  // Con más de 2 RA suspensos se resume ("4 RA"); el detalle está en "Ver detalle de la nota".
+  const rasMal = ev.motivos.filter(m => m.startsWith('RA'));
+  const partesMal = ev.motivos.filter(m => !m.startsWith('RA'));
+  const resumenMotivos = [...(rasMal.length > 2 ? [`${rasMal.length} RA`] : rasMal), ...partesMal].join(', ');
+  const estado = g === null ? 'Sin evaluar todavía'
+    : ev.motivos.length ? `⚠ No supera: ${resumenMotivos}`
+    : ev.provisional ? `Faltan: ${ev.faltan.join(', ')}`
+    : '✓ Todas las partes evaluadas';
+  const pill = (letra, v) => `<span class="score-pill"><span class="label">${letra}</span><span class="val" style="color:${scoreColor(v)}">${scoreLabel(v)}</span></span>`;
+  const raChips = ev.ras.map(x => `<span class="ra-chip ${x.superado===false?'mal':x.superado?'bien':''}"
+      title="RA${x.ra} · ${x.evaluados}/${x.total} criterios evaluados · peso ${Math.round(x.peso*10)/10} %">RA${x.ra} ${x.nota!==null?x.nota.toFixed(1):'—'}</span>`).join('');
   document.getElementById('stuHeader').innerHTML=`
-    <div class="stu-avatar" onclick="triggerStuPhoto('${a.id}')">
-      ${photo?`<img src="${photo}" alt="${initials}">`:`<span>${initials}</span>`}
-      <div class="stu-avatar-edit">📷</div>
-    </div>
-    <div class="stu-info">
-      <h2>${a.nombre} ${a.apellidos}</h2>
-      <p>${getModulo()?.nombre}</p>
-      <div class="stu-scores">
-        <span class="score-pill"><span class="label">P</span><span class="val" style="color:${scoreColor(scoreRubrica(key))}">${r}</span></span>
-        <span class="score-pill"><span class="label">A</span><span class="val" style="color:${scoreColor(scoreObs(key))}">${o}</span></span>
-        <span class="score-pill"><span class="label">T</span><span class="val" style="color:${scoreColor(scoreEscrita(key))}">${e}</span></span>
-        ${hasSusp?`<span style="background:#FFEBEE;color:#C62828;border-radius:20px;padding:4px 10px;font-size:var(--fs-xs);font-weight:700">⚠ Bloque suspenso</span>`:''}
+    <div class="stu-top">
+      <div class="stu-avatar" onclick="triggerStuPhoto('${a.id}')">
+        ${photo?`<img src="${photo}" alt="${initials}">`:`<span>${initials}</span>`}
+        <div class="stu-avatar-edit">📷</div>
+      </div>
+      <div class="stu-info">
+        <h2>${escHTML(a.nombre)} ${escHTML(a.apellidos)}</h2>
+        <p class="stu-estado ${ev.motivos.length?'mal':''}">${estado}</p>
+      </div>
+      <div class="stu-global-pill ${ev.provisional && g!==null?'prov':''}" style="background:${g!==null?scoreColor(g):'rgba(255,255,255,.18)'}"
+           title="${ev.notaExacta!==null?'Media ponderada de los RA: '+ev.notaExacta.toFixed(2):''}">
+        <div class="stu-global-label">${ev.provisional && g!==null?'PROVISIONAL':'NOTA'}</div>
+        <div class="stu-global-val">${g!==null?g:'—'}</div>
       </div>
     </div>
-    <div class="stu-global-pill" style="background:${g!==null?scoreColor(g):'#E0E0E0'}">
-      <div class="stu-global-label">GLOBAL</div>
-      <div class="stu-global-val">${g!==null?g.toFixed(1):'—'}</div>
-    </div>`;
+    <details class="stu-detalle" ${S._detalleAbierto?'open':''} ontoggle="S._detalleAbierto=this.open">
+      <summary>Ver detalle de la nota</summary>
+      <div class="stu-detalle-body">
+        <div class="stu-detalle-tit">Por partes</div>
+        <div class="stu-scores">${pill('Prácticas', ev.bloques.p)}${pill('Actitud', ev.bloques.a)}${pill('Teoría', ev.bloques.t)}</div>
+        ${raChips ? `<div class="stu-detalle-tit">Por resultados de aprendizaje</div><div class="ra-chips">${raChips}</div>` : ''}
+        <div class="stu-detalle-nota">Para aprobar: todos los RA y cada parte con 5 o más.</div>
+        <div class="stu-acciones">
+          <button onclick="openEditAlumno('${a.id}')">✏ Editar alumno</button>
+          <button class="borrar" onclick="openDeleteAlumno('${a.id}')">🗑 Borrar alumno</button>
+        </div>
+      </div>
+    </details>`;
 }
 function switchTab(tab) {
   S.curTab=tab;
@@ -1715,14 +2562,32 @@ function switchTab(tab) {
 }
 
 // ═══════════ RÚBRICA ═══════════
-function actCardHTML(act, ai, s, scored, pct) {
+// Botones de nota 0-10 + ✕. accion(v) devuelve el onclick de cada nota; quitar = onclick del ✕ (o null).
+const franjaNota = v => v >= 9 ? 'b9' : v >= 7 ? 'b7' : v >= 5 ? 'b5' : 'b0';
+function botonesNota(valor, accion, { heredada = false, quitar = null, quitarTitulo = 'Quitar nota' } = {}) {
+  return `<div class="nota-btns">${[0,1,2,3,4,5,6,7,8,9,10].map(v =>
+    `<button class="nota-btn ${franjaNota(v)} ${valor === v ? 'active' : ''} ${valor === v && heredada ? 'heredada' : ''}" onclick="${accion(v)}">${v}</button>`).join('')}
+    <button class="nota-btn quitar" ${quitar ? `onclick="${quitar}"` : 'disabled'} title="${quitarTitulo}">✕</button>
+  </div>`;
+}
+// Leyenda de las franjas de la rúbrica sobre la escala 0-10
+const LEYENDA_FRANJAS = `<div class="franjas">
+  <span><i style="background:#C62828"></i>0-4 No conseguido</span>
+  <span><i style="background:#E65100"></i>5-6 Conseguido justo</span>
+  <span><i style="background:#1565C0"></i>7-8 Conseguido</span>
+  <span><i style="background:#2E7D32"></i>9-10 Excelente</span>
+</div>`;
+
+function actCardHTML(act, ai) {
   const isOpen = S.openActIdx === ai;
-  // Filtrar indicadores: si la práctica tiene 'crits', mostrar solo esos. Si no, mostrar todos (compat)
-  const allIndP = getIndP();
-  const indsToShow = act.crits && act.crits.length
-    ? allIndP.filter(ind => act.crits.includes(ind.id))
-    : allIndP;
+  // Criterios P activos de la práctica (sin 'crits' = todos, por compatibilidad)
+  const ids = critsPractica(act);
+  const indsToShow = getIndP().filter(ind => ids.includes(ind.id));
   const totalCrits = indsToShow.length;
+  const s = actScore(act);
+  const scored = ids.filter(id => puntoAct(act, id) !== null).length;
+  const pct = totalCrits ? Math.round(scored / totalCrits * 100) : 0;
+  const ajustados = ids.filter(id => tieneAjuste(act, id)).length;
   return `<div class="act-card">
     <div class="act-card-header-wrap" style="display:flex;align-items:stretch;border-bottom:1px solid var(--border)">
       <button class="act-toggle act-header" onclick="toggleAct(${ai})" style="flex:1;border-bottom:none;gap:14px">
@@ -1740,25 +2605,33 @@ function actCardHTML(act, ai, s, scored, pct) {
       <button class="act-del-btn" onclick="confirmDelAct(${ai})" title="Eliminar práctica">🗑</button>
     </div>
     <div class="act-body ${isOpen?'open':'closed'}">
+      ${imagenPractica(act.nombre) ? `<div style="padding:12px 16px 0">${botonVerPractica(`verImagenDeAct(${ai})`, imagenPractica(act.nombre))}</div>` : ''}
       <div class="act-photo-zone" onclick="triggerActPhoto(${ai})">
         ${act.photo
           ?`<img src="${act.photo}" alt="pieza"><div class="act-photo-overlay" style="display:flex;align-items:center;justify-content:center">📷 Cambiar foto</div>`
           :`<div class="act-photo-placeholder" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px"><span style="font-size:36px">📸</span><span>Añadir foto de la pieza</span></div>`}
         <input type="file" id="paf-${ai}" accept="image/*" style="display:none" onchange="handleActPhotoExist(this,${ai})" />
       </div>
+      <div class="rapida-box">
+        <div class="rapida-title">Nota de la práctica</div>
+        ${botonesNota(esNota(act.rapida) ? act.rapida : null, v => `setRapida(${ai},${v})`,
+          { quitar: esNota(act.rapida) ? `setRapida(${ai},null)` : null })}
+        <div class="rapida-hint">Se aplica a todos los criterios de la práctica. Si alguno destaca o falla, ajústalo abajo${ajustados?` · <strong>${ajustados} ajustado(s) a mano</strong>`:''}.</div>
+        ${LEYENDA_FRANJAS}
+      </div>
       <div style="padding:8px 16px 4px"><div class="prog-wrap"><div class="prog-bar" style="width:${pct}%;background:var(--teal)"></div></div></div>
       <div class="ind-list">
-        ${indsToShow.map(ind=>`
-        <div class="ind-row" style="${act.scores[ind.id]>0?'':'opacity:0.6'}">
-          <div class="ind-label"><span class="ce-tag">${ind.ce}</span>${ind.texto}${act.scores[ind.id]>0?'':' <span style=\"font-size:11px;color:var(--muted);font-style:italic\">(no computa)</span>'}</div>
-          <div class="score-btns">
-            ${[1,2,3,4].map(sc=>`<button class="score-btn s${sc} ${act.scores[ind.id]===sc?'active':''}"
-              onclick="setScore(${ai},'${ind.id}',${sc})">${sc}</button>`).join('')}
-            <button class="score-btn-clear ${act.scores[ind.id]>0?'visible':''}"
-              onclick="setScore(${ai},'${ind.id}',0)"
-              title="Quitar puntuación">✕</button>
-          </div>
-        </div>`).join('')}
+        ${indsToShow.map(ind=>{
+          const propia = tieneAjuste(act, ind.id);
+          const efectiva = puntoAct(act, ind.id);
+          return `
+        <div class="ind-row" style="${efectiva!==null?'':'opacity:0.6'}">
+          <div class="ind-label"><span class="ce-tag">${ind.ce}</span>${ind.texto}${efectiva!==null?'':' <span style=\"font-size:11px;color:var(--muted);font-style:italic\">(no computa)</span>'}</div>
+          ${botonesNota(efectiva, v => `setScore(${ai},'${ind.id}',${v})`, {
+            heredada: !propia,
+            quitar: propia ? `setScore(${ai},'${ind.id}',null)` : null,
+            quitarTitulo: esNota(act.rapida) ? 'Volver a la nota de la práctica' : 'Quitar nota' })}
+        </div>`; }).join('')}
       </div>
     </div>
   </div>`;
@@ -1791,15 +2664,7 @@ function renderRubrica() {
     </div></div>`;
   }
 
-  // Leyenda de la escala 1-4 (solo si hay alguna práctica abierta o iniciada)
-  if (defs.length || acts.length) {
-    html += `<div class="rubric-legend">
-      <span><strong>1</strong> No conseguido</span>
-      <span><strong>2</strong> En proceso</span>
-      <span><strong>3</strong> Conseguido</span>
-      <span><strong>4</strong> Excelente</span>
-    </div>`;
-  }
+  // La leyenda de las franjas va dentro de la práctica abierta (ver actCardHTML)
 
   // Si hay prácticas predefinidas, mostrarlas todas (iniciadas o pendientes)
   if (defs.length) {
@@ -1810,11 +2675,7 @@ function renderRubrica() {
       if (ai >= 0) {
         // ── Práctica ya iniciada: mostrar tarjeta completa ──
         const act = acts[ai];
-        const s = actScore(act);
-        const totalCrits = act.crits && act.crits.length ? act.crits.length : getIndP().length;
-        const scored = Object.values(act.scores).filter(v=>v>0).length;
-        const pct = totalCrits ? Math.round(scored/totalCrits*100) : 0;
-        html += actCardHTML(act, ai, s, scored, pct);
+        html += actCardHTML(act, ai);
       } else {
         // ── Práctica pendiente: tarjeta de inicio ──
         const defCrits = def.crits || null;
@@ -1822,14 +2683,15 @@ function renderRubrica() {
         html+=`<div class="act-card" style="opacity:.85">
           <div class="act-header" style="align-items:center">
             <div>
-              <h3>${def.nombre}</h3>
+              <h3>${escHTML(def.nombre)}</h3>
               <div class="meta" style="color:var(--amber)">⏳ Pendiente · ${critInfo}</div>
             </div>
-            <button onclick="iniciarActividad('${def.nombre.replace(/'/g,"\\'")}')"
+            <button onclick="iniciarActividad(S.configActs[S.moduloId][${di}].nombre)"
               style="background:var(--teal);color:#fff;border:none;padding:12px 20px;border-radius:14px;font-size:17px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;min-height:52px">
               Evaluar →
             </button>
           </div>
+          ${def.imagen ? `<div style="padding:0 16px 14px">${botonVerPractica(`verImagenDef(${di})`, def.imagen)}</div>` : ''}
         </div>`;
       }
     });
@@ -1841,11 +2703,7 @@ function renderRubrica() {
       html+=`<div class="section-subhead">✏ Prácticas adicionales</div>`;
       extras.forEach(act => {
         const ai = acts.indexOf(act);
-        const s = actScore(act);
-        const totalCrits = act.crits && act.crits.length ? act.crits.length : getIndP().length;
-        const scored = Object.values(act.scores).filter(v=>v>0).length;
-        const pct = totalCrits ? Math.round(scored/totalCrits*100) : 0;
-        html+=actCardHTML(act, ai, s, scored, pct);
+        html+=actCardHTML(act, ai);
       });
     }
 
@@ -1857,15 +2715,11 @@ function renderRubrica() {
     if (!acts.length) {
       html+=`<div class="card empty">
         <div class="empty-icon">📦</div>
-        <p>No hay prácticas evaluadas.<br>Pulsa <strong>Añadir práctica</strong> para empezar,<br>o define prácticas en <strong>⚙ Configurar prácticas</strong>.</p>
+        <p>No hay prácticas evaluadas.<br>Pulsa <strong>Añadir práctica</strong> para empezar,<br>o define prácticas en <strong>⚙ Criterios y prácticas</strong>.</p>
       </div>`;
     } else {
       acts.forEach((act,ai)=>{
-        const s=actScore(act);
-        const totalCrits = act.crits && act.crits.length ? act.crits.length : getIndP().length;
-        const scored=Object.values(act.scores).filter(v=>v>0).length;
-        const pct = totalCrits ? Math.round(scored/totalCrits*100) : 0;
-        html += actCardHTML(act, ai, s, scored, pct);
+        html += actCardHTML(act, ai);
       });
     }
     html+=`<button class="add-act-btn" onclick="openAddAct()">＋ Añadir práctica</button>`;
@@ -1875,35 +2729,47 @@ function renderRubrica() {
 }
 
 // Inicia una práctica predefinida pendiente: la crea directamente sin modal
+// Crea para un alumno la práctica predefinida `nombre` (o devuelve la existente)
+function crearPractica(key, nombre, fecha = today()) {
+  if (!S.actividades[key]) S.actividades[key] = [];
+  const existente = S.actividades[key].find(a => a.nombre === nombre);
+  if (existente) return existente;
+  // Copiar los criterios de la definición predefinida (null = todos)
+  const def = (S.configActs[S.moduloId] || []).find(d => d.nombre === nombre);
+  const defCrits = def && def.crits ? def.crits : null;
+  const act = { nombre, fecha, photo: null, scores: {}, crits: defCrits, rapida: null, escala: 10 };
+  S.actividades[key].push(act);
+  return act;
+}
+
 function iniciarActividad(nombre) {
   const key = akey();
-  if (!S.actividades[key]) S.actividades[key] = [];
-  // Evitar duplicados
-  if (S.actividades[key].find(a => a.nombre === nombre)) return;
-
-  // Buscar la definición predefinida para copiar sus criterios
-  const defs = S.configActs[S.moduloId] || [];
-  const def = defs.find(d => d.nombre === nombre);
-  const defCrits = def && def.crits ? def.crits : null; // null = todos
-
-  const scores = {};
-  // Solo inicializar los criterios que realmente se van a evaluar
-  const critsToUse = defCrits || getIndP().map(i => i.id);
-  critsToUse.forEach(id => scores[id] = 0);
-
-  S.actividades[key].push({ nombre, fecha: today(), photo: null, scores, crits: defCrits });
+  if ((S.actividades[key] || []).find(a => a.nombre === nombre)) return;
+  const act = crearPractica(key, nombre);
+  // Se abre ya desplegada: un solo toque para empezar a poner la nota
+  S.openActIdx = S.actividades[key].indexOf(act);
   scheduleSave();
   renderRubrica();
   updateHeader();
-  showToast('✓ ' + nombre + ' · lista para evaluar');
+  requestAnimationFrame(() => document.querySelector('.act-body.open')?.scrollIntoView({ behavior:'smooth', block:'start' }));
 }
 // Helper: vibración háptica en móvil (feedback táctil sutil)
 function haptic(ms) {
   try { if (navigator.vibrate) navigator.vibrate(ms || 10); } catch(e) {}
 }
 
+// Nota (0-10) de un criterio en una práctica; null la quita y el criterio vuelve a la nota de la práctica
 function setScore(ai,indId,val) {
-  S.actividades[akey()][ai].scores[indId]=val;
+  const act = S.actividades[akey()][ai];
+  if (!act.scores) act.scores = {};
+  if (esNota(val)) act.scores[indId] = val; else delete act.scores[indId];
+  haptic(8);
+  scheduleSave();
+  renderRubrica(); updateHeader();
+}
+// Nota rápida (0-10) de toda la práctica; null la quita. Los criterios ajustados a mano la mantienen.
+function setRapida(ai, val) {
+  S.actividades[akey()][ai].rapida = esNota(val) ? val : null;
   haptic(8);
   scheduleSave();
   renderRubrica(); updateHeader();
@@ -1948,11 +2814,8 @@ function createActividad() {
 
   const key=akey();
   if (!S.actividades[key]) S.actividades[key]=[];
-  const scores={};
-  crits.forEach(id => scores[id] = 0);
-
   const doCreate = (photo) => {
-    S.actividades[key].push({nombre,fecha,photo,scores,crits});
+    S.actividades[key].push({ nombre, fecha, photo, scores: {}, crits, rapida: null, escala: 10 });
     S.openActIdx = S.actividades[key].length - 1; // abrir la nueva automáticamente
     scheduleSave();
     document.getElementById('new-act-name').value = ''; // limpiar para la próxima
@@ -1993,6 +2856,12 @@ function handleActPhotoExist(input,ai) {
 // ═══════════ OBSERVACIÓN ═══════════
 function renderObs() {
   const key=akey();
+  // Módulos sin criterios de actitud (p. ej. 3073) o con todos desmarcados: no hay nada que observar
+  if (!getIndA().length) {
+    document.getElementById('obs-content').innerHTML = `<div class="card empty"><div class="empty-icon">👁</div>
+      <p>Este módulo no tiene criterios de actitud activos.<br>Puedes activarlos en <strong>⚙ Criterios y prácticas</strong> si el currículo los incluye.</p></div>`;
+    return;
+  }
   const sessions=Object.keys(S.observaciones).filter(k=>k.startsWith(key+'_')).sort().reverse();
   const o=scoreObs(key);
   let html='';
@@ -2003,10 +2872,10 @@ function renderObs() {
     </div></div>`;
   }
   sessions.forEach(sk=>{
-    const date=sk.split('_').slice(2).join('_');
+    const date=sk.slice(sk.lastIndexOf('_')+1); // la clave es ${alumnoId}_${moduloId}_${fecha}
     const data=S.observaciones[sk]||{};
-    const si=Object.values(data).filter(v=>v==='Sí').length;
-    const tot=Object.values(data).filter(v=>v).length;
+    const si=valoresActivos(data).filter(v=>v==='Sí').length;
+    const tot=valoresActivos(data).filter(v=>v).length;
     const ss=tot?+(si/tot*10).toFixed(1):null;
     html+=`<div class="obs-session">
       <div class="obs-session-header">
@@ -2042,8 +2911,7 @@ function renderObs() {
 // Cambiar fecha de una sesión de observación
 function changeObsDate(oldKey, newDate) {
   if (!newDate) return;
-  const parts = oldKey.split('_');
-  const newKey = `${parts[0]}_${parts[1]}_${newDate}`;
+  const newKey = oldKey.slice(0, oldKey.lastIndexOf('_') + 1) + newDate;
   if (newKey === oldKey) return;
   if (S.observaciones[newKey] && Object.keys(S.observaciones[newKey]).length) {
     if (!confirm('Ya existe una sesión en esa fecha. ¿Fusionar datos?')) {
@@ -2062,8 +2930,7 @@ function changeObsDate(oldKey, newDate) {
 
 // Borrar sesión de observación con confirmación
 function confirmDelObsSession(sk) {
-  const parts = sk.split('_');
-  const date = parts.slice(2).join('_');
+  const date = sk.slice(sk.lastIndexOf('_') + 1);
   if (!confirm(`¿Eliminar la sesión del ${fmtFecha(date)}?\n\nSe perderán todas las respuestas Sí/No de esa sesión.`)) return;
   delete S.observaciones[sk];
   scheduleSave();
@@ -2080,8 +2947,8 @@ function setObs(sk,indId,val,btn) {
   scheduleSave();
   updateHeader();
   const data=S.observaciones[sk];
-  const si=Object.values(data).filter(v=>v==='Sí').length;
-  const tot=Object.values(data).filter(v=>v).length;
+  const si=valoresActivos(data).filter(v=>v==='Sí').length;
+  const tot=valoresActivos(data).filter(v=>v).length;
   const sc=tot?+(si/tot*10).toFixed(1):null;
   const hdr=btn.closest('.obs-session')?.querySelector('.obs-session-score');
   if (hdr&&sc!==null){hdr.textContent=sc+'/10';hdr.style.color=scoreColor(sc);}
@@ -2148,7 +3015,7 @@ function renderEscrita() {
             <span class="examen-crits-title">
               <span class="crit-badge crit-t" style="width:22px;height:22px;font-size:11px">T</span>
               Criterios conceptuales trabajados
-              <span class="examen-crits-count">${crits.length} de ${indsT.length}</span>
+              <span class="examen-crits-count">${crits.length ? `${crits.length} de ${indsT.length}` : `ninguno marcado: cuenta para los ${indsT.length}`}</span>
             </span>
             <div style="display:flex;gap:6px">
               <button class="examen-crit-mini-btn" onclick="togglePruebaAllCrits(${i},true)">✓ Todos</button>
@@ -2271,10 +3138,12 @@ function renderConfig(){
     ? acts.map((a,i)=>{
         // Compatibilidad: prácticas antiguas sin crits = todos los criterios
         const crits = a.crits || null;
-        const n = crits ? crits.length : totalCrits;
+        const n = crits ? crits.filter(id => critActivo(id, mid)).length : totalCrits;
         return `
       <div class="config-act-item" style="cursor:pointer" onclick="editConfigAct(${i})">
-        <div class="config-act-num">${i+1}</div>
+        ${a.imagen
+          ? `<img class="config-act-thumb" src="${a.imagen}" alt="" title="Ver imagen" onclick="event.stopPropagation();verImagenConfig(${i})" />`
+          : `<div class="config-act-num">${i+1}</div>`}
         <div class="config-act-name">
           <div>${a.nombre}</div>
           <div style="font-size:12px;color:var(--muted);font-weight:400;margin-top:2px">${n}/${totalCrits} criterios P · toca para editar</div>
@@ -2297,11 +3166,11 @@ function saveConfigAct(){
 
   if (S._editingConfigActIdx !== null && S._editingConfigActIdx !== undefined) {
     // Editar existente
-    S.configActs[mid][S._editingConfigActIdx] = { nombre, crits };
+    S.configActs[mid][S._editingConfigActIdx] = { nombre, crits, imagen: S._configImg || null };
     showToast('✓ Práctica actualizada');
   } else {
     // Nueva
-    S.configActs[mid].push({ nombre, crits });
+    S.configActs[mid].push({ nombre, crits, imagen: S._configImg || null });
     showToast('✓ Práctica añadida');
   }
 
@@ -2364,6 +3233,11 @@ function saveAlumno() {
   }
   closeModal('modal-alumno');
   renderAlumnos();
+  // Editado desde su ficha: refrescar cabecera y título
+  if (document.getElementById('screen-alumno').classList.contains('active')) {
+    updateHeader();
+    document.getElementById('topbarTitle').textContent = `${getAlumno().nombre} ${getAlumno().apellidos}`;
+  }
 }
 
 function openDeleteAlumno(id) {
@@ -2383,9 +3257,12 @@ function confirmDeleteAlumno() {
   Object.keys(S.actividades).filter(k=>k.startsWith(id+'_')).forEach(k=>delete S.actividades[k]);
   Object.keys(S.observaciones).filter(k=>k.startsWith(id+'_')).forEach(k=>delete S.observaciones[k]);
   Object.keys(S.notas).filter(k=>k.startsWith(id+'_')).forEach(k=>delete S.notas[k]);
+  Object.keys(S.obsProfesor||{}).filter(k=>k.startsWith(id+'_')).forEach(k=>delete S.obsProfesor[k]);
   delete S.stuPhotos[id];
   scheduleSave();
   closeModal('modal-del-alu');
+  // Se borra desde su ficha: volver a la lista de alumnos
+  if (document.getElementById('screen-alumno').classList.contains('active')) goBack();
   renderAlumnos();
   showToast('✓ Alumno eliminado');
 }
@@ -2509,10 +3386,10 @@ function generarPDF(observaciones = '') {
   doc.setFont('helvetica','bold');
   doc.setFontSize(10);
   doc.setTextColor(255,255,255);
-  doc.text('CALIFICACIÓN GLOBAL', M+3, y+9);
+  doc.text('CALIFICACIÓN DEL MÓDULO', M+3, y+9);
   doc.setFontSize(15);
   doc.setTextColor(...(glo===null?[200,200,200]:glo>=5?[144,238,144]:[255,180,180]));
-  doc.text(glo!==null ? glo.toFixed(1)+'/10' : '—', W-M-3, y+9.5, {align:'right'});
+  doc.text(glo!==null ? glo+'/10' : '—', W-M-3, y+9.5, {align:'right'});
   y += 18;
 
   // ── Helper: badge de resultado ────────────────────────────
@@ -2524,6 +3401,61 @@ function generarPDF(observaciones = '') {
     doc.setTextColor(255,255,255);
     doc.text(superado?'Superado':'No superado', x + (superado?10:11), by, {align:'center'});
   };
+
+  // ── Sección: RESULTADOS DE APRENDIZAJE (art. 5.4 de la Orden 18/09/2025) ──
+  const ev = evalModulo(key);
+  if (ev.provisional && glo !== null) {
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...AMBER);
+    doc.text(`Nota provisional: aún no se han evaluado ${ev.faltan.join(', ')}.`, M+2, y-1);
+    y += 5;
+  }
+  if (ev.ras.length) {
+    if (y > 240) { doc.addPage(); y = 14; }
+    doc.setFillColor(...NAVY);
+    doc.rect(M, y, W-M*2, 7, 'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9);
+    doc.setTextColor(255,255,255);
+    doc.text('RESULTADOS DE APRENDIZAJE', M+3, y+5);
+    y += 10;
+    ev.ras.forEach(x => {
+      const texto = RA_TEXTOS[mod.id]?.[x.ra] || '';
+      const lines = doc.splitTextToSize(texto, W-M*2-70);
+      const rowH = Math.max(10, 4 + lines.slice(0,2).length * 3.6);
+      if (y + rowH > 280) { doc.addPage(); y = 14; }
+      doc.setFillColor(...(x.superado===false ? [254,226,226] : x.superado ? [240,253,241] : [245,247,250]));
+      doc.rect(M, y, W-M*2, rowH, 'F');
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(8);
+      doc.setTextColor(...NAVY);
+      doc.text(`RA${x.ra}`, M+2, y+4.5);
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(6.5);
+      doc.setTextColor(28,43,58);
+      doc.text(lines.slice(0,2).map((l,i)=> i===1 && lines.length>2 ? l+'…' : l), M+13, y+4);
+      doc.setTextColor(...MUTED);
+      doc.text(`Peso ${Math.round(x.peso*10)/10}% · ${x.evaluados}/${x.total} CE`, W-M-57, y+4.5);
+      if (x.nota !== null) {
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(9);
+        doc.setTextColor(...(x.nota>=9?GREEN:x.nota>=7?TEAL:x.nota>=5?AMBER:RED));
+        doc.text(x.nota.toFixed(1), W-M-30, y+5, {align:'right'});
+        badge(W-M-26, y+5, x.superado);
+      }
+      y += rowH + 1.5;
+    });
+    if (ev.motivos.length) {
+      if (y > 275) { doc.addPage(); y = 14; }
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(7.5);
+      doc.setTextColor(...RED);
+      doc.text(`No supera el módulo por: ${ev.motivos.join(', ')}. Requisito: todos los RA y cada parte (P, A, T) con 5 o más.`, M+2, y+4);
+      y += 7;
+    }
+    y += 4;
+  }
 
   // ── Sección: Fotos de prácticas realizadas ───────────────
   const acts = S.actividades[key]||[];
@@ -2606,9 +3538,9 @@ function generarPDF(observaciones = '') {
 
     getIndP().forEach(ind => {
       if (y > 265) { doc.addPage(); y = 14; }
-      const vals = acts.map(ac=>ac.scores[ind.id]||0).filter(v=>v>0);
+      const vals = acts.filter(ac => critsPractica(ac).includes(ind.id)).map(ac => puntoAct(ac, ind.id)).filter(v => v !== null);
       const avg = vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
-      const superado = avg !== null && avg >= 2.5;
+      const superado = avg !== null && avg >= 5;
       const suspenso = avg !== null && !superado;
 
       // Fondo: gris si no evaluado, verde si superado, ROSA si suspenso
@@ -2636,11 +3568,11 @@ function generarPDF(observaciones = '') {
       doc.text(lines[0]+(lines.length>1?'…':''), M+2, y+7);
 
       if (avg !== null) {
-        const col = avg>=3.5?GREEN:avg>=2.5?TEAL:avg>=1.5?AMBER:RED;
+        const col = avg>=9?GREEN:avg>=7?TEAL:avg>=5?AMBER:RED;
         doc.setFont('helvetica','bold');
         doc.setFontSize(9);
         doc.setTextColor(...col);
-        doc.text(avg.toFixed(1)+'/4', W-M-40, y+6, {align:'right'});
+        doc.text(avg.toFixed(1)+'/10', W-M-40, y+6, {align:'right'});
       }
       badge(W-M-28, y+6, superado);
       y += 11;
@@ -2666,7 +3598,7 @@ function generarPDF(observaciones = '') {
       const vals = obsSessions.map(sk=>(S.observaciones[sk]||{})[ind.id]).filter(v=>v);
       const si = vals.filter(v=>v==='Sí').length;
       const pct = vals.length ? Math.round(si/vals.length*100) : null;
-      const superado = pct !== null && pct >= 60;
+      const superado = pct !== null && pct >= 50; // = nota 5 en el modelo (Sí = 10, No = 0)
       const suspenso = pct !== null && !superado;
 
       if (suspenso) {
@@ -2832,7 +3764,7 @@ function generarPDF(observaciones = '') {
     doc.setFont('helvetica','normal');
     doc.setFontSize(7);
     doc.setTextColor(...MUTED);
-    doc.text(`NEXUS by Xurxo · Soldadura y Calderería · ${S.settings.year}${S.settings.centro?' · '+S.settings.centro:''}`, M, 293);
+    doc.text(`NEXUS by Xurxo · ${getClase()?.nombre || ''} · ${S.settings.year}${S.settings.centro?' · '+S.settings.centro:''}`, M, 293);
     doc.text(`Página ${p} de ${pageCount}`, W-M, 293, {align:'right'});
   }
 
@@ -2857,6 +3789,124 @@ function fmtFecha(iso) {
 // ═══════════════════════════════════════════════════════════════
 
 let _resumenSort = { col: 'apellidos', dir: 'asc' };
+
+// ═══════════ EVALUAR UNA PRÁCTICA A TODA LA CLASE ═══════════
+// Se pone una nota rápida (1-4) por alumno; los ajustes por criterio se hacen en la ficha del alumno.
+const escHTML = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+const cpDef = () => (S.configActs[S.moduloId] || [])[S._cpIdx];
+const cpPractica = aluId => (S.actividades[`${aluId}_${S.moduloId}`] || []).find(a => a.nombre === cpDef()?.nombre);
+
+function openClasePractica() {
+  if (!S.moduloId || !S.claseId) return;
+  S._cpIdx = null;
+  S._cpFecha = today();
+  navigate('screen-clase-practica', 'Evaluar a toda la clase', getModulo().nombre);
+  renderClasePractica();
+}
+function cpElegir(i) {
+  S._cpIdx = i;
+  renderClasePractica();
+  window.scrollTo(0, 0);
+}
+
+function renderClasePractica() {
+  const el = document.getElementById('cp-content');
+  if (!el) return;
+  const defs = S.configActs[S.moduloId] || [];
+  const alus = S.alumnos[S.claseId] || [];
+  const def = cpDef();
+
+  if (!alus.length) {
+    el.innerHTML = `<div class="card empty"><div class="empty-icon">👥</div><p>No hay alumnos en esta clase.</p></div>`;
+    return;
+  }
+  if (!def) {
+    S._cpIdx = null;
+    el.innerHTML = !defs.length
+      ? `<div class="card empty"><div class="empty-icon">📋</div><p>Primero define las prácticas del módulo y qué criterios evalúa cada una.</p></div>
+         <button class="add-act-btn" onclick="openConfig()">⚙ Criterios y prácticas</button>`
+      : `<div class="section-label">Elige la práctica</div>
+         <div class="card">${defs.map((d, i) => {
+           const hechos = alus.filter(a => {
+             const act = (S.actividades[`${a.id}_${S.moduloId}`] || []).find(x => x.nombre === d.nombre);
+             return act && actScore(act) !== null;
+           }).length;
+           return `<div class="card-list-item" onclick="cpElegir(${i})">
+             <div class="item-body"><h3>${escHTML(d.nombre)}</h3><p>${hechos} de ${alus.length} alumnos con nota</p></div>
+             <span class="item-arrow">›</span></div>`;
+         }).join('')}</div>`;
+    return;
+  }
+
+  const nCrits = def.crits ? def.crits.filter(id => critActivo(id)).length : getIndP().length;
+  let html = `<div class="card cp-head">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div><h3>${escHTML(def.nombre)}</h3><div class="cp-sub">${nCrits} criterios de práctica (P)</div></div>
+        <button class="examen-crit-mini-btn" onclick="cpElegir(null)">Cambiar</button>
+      </div>
+      ${botonVerPractica(`verImagenDef(${S._cpIdx})`, def.imagen)}
+      <label class="cp-sub" style="display:flex;align-items:center;gap:8px">Fecha
+        <input type="date" class="cp-fecha" value="${S._cpFecha}" onchange="S._cpFecha=this.value||today()" />
+      </label>
+      <div class="cp-todos-label">Poner a todos</div>
+      ${botonesNota(null, v => `cpTodos(${v})`)}
+      <div class="cp-sub">Pon a todos la nota más habitual y cambia solo a quien se salga. Quien no la haya hecho, déjalo sin nota (✕). Con › ajustas criterio a criterio.</div>
+    </div>
+    ${LEYENDA_FRANJAS}
+    <div class="card">`;
+  alus.forEach(a => {
+    const act = cpPractica(a.id);
+    const r = act && esNota(act.rapida) ? act.rapida : null;
+    const s = act ? actScore(act) : null;
+    const ajustados = act ? critsPractica(act).filter(id => tieneAjuste(act, id)).length : 0;
+    html += `<div class="cp-row">
+      <div class="cp-name">
+        <div><strong>${escHTML(a.nombre)} ${escHTML(a.apellidos)}</strong><br>
+          <span>${s !== null ? `<b style="color:${scoreColor(s)}">${s}/10</b>` : 'sin nota'}${ajustados ? ` · ${ajustados} ajustado(s)` : ''}</span></div>
+        <button class="cp-detalle" onclick="cpDetalle('${a.id}')" title="Ajustar criterio a criterio">›</button>
+      </div>
+      ${botonesNota(r, v => `cpSet('${a.id}',${v})`, { quitar: r !== null ? `cpSet('${a.id}',null)` : null })}
+    </div>`;
+  });
+  el.innerHTML = html + `</div>`;
+}
+
+function cpSet(aluId, val, pintar = true) {
+  const key = `${aluId}_${S.moduloId}`;
+  const conNota = esNota(val);
+  let act = cpPractica(aluId);
+  if (!act) {
+    if (!conNota) return;
+    act = crearPractica(key, cpDef().nombre, S._cpFecha);
+  }
+  act.rapida = conNota ? val : null;
+  // Al quitar la nota, si la práctica queda vacía (sin ajustes ni foto) se borra para no dejarla a medias
+  if (!conNota && !act.photo && !critsPractica(act).some(id => tieneAjuste(act, id))) {
+    S.actividades[key] = S.actividades[key].filter(x => x !== act);
+    if (!S.actividades[key].length) delete S.actividades[key];
+  }
+  scheduleSave();
+  if (pintar) { haptic(8); renderClasePractica(); }
+}
+function cpTodos(val) {
+  const alus = S.alumnos[S.claseId] || [];
+  const distintos = alus.filter(a => { const r = cpPractica(a.id)?.rapida; return esNota(r) && r !== val; }).length;
+  if (distintos && !confirm(`${distintos} alumno(s) ya tienen otra nota en esta práctica.\n\n¿Poner un ${val} a toda la clase?`)) return;
+  alus.forEach(a => cpSet(a.id, val, false));
+  haptic(8);
+  renderClasePractica();
+  showToast(`✓ ${val} para toda la clase`);
+}
+// Abre la ficha del alumno con esta práctica desplegada para ajustar criterios
+function cpDetalle(aluId) {
+  const key = `${aluId}_${S.moduloId}`;
+  const act = crearPractica(key, cpDef().nombre, S._cpFecha);
+  scheduleSave();
+  selectAlumno(aluId);
+  switchTab('rubrica');
+  S.openActIdx = S.actividades[key].indexOf(act);
+  renderRubrica();
+}
 
 function openResumen() {
   if (!S.moduloId || !S.claseId) return;
@@ -2919,7 +3969,7 @@ function renderResumen() {
 
   const arrow = (col) => _resumenSort.col === col ? (_resumenSort.dir === 'asc' ? ' ▲' : ' ▼') : '';
   const colorFor = (v) => v===null?'var(--muted)':v>=9?'#10B981':v>=7?'var(--teal)':v>=5?'#F59E0B':'#EF4444';
-  const fmt = v => v===null ? '—' : v.toFixed(1);
+  const fmt = v => v===null ? '—' : Number.isInteger(v) ? String(v) : v.toFixed(1);
 
   // Controles de ordenación (compactos, siempre visibles)
   let html = `<div class="resumen-sort-bar">
@@ -3033,7 +4083,7 @@ function exportResumenPDF() {
   doc.text('Resumen de clase', M + 34, 14);
   doc.setFont('helvetica','normal');
   doc.setFontSize(10);
-  doc.text(`${clase.emoji || ''} ${clase.nombre}  ·  ${mod.nombre}`, M + 34, 21);
+  doc.text(`${clase.nombre}  ·  ${mod.nombre}`, M + 34, 21);
   doc.setFontSize(8);
   doc.text(`Cód. ${mod.codigo}  ·  ${mod.horas}h`, M + 34, 27);
 
@@ -3072,11 +4122,11 @@ function exportResumenPDF() {
   doc.text('Proc.', colX.rub+8, y+5.5, {align:'center'});
   doc.text('Actit.', colX.obs+8, y+5.5, {align:'center'});
   doc.text('Conc.', colX.esc+8, y+5.5, {align:'center'});
-  doc.text('GLOBAL', colX.glo+8, y+5.5, {align:'center'});
+  doc.text('NOTA', colX.glo+8, y+5.5, {align:'center'});
   y += 8;
 
   const colorFor = (v) => v===null?MUTED : v>=9?GREEN : v>=7?TEAL : v>=5?AMBER : RED;
-  const fmt = v => v===null ? '—' : v.toFixed(1);
+  const fmt = v => v===null ? '—' : Number.isInteger(v) ? String(v) : v.toFixed(1);
   const rowH = 8;
 
   data.forEach((r, i) => {
@@ -3093,7 +4143,7 @@ function exportResumenPDF() {
       doc.text('Proc.', colX.rub+8, y+5.5, {align:'center'});
       doc.text('Actit.', colX.obs+8, y+5.5, {align:'center'});
       doc.text('Conc.', colX.esc+8, y+5.5, {align:'center'});
-      doc.text('GLOBAL', colX.glo+8, y+5.5, {align:'center'});
+      doc.text('NOTA', colX.glo+8, y+5.5, {align:'center'});
       y += 8;
     }
 
@@ -3149,7 +4199,7 @@ function exportResumenPDF() {
     doc.setFont('helvetica','normal');
     doc.setFontSize(7);
     doc.setTextColor(...MUTED);
-    doc.text(`NEXUS by Xurxo · Soldadura y Calderería · ${S.settings.year}${S.settings.centro?' · '+S.settings.centro:''}`, M, 293);
+    doc.text(`NEXUS by Xurxo · ${getClase()?.nombre || ''} · ${S.settings.year}${S.settings.centro?' · '+S.settings.centro:''}`, M, 293);
     doc.text(`Página ${p} de ${pageCount}`, W-M, 293, {align:'right'});
   }
 
@@ -3169,6 +4219,25 @@ function showToast(msg){
   setTimeout(()=>t.remove(),2500);
 }
 
+// Aviso que se queda en pantalla hasta que se cierra o se resuelve. tipo: 'warn' | 'error' | 'info'
+const _avisoAcciones = {};
+function showAviso(id, tipo, msg, accion, cerrable = true) {
+  hideAviso(id);
+  const el = document.createElement('div');
+  el.className = `aviso ${tipo}`;
+  el.id = 'aviso-' + id;
+  el.setAttribute('role', tipo === 'error' ? 'alert' : 'status');
+  el.innerHTML = `<div class="aviso-msg"></div>
+    ${accion ? `<button class="aviso-btn" onclick="_avisoAcciones['${id}']()"></button>` : ''}
+    ${cerrable ? `<button class="aviso-close" title="Cerrar" onclick="hideAviso('${id}')">✕</button>` : ''}`;
+  el.querySelector('.aviso-msg').textContent = msg;
+  if (accion) { el.querySelector('.aviso-btn').textContent = accion.texto; _avisoAcciones[id] = accion.fn; }
+  let cont = document.getElementById('avisos');
+  if (!cont) { cont = document.createElement('div'); cont.id = 'avisos'; cont.className = 'avisos'; document.body.appendChild(cont); }
+  cont.appendChild(el);
+}
+function hideAviso(id) { document.getElementById('aviso-' + id)?.remove(); }
+
 // ═══════════ SETTINGS ═══════════
 function openSettings() {
   document.getElementById('settings-year').value     = S.settings.year;
@@ -3182,11 +4251,11 @@ function openSettings() {
 function renderSettingsModulos() {
   const activos = S.settings.modulosActivos;
   const html = CLASES.map(c => {
-    const mods = MODULOS[c.curso] || [];
+    const mods = modsDeClase(c);
     return `
     <div>
       <div style="font-size:var(--fs-xs);font-weight:700;color:var(--muted);text-transform:uppercase;
-                  letter-spacing:.06em;margin-bottom:8px">${c.emoji} ${c.nombre}</div>
+                  letter-spacing:.06em;margin-bottom:8px"><span class="clase-dot-ico" style="color:${c.color1}">${iconoClase(c, 18)}</span>${c.nombre}</div>
       <div style="display:flex;flex-direction:column;gap:6px">
         ${mods.map(m => {
           const checked = (activos[c.id] || []).includes(m.id);
@@ -3223,10 +4292,9 @@ function toggleModulo(claseId, modId, checked) {
     label.style.border = `2px solid ${checked ? 'var(--teal)' : 'var(--border)'}`;
   }
   scheduleSave();
-  // Refrescar lista de módulos si está visible
-  if (document.getElementById('screen-modulos').classList.contains('active')) {
-    renderModulos();
-  }
+  // Refrescar lo que haya detrás del modal: clases visibles o lista de módulos
+  if (document.getElementById('screen-clases').classList.contains('active')) renderClases();
+  if (document.getElementById('screen-modulos').classList.contains('active')) renderModulos();
 }
 
 function saveSettings() {
@@ -3248,7 +4316,7 @@ function applySettings() {
   const year = S.settings.year;
   // Actualiza subtítulo
   const sub = document.getElementById('topbarSub');
-  if (sub) { sub.textContent = `Soldadura y Calderería · ${year || '2025-2026'}`; sub.style.display = ''; }
+  if (sub) { sub.textContent = `Departamento de Fabricación Mecánica · ${year || '2026-2027'}`; sub.style.display = ''; }
   // Restore título en home
   const titleEl = document.getElementById('topbarTitle');
   if (titleEl && (navHistory.length===0 || navHistory[navHistory.length-1]==='screen-clases')) {
@@ -3324,12 +4392,28 @@ async function requestPersistent() {
   }
 }
 
+let _savePending = false; // hay cambios esperando a guardarse
+let _saveFailed = false;  // el último intento de guardado falló
+
 function scheduleSave() {
+  _savePending = true;
   clearTimeout(_saveTimer);
   _saveTimer = setTimeout(persistState, 800);
 }
 
+// Guardar en cuanto la app deja de verse (cambiar de app en el móvil, cerrar la pestaña o la ventana)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden' && _savePending) persistState();
+});
+window.addEventListener('pagehide', () => { if (_savePending) persistState(); });
+// En el PC, si el guardado ha fallado, el navegador pregunta antes de cerrar
+window.addEventListener('beforeunload', e => {
+  if (_saveFailed) { e.preventDefault(); e.returnValue = ''; }
+});
+
 async function persistState() {
+  clearTimeout(_saveTimer);
+  _savePending = false;
   try {
     const data = {
       actividades:   S.actividades,
@@ -3342,13 +4426,40 @@ async function persistState() {
       settings:      S.settings,
     };
     await idbSet('state', data);
-  } catch(e) {
-    if (e.name === 'QuotaExceededError') {
-      showToast('⚠ Almacenamiento lleno. Borra fotos antiguas.');
-    } else {
-      console.warn('Error guardando estado:', e);
+    if (_saveFailed) {
+      _saveFailed = false;
+      hideAviso('guardado');
+      showToast('✓ Cambios guardados');
     }
+  } catch(e) {
+    console.warn('Error guardando estado:', e);
+    _saveFailed = true;
+    _savePending = true;
+    showAviso('guardado', 'error',
+      e?.name === 'QuotaExceededError'
+        ? '⚠ Almacenamiento lleno: los últimos cambios NO se han guardado. Borra fotos en ⚙ Ajustes y haz una copia de seguridad.'
+        : '⚠ Los últimos cambios NO se han guardado. No cierres la app y haz una copia de seguridad.',
+      { texto: 'Reintentar', fn: persistState }, false);
   }
+}
+
+// Módulos que se añaden en una versión nueva aparecen activos aunque ya hubiera datos guardados.
+// settings.modulosVistos recuerda qué módulos existían, para no reactivar los que el profesor desactivó.
+// Antes de guardarse esa lista (hasta la v36) existían todos menos los de MODULOS_NUEVOS_V37.
+const MODULOS_NUEVOS_V37 = ['MOD3015', 'MOD3020'];
+function activarModulosNuevos(vistosGuardados) {
+  const todos = CLASES.flatMap(c => modsDeClase(c).map(m => m.id));
+  const vistos = vistosGuardados || todos.filter(id => !MODULOS_NUEVOS_V37.includes(id));
+  let cambios = 0;
+  CLASES.forEach(c => {
+    const activos = S.settings.modulosActivos[c.id] = S.settings.modulosActivos[c.id] || [];
+    modsDeClase(c).forEach(m => {
+      if (!vistos.includes(m.id) && !activos.includes(m.id)) { activos.push(m.id); cambios++; }
+    });
+  });
+  if (!vistosGuardados || todos.some(id => !vistos.includes(id))) cambios++;
+  S.settings.modulosVistos = todos;
+  return cambios > 0;
 }
 
 async function loadState() {
@@ -3382,10 +4493,14 @@ async function loadState() {
       S.settings = {
         ...S.settings,
         ...data.settings,
-        modulosActivos: data.settings.modulosActivos || S.settings.modulosActivos,
+        // Las clases añadidas en versiones nuevas (p. ej. FPB) conservan sus módulos por defecto
+        modulosActivos: { ...S.settings.modulosActivos, ...(data.settings.modulosActivos || {}) },
       };
     }
-    if (data.alumnos) S.alumnos = data.alumnos;
+    if (data.alumnos) S.alumnos = { ...S.alumnos, ...data.alumnos };
+    // Notas de prácticas de versiones anteriores (1-4) → 0-10, y se guarda ya convertido
+    const convertidas = migrarEscala10();
+    if (activarModulosNuevos(data.settings?.modulosVistos) || convertidas) scheduleSave();
     return true;
   } catch(e) {
     console.warn('Error cargando estado:', e);
@@ -3442,10 +4557,12 @@ async function refreshStorageInfo() {
     <div>👥 <strong>${nAlumnos}</strong> alumnos · 📋 <strong>${nPracticas}</strong> prácticas evaluadas</div>
     <div>👁 <strong>${nSesiones}</strong> sesiones de observación · ✏ <strong>${nPruebas}</strong> pruebas escritas</div>
     <div>📷 <strong>${nFotosAct + nFotosStu}</strong> fotos (${nFotosAct} de prácticas · ${nFotosStu} de alumnos)</div>
+    <div>📐 <strong>${Object.values(S.configActs || {}).flat().filter(d => d.imagen).length}</strong> imágenes de prácticas predefinidas</div>
     <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
       💾 <strong>${fmt(usedBytes)}</strong> usados${quotaBytes ? ' de ~'+fmt(quotaBytes)+' disponibles ('+pct+'%)' : ''}
     </div>
     ${persistLabel ? '<div style="margin-top:6px">'+persistLabel+'</div>' : ''}
+    <div style="margin-top:6px">💾 Última copia de seguridad: <strong>${S.settings.ultimaCopia ? new Date(S.settings.ultimaCopia).toLocaleDateString('es-ES') : 'nunca'}</strong></div>
     <div style="margin-top:10px;font-size:11px;color:var(--muted);line-height:1.5">
       Todos los datos están solo en este dispositivo. Nada se envía a internet.
     </div>
@@ -3458,7 +4575,7 @@ async function exportBackup(withPhotos) {
     const data = {
       _meta: {
         app: 'NEXUS by Xurxo',
-        version: 'v28',
+        version: APP_VERSION,
         exported: new Date().toISOString(),
         withPhotos: withPhotos,
       },
@@ -3495,6 +4612,10 @@ async function exportBackup(withPhotos) {
 
     const size = (blob.size / 1024).toFixed(0);
     showToast(`✓ Copia ${withPhotos?'completa':'rápida'} descargada (${size} KB)`);
+    S.settings.ultimaCopia = new Date().toISOString();
+    hideAviso('copia');
+    persistState();
+    refreshStorageInfo();
   } catch(e) {
     console.error(e);
     showToast('✗ Error exportando copia');
@@ -3530,8 +4651,11 @@ function importBackup(input) {
       if (data.stuPhotos)     S.stuPhotos     = data.stuPhotos;
       if (data.configActs)    S.configActs    = data.configActs;
       if (data.obsProfesor)   S.obsProfesor   = data.obsProfesor;
-      if (data.alumnos)       S.alumnos       = data.alumnos;
-      if (data.settings)      S.settings      = { ...S.settings, ...data.settings };
+      if (data.alumnos)       S.alumnos       = { ...S.alumnos, ...data.alumnos };
+      if (data.settings)      S.settings      = { ...S.settings, ...data.settings,
+        modulosActivos: { ...S.settings.modulosActivos, ...(data.settings.modulosActivos || {}) } };
+      // Una copia de una versión anterior no conoce los módulos añadidos después: se activan
+      activarModulosNuevos(data.settings?.modulosVistos);
 
       await persistState();
       showToast('✓ Copia restaurada. Recargando…');
@@ -3583,11 +4707,32 @@ async function executeDeleteAll() {
 // Retrocompatibilidad: función antigua mantenida
 function clearAllData() { confirmDeleteAll(); }
 
+// Recordatorio de copia: los datos solo viven en este navegador, así que si pasan
+// DIAS_COPIA días sin copia (o nunca se hizo) se avisa al abrir la app.
+const DIAS_COPIA = 7;
+const POSPONER_KEY = 'nexus_copia_pospuesta'; // fecha (AAAA-MM-DD) en que se cerró el aviso; no guarda datos de alumnos
+function comprobarCopia() {
+  const nAlumnos = Object.values(S.alumnos || {}).reduce((n, l) => n + l.length, 0);
+  if (!nAlumnos) return;
+  try { if (localStorage.getItem(POSPONER_KEY) === today()) return; } catch(e) {}
+  const ultima = S.settings.ultimaCopia ? new Date(S.settings.ultimaCopia) : null;
+  const dias = ultima ? Math.floor((Date.now() - ultima) / 86400000) : null;
+  if (dias !== null && dias < DIAS_COPIA) return;
+  showAviso('copia', 'warn',
+    dias === null
+      ? '💾 Aún no has hecho ninguna copia de seguridad. Los datos solo están en este dispositivo.'
+      : `💾 Hace ${dias} días de tu última copia de seguridad.`,
+    { texto: 'Hacer copia', fn: () => exportBackup(true) });
+  // Al cerrarlo con ✕ no vuelve a salir hasta mañana
+  document.querySelector('#aviso-copia .aviso-close').addEventListener('click', () => {
+    try { localStorage.setItem(POSPONER_KEY, today()); } catch(e) {}
+  });
+}
+
 // Compresión de imágenes (sin cambios)
-function compressImage(dataURL, callback) {
+function compressImage(dataURL, callback, MAX = 800, calidad = 0.70) {
   const img = new Image();
   img.onload = () => {
-    const MAX = 800;
     let w = img.width, h = img.height;
     if (w > MAX || h > MAX) {
       if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
@@ -3595,8 +4740,10 @@ function compressImage(dataURL, callback) {
     }
     const canvas = document.createElement('canvas');
     canvas.width = w; canvas.height = h;
-    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-    callback(canvas.toDataURL('image/jpeg', 0.70));
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); // fondo blanco: un PNG transparente saldría negro en JPEG
+    ctx.drawImage(img, 0, 0, w, h);
+    callback(canvas.toDataURL('image/jpeg', calidad));
   };
   img.src = dataURL;
 }
@@ -3620,6 +4767,7 @@ function isPWAInstalled() {
 }
 
 function openInfo() {
+  document.getElementById('app-version').textContent = APP_VERSION;
   // Mostrar/ocultar el botón de instalar según estado
   const installPrompt = document.getElementById('install-prompt');
   const installedHint = document.getElementById('installed-hint');
@@ -3665,8 +4813,21 @@ async function installPWA() {
 
 // ═══════════ SERVICE WORKER (PWA) ═══════════
 if ('serviceWorker' in navigator) {
+  // Si ya había una versión instalada controlando la página, un cambio de controlador
+  // significa que se ha descargado una versión nueva (sw.js con otro CACHE_NAME)
+  const habiaVersion = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!habiaVersion) return;
+    showAviso('version', 'info', '🔄 Hay una versión nueva de NEXUS.',
+      { texto: 'Actualizar', fn: async () => { await persistState(); location.reload(); } });
+  });
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(err => {
+    navigator.serviceWorker.register('sw.js').then(reg => {
+      // La app instalada puede pasar días abierta: buscar versión nueva cada vez que vuelve a verse
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') reg.update().catch(() => {});
+      });
+    }).catch(err => {
       console.log('Service Worker no registrado (solo funciona en HTTPS):', err.message);
     });
   });
@@ -3683,6 +4844,7 @@ if ('serviceWorker' in navigator) {
   if (restored) {
     setTimeout(() => showToast(`✓ Datos del curso ${S.settings.year} cargados`), 300);
   }
+  setTimeout(comprobarCopia, 2600); // tras el splash
 })();
 
 // ═══════════ SPLASH SCREEN ═══════════
@@ -3705,29 +4867,24 @@ document.addEventListener('keydown', (e) => {
 
   // Esc cierra cualquier modal abierto
   if (e.key === 'Escape') {
+    if (document.getElementById('visor')) { cerrarVisor(); e.preventDefault(); return; }
     const open = document.querySelector('.modal-overlay.open');
     if (open) { open.classList.remove('open'); e.preventDefault(); return; }
   }
 
-  // 1-2-3-4 puntúan la práctica activa si hay una abierta en la pestaña Prácticas
-  if (['1','2','3','4'].includes(e.key) && S.curTab === 'rubrica' && S.openActIdx !== null) {
-    const val = parseInt(e.key, 10);
-    const acts = S.actividades[akey()] || [];
-    const act = acts[S.openActIdx];
+  // Teclas 0-9 (y D = 10) puntúan el primer criterio sin nota propia de la práctica abierta
+  const tecla = e.key.toLowerCase();
+  if ((/^[0-9]$/.test(tecla) || tecla === 'd') && S.curTab === 'rubrica' && S.openActIdx !== null) {
+    const val = tecla === 'd' ? 10 : parseInt(tecla, 10);
+    const act = (S.actividades[akey()] || [])[S.openActIdx];
     if (!act) return;
-
-    // Buscar el primer indicador sin puntuar
-    const indsToShow = act.crits && act.crits.length
-      ? getIndP().filter(i => act.crits.includes(i.id))
-      : getIndP();
-    const nextInd = indsToShow.find(i => !act.scores[i.id] || act.scores[i.id] === 0);
-
-    if (nextInd) {
-      setScore(S.openActIdx, nextInd.id, val);
+    const ids = critsPractica(act);
+    const primero = ids.find(id => !tieneAjuste(act, id));
+    if (primero) {
+      const eraElPrimero = !ids.some(id => tieneAjuste(act, id));
+      setScore(S.openActIdx, primero, val);
       e.preventDefault();
-      // Pequeño toast solo si es el primero (feedback)
-      const countScored = Object.values(act.scores).filter(v => v > 0).length;
-      if (countScored === 0) showToast(`Atajo activo · pulsa 1-4 para puntuar`);
+      if (eraElPrimero) showToast('Atajo activo · teclas 0-9 y D = 10');
     }
   }
 });

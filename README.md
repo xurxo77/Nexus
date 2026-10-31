@@ -71,7 +71,8 @@ Cuando recibas una versión nueva del `index.html`:
 2. Pulsa el lápiz ✏ de arriba a la derecha
 3. Borra el contenido y pega el nuevo
 4. Abajo "Commit changes"
-5. La app se actualiza sola en 1-2 minutos (el Service Worker detecta el cambio)
+5. Haz lo mismo con `sw.js` si también ha cambiado (en cada versión cambia la línea `CACHE_NAME = 'nexus-vNN'`)
+6. La app se actualiza al volver a abrirla. **Ojo:** si solo cambias `index.html` y no `sw.js`, los dispositivos donde ya está instalada siguen mostrando la versión anterior guardada en caché.
 
 ## Archivos del paquete
 
