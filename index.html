@@ -1074,6 +1074,7 @@ try {
             Criterio = media de prácticas, observación y exámenes · RA = media de sus criterios · <strong>Módulo = media de los RA según su peso</strong>
           </p>
           <p><strong>Condición de aprobado:</strong> todos los RA con 5 o más y cada parte (prácticas, actitud y teoría) con 5 o más. Si no, la nota queda en <strong>4 como máximo</strong>.</p>
+          <p><strong>Cada parte se calcula por instrumento:</strong> prácticas = notas de las prácticas · actitud = hoja de observación · teoría = exámenes. Un examen cuenta siempre en teoría, aunque evalúe criterios de procedimiento (por ejemplo, la prueba de seguridad).</p>
           <p>La nota final es <strong>entera, de 1 a 10</strong>. Los pesos de los RA se configuran en ⚙ Criterios y prácticas (por defecto, todos iguales).</p>
           <p>La nota es <strong>acumulada</strong> (todo lo evaluado desde el inicio de curso) y está <strong>en curso</strong> hasta que cierras la evaluación con el botón «Cerrar» de la lista de alumnos. Al cerrar, se guarda la nota de cada alumno en ese momento y ya no cambia; aparece en la lista, en la ficha y en el informe PDF. Si te equivocas, puedes reabrir la última evaluación cerrada.</p>
           <p>Si a un alumno le falta por evaluar alguna parte (prácticas, actitud o teoría), su nota sale en ámbar con el aviso «falta…». El detalle por partes y por RA está en la ficha del alumno, en «Ver detalle de la nota».</p>
@@ -1088,7 +1089,7 @@ try {
           <p>Todos los criterios están vinculados a los RA y CE del currículo andaluz:</p>
           <p>• CFGM Soldadura y Calderería: Orden de 7 de julio de 2009 (BOJA nº 150, 4/08/2009).</p>
           <p>• FP Básica Fabricación de Elementos Metálicos: Orden de 8 de noviembre de 2016, Anexo XXIV (BOJA nº 241, 19/12/2016).</p>
-          <p>La clasificación de cada criterio como práctica (P), actitud (A) o teoría (T) es una decisión metodológica del profesorado: no la fija el currículo.</p>
+          <p>La clasificación de cada criterio como práctica (P), actitud (A) o teoría (T) es una decisión metodológica del profesorado (no la fija el currículo). Sirve para ordenar los criterios y para saber a qué criterios cuenta un examen sin criterios marcados (a los de teoría); la parte en la que se suma una nota la decide el instrumento.</p>
 
           <p style="margin-top:12px"><strong>Importante:</strong> lo que configures en NEXUS (criterios trabajados, pesos de los RA y condición de aprobado) debe coincidir con tu programación didáctica (art. 3 de la Orden 18/09/2025).</p>
         </div>
@@ -1243,7 +1244,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v88';
+const APP_VERSION = 'v89';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -2351,7 +2352,7 @@ const valoresActivos = (mapa, modId) =>
 //    prácticas (0-10), observación (Sí = 10, No = 0) y exámenes (nota del examen).
 // 2. Nota de cada RA = media de sus criterios evaluados (todos pesan lo mismo).
 // 3. Nota del módulo = media de los RA ponderada por el peso de cada RA (por defecto, iguales).
-// 4. Para aprobar: todos los RA ≥ 5 y cada parte (prácticas, actitud, teoría) ≥ 5. Si no, máximo 4.
+// 4. Para aprobar: todos los RA ≥ 5 y cada parte ≥ 5 (por instrumento: prácticas, observación, exámenes). Si no, máximo 4.
 // 5. La nota final es entera, de 1 a 10.
 const mediaDe = vals => vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
 const raDe = ind => ind.ce.match(/^RA(\d+)/)[1];
@@ -2448,11 +2449,23 @@ function evalModulo(key) {
   const obligSuspensas = todasPruebas.filter(p => p.obligatoria && esNota(p.nota) && p.nota < 5).map(nombreExamen);
   const obligPendientes = todasPruebas.filter(p => p.obligatoria && !esNota(p.nota)).map(nombreExamen);
 
-  const evaluados = t => criterios.filter(c => (!t || c.tipo === t) && c.nota !== null).map(c => c.nota);
-  const bloques = { p: mediaDe(evaluados('p')), a: mediaDe(evaluados('a')), t: mediaDe(evaluados('t')) };
-  // Partes del módulo que tienen criterios activos pero aún ninguna nota: la nota es provisional
+  // Partes P / A / T por INSTRUMENTO (decisión del profesor): prácticas = P, observación = A, exámenes = T,
+  // sea cual sea el tipo de criterio que evalúen (p. ej. una prueba de seguridad sobre criterios de
+  // procedimiento cuenta en teoría). Cada parte es la media, criterio a criterio, de las notas de ese instrumento.
+  // La nota de cada criterio, y por tanto la de cada RA, sigue juntando todos los instrumentos.
+  const todosIds = criterios.map(c => c.id);
+  const parte = notasDe => mediaDe(todosIds.map(id => mediaDe(notasDe(id))).filter(v => v !== null));
+  const bloques = { p: parte(notasPracticas), a: parte(notasObservacion), t: parte(notasExamen) };
+  // Partes que se esperan en este módulo: prácticas si hay criterios de procedimiento, observación si hay
+  // criterios de actitud o frases Sí/No, y teoría si hay criterios teóricos o algún examen creado
+  const partes = {
+    p: criterios.some(c => c.tipo === 'p'),
+    a: criterios.some(c => c.tipo === 'a') || indsSiNo.length > 0,
+    t: criterios.some(c => c.tipo === 't') || todasPruebas.length > 0,
+  };
+  // Partes esperadas que aún no tienen ninguna nota: falta evaluarlas
   const faltan = [['p','prácticas'], ['a','actitud'], ['t','teoría']]
-    .filter(([t]) => criterios.some(c => c.tipo === t) && bloques[t] === null).map(([, nombre]) => nombre)
+    .filter(([t]) => partes[t] && bloques[t] === null).map(([, nombre]) => nombre)
     .concat(obligPendientes);
 
   const grupos = {};
@@ -2467,7 +2480,7 @@ function evalModulo(key) {
   });
 
   const conNota = ras.filter(r => r.nota !== null);
-  if (!conNota.length) return { criterios, bloques, ras, notaExacta: null, nota: null, motivos: [], faltan, provisional: true };
+  if (!conNota.length) return { criterios, bloques, partes, ras, notaExacta: null, nota: null, motivos: [], faltan, provisional: true };
   const sumaPesos = conNota.reduce((s, r) => s + r.peso, 0);
   const notaExacta = sumaPesos > 0
     ? conNota.reduce((s, r) => s + r.nota * r.peso, 0) / sumaPesos
@@ -2480,7 +2493,7 @@ function evalModulo(key) {
   motivos.push(...obligSuspensas);
   let nota = Math.min(10, Math.max(1, Math.round(notaExacta)));
   if (motivos.length) nota = Math.min(nota, 4);
-  return { criterios, bloques, ras, notaExacta, nota, motivos, faltan, provisional: faltan.length > 0 };
+  return { criterios, bloques, partes, ras, notaExacta, nota, motivos, faltan, provisional: faltan.length > 0 };
 }
 
 const redondea1 = v => v === null ? null : +v.toFixed(1);
@@ -3208,7 +3221,7 @@ function filaAlumnoHTML(a) {
   const cierre = ultimoCierreAlumno(a.id);
   const tendencia = !cierre || cierre.nota === null || ev.nota === null ? ''
     : ev.nota > cierre.nota ? 'sube' : ev.nota < cierre.nota ? 'baja' : 'igual';
-  const partes = ['p','a','t'].filter(t => ev.criterios.some(c => c.tipo === t)).map(t => {
+  const partes = ['p','a','t'].filter(t => ev.partes[t]).map(t => {
     const v = ev.bloques[t];
     const cls = v === null ? 'pend' : v >= 5 ? '' : 'mal';
     return `<span class="parte ${cls}" title="${({p:'Prácticas',a:'Actitud',t:'Teoría'})[t]}: ${v === null ? 'sin evaluar' : v.toFixed(1)}">${t.toUpperCase()} <b>${fmtParte(v)}</b></span>`;
