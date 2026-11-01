@@ -96,10 +96,12 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .section-label{font-size:var(--fs-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:4px 2px}
 
 /* ── Clase banners ── */
-.clase-banner{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s,filter .12s;-webkit-tap-highlight-color:transparent}
+/* Profundidad: brillo en la esquina superior izquierda, sombra del color de la clase (--sombra) y línea de luz arriba */
+.clase-banner{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 24px -8px var(--sombra,rgba(0,0,0,.35)),inset 0 1px 0 rgba(255,255,255,.25);cursor:pointer;transition:transform .12s,filter .12s;-webkit-tap-highlight-color:transparent}
+.clase-banner::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 0% 0%,rgba(255,255,255,.22),transparent 55%);pointer-events:none}
 .clase-banner:hover{transform:scale(1.01)}
 .clase-banner:active{transform:scale(.97);filter:brightness(.9)} /* al tocar se "hunde": se nota que es un botón */
-.clase-banner-inner{padding:16px 18px 14px;display:flex;flex-direction:column;gap:12px}
+.clase-banner-inner{position:relative;padding:16px 18px 14px;display:flex;flex-direction:column;gap:12px}
 .clase-top{display:flex;align-items:center;gap:14px}
 /* Pie: chips de módulos a la izquierda (pueden ocupar varias líneas) y «Entrar» siempre abajo a la derecha */
 .clase-pie{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
@@ -1127,7 +1129,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v73';
+const APP_VERSION = 'v74';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -2489,7 +2491,7 @@ function renderClases() {
     const nAlu = (S.alumnos[c.id]||[]).length;
     const mods = modsActivosDe(c);
     return `
-    <div class="clase-banner" role="button" tabindex="0" title="${c.titulo}" onclick="selectClase('${c.id}')" style="background:linear-gradient(135deg,${c.color1},${c.color2})">
+    <div class="clase-banner" role="button" tabindex="0" title="${c.titulo}" onclick="selectClase('${c.id}')" style="background:linear-gradient(135deg,${c.color1},${c.color2});--sombra:${c.color1}99">
       <div class="clase-banner-inner">
         <div class="clase-top">
           <div class="clase-badge">${iconoClase(c)}</div>
