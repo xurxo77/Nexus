@@ -3,7 +3,7 @@
 // Cachea la app para funcionamiento offline completo
 // ═══════════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'nexus-v57';
+const CACHE_NAME = 'nexus-v58';
 const CORE_ASSETS = [
   './',
   './index.html',

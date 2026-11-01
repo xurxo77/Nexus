@@ -7,6 +7,7 @@
 
 <!-- ═══════════ PWA METADATA ═══════════ -->
 <link rel="manifest" href="manifest.json">
+<link rel="preload" as="image" href="icon-maskable-512.png">
 <meta name="theme-color" content="#1A237E">
 <meta name="description" content="Evaluación criterial para FP de Soldadura y Calderería">
 
@@ -510,17 +511,17 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 </head>
 <body>
 <!-- ═══════════ SPLASH SCREEN ═══════════ -->
-<!-- Mismo fondo (background_color del manifest) e icono en círculo que la pantalla de arranque de Android, para que el paso de una a otra no se note -->
+<!-- Continúa la pantalla de arranque de Android sin que se note el paso: mismo fondo (background_color del
+     manifest), mismo icono en círculo, mismo tamaño (≈160 px) y mismo centro, sin animación de entrada.
+     Lo único nuevo es la frase, que aparece debajo con un fundido. -->
 <div id="splash" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#581C87;transition:opacity .5s ease;opacity:1">
-  <img src="icon-maskable-512.png" alt="NEXUS"
-       style="width:min(56vw,300px);height:auto;border-radius:50%;box-shadow:0 20px 60px rgba(0,0,0,0.35);animation:splashPulse 1.6s ease-in-out" />
+  <img src="icon-maskable-512.png" alt="NEXUS" decoding="sync" fetchpriority="high"
+       style="width:160px;height:160px;border-radius:50%" />
+  <div class="splash-lema">Tu cuaderno de evaluación del taller</div>
 </div>
 <style>
-@keyframes splashPulse {
-  0%   { opacity: 0; transform: scale(.9); }
-  30%  { opacity: 1; transform: scale(1); }
-  100% { opacity: 1; transform: scale(1); }
-}
+.splash-lema{position:absolute;left:24px;right:24px;top:calc(50% + 104px);text-align:center;color:#fff;font-family:'Outfit',system-ui,sans-serif;font-size:17px;font-weight:500;letter-spacing:.02em;opacity:0;animation:splashLema .7s ease .3s forwards}
+@keyframes splashLema { from { opacity: 0; transform: translateY(6px); } to { opacity: .9; transform: none; } }
 #splash.hidden { opacity: 0; pointer-events: none; }
 </style>
 
@@ -1097,7 +1098,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v57';
+const APP_VERSION = 'v58';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
