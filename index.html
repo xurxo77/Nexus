@@ -73,7 +73,11 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .topbar-action:hover{background:rgba(255,255,255,.15)}
 
 /* ── Screens ── */
-.screen{flex:1;overflow-y:auto;padding:20px;display:none;flex-direction:column;gap:16px;animation:fadeUp .22s ease;padding-bottom:40px}
+.screen{flex:1;overflow-y:auto;padding:20px;display:none;flex-direction:column;gap:16px;animation:fadeUp .22s ease;padding-bottom:96px}
+/* Botón flotante de volver */
+.back-fab{position:fixed;left:16px;bottom:calc(20px + var(--safe-bottom));z-index:900;width:52px;height:52px;border-radius:50%;border:none;background:rgba(26,35,126,.82);color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.back-fab:active{transform:scale(.94)}
+@media (min-width:600px){.back-fab{left:calc(50% - 280px + 16px)}}
 .screen.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
@@ -520,6 +524,8 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 </style>
 
 <div id="app">
+  <!-- Botón flotante de volver, a la altura del pulgar (en móvil la flecha de arriba queda lejos) -->
+  <button id="backFab" class="back-fab" style="display:none" onclick="goBack()" title="Volver" aria-label="Volver a la pantalla anterior">←</button>
   <div class="topbar" id="topbar">
     <button class="topbar-back" id="backBtn" style="display:none" onclick="goBack()">←</button>
     <div class="topbar-title">
@@ -1090,7 +1096,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v51';
+const APP_VERSION = 'v54';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -2364,6 +2370,7 @@ function showScreen(id,title,sub,showConf=false) {
     _subEl.style.display = sub ? '' : 'none';
   }
   document.getElementById('backBtn').style.display=navHistory.length>1?'':'none';
+  document.getElementById('backFab').style.display=navHistory.length>1?'':'none';
   document.getElementById('configBtn').style.display=showConf?'flex':'none';
   document.getElementById('pdfBtn').style.display=id==='screen-alumno'?'flex':'none';
   document.getElementById('settingsBtn').style.display=isHome?'flex':'none';
@@ -2371,8 +2378,40 @@ function showScreen(id,title,sub,showConf=false) {
 }
 function navigate(id,title,sub,showConf=false) {
   navHistory.push(id); showScreen(id,title,sub,showConf);
+  ponerGuardaAtras();
 }
+
+// ── Botón / gesto "atrás" del móvil ──
+// Mientras no estemos en la pantalla de inicio se mantiene UNA entrada extra en el historial del navegador
+// (la "guarda"). El atrás del sistema la consume: se detecta en popstate y se vuelve a la pantalla anterior
+// de la app. En la pantalla de inicio no hay guarda, así que el atrás del sistema cierra la app como siempre.
+let _guardaActiva = false, _ignorarPop = false;
+function ponerGuardaAtras() {
+  if (_guardaActiva || navHistory.length <= 1) return;
+  try { history.pushState({ nexus: true }, ''); _guardaActiva = true; } catch (e) {}
+}
+window.addEventListener('popstate', () => {
+  _guardaActiva = false;
+  if (_ignorarPop) { _ignorarPop = false; return; }
+  // Primero se cierra lo que haya abierto encima (visor de imagen, ventana), sin cambiar de pantalla
+  const modal = document.querySelector('.modal-overlay.open');
+  if (document.getElementById('visor')) cerrarVisor();
+  else if (modal) modal.classList.remove('open');
+  else retroceder();
+  ponerGuardaAtras();
+});
+
+// Volver atrás desde la app (flecha de arriba, botón flotante o el propio código)
 function goBack() {
+  if (navHistory.length<=1) return;
+  retroceder();
+  // De vuelta en el inicio sobra la guarda: se consume para que el atrás del sistema cierre la app
+  if (navHistory.length <= 1 && _guardaActiva) {
+    _guardaActiva = false; _ignorarPop = true;
+    try { history.back(); } catch (e) { _ignorarPop = false; }
+  }
+}
+function retroceder() {
   if (navHistory.length<=1) return;
   navHistory.pop();
   const prev=navHistory[navHistory.length-1];
