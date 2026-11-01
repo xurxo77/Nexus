@@ -103,6 +103,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .clase-top{display:flex;align-items:center;gap:16px}
 .clase-pie{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .clase-chip{font-size:12px;font-weight:700;letter-spacing:.03em;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.18);color:#fff;font-family:"IBM Plex Mono",monospace}
+.clase-chip .chip-h{font-weight:500;opacity:.8}
 .clase-chip.alumnos{font-family:inherit;letter-spacing:0}
 .clase-entrar{margin-left:auto;background:#fff;font-weight:800;font-size:15px;padding:9px 16px;border-radius:999px;box-shadow:0 3px 10px rgba(0,0,0,.18);white-space:nowrap}
 /* Icono temático de la clase: solo el icono en blanco, sin recuadro, para que no compita con el nombre */
@@ -1119,7 +1120,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v64';
+const APP_VERSION = 'v66';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -1146,26 +1147,28 @@ const iconoClase = (c, size = 42) => `<svg width="${size}" height="${size}" view
 // Módulos de una clase: los de FPB van aparte; los del CFGM se agrupan por curso
 const modsDeClase = c => (c ? MODULOS[c.modulos || c.curso] : null) || [];
 
+// horasSem: Resolución 24/07/2026 (curso 26/27). horas: totales calculadas = horasSem × semanas por curso
+// según la Orden 07/07/2009 (CFGM: 32 en 1º, 21 en 2º) y la Orden 08/11/2016 (FPB: 32 en 1º, 26 en 2º)
 const MODULOS = {
   1: [
-    { id:"MOD0091", codigo:"0091", nombre:"Trazado, corte y conformado", horas:288, icon:"✂️", bg:"#FFE0B2" },
-    { id:"MOD0092", codigo:"0092", nombre:"Mecanizado",                   horas:192, icon:"⚙️", bg:"#C8E6C9" },
-    { id:"MOD0007", codigo:"0007", nombre:"Interpretación gráfica",        horas:96,  icon:"📐", bg:"#B3E5FC" },
-    { id:"MOD0093", codigo:"0093", nombre:"Soldadura en atmósfera natural", horas:288, icon:"🔥", bg:"#FFCDD2" },
+    { id:"MOD0091", codigo:"0091", nombre:"Trazado, corte y conformado", horas:256, horasSem:8, icon:"✂️", bg:"#FFE0B2" },
+    { id:"MOD0092", codigo:"0092", nombre:"Mecanizado",                   horas:192, horasSem:6, icon:"⚙️", bg:"#C8E6C9" },
+    { id:"MOD0007", codigo:"0007", nombre:"Interpretación gráfica",        horas:96, horasSem:3, icon:"📐", bg:"#B3E5FC" },
+    { id:"MOD0093", codigo:"0093", nombre:"Soldadura en atmósfera natural", horas:256, horasSem:8, icon:"🔥", bg:"#FFCDD2" },
   ],
   2: [
-    { id:"MOD0094", codigo:"0094", nombre:"Soldadura en atmósfera protegida", horas:231, icon:"🛡️", bg:"#E1BEE7" },
-    { id:"MOD0095", codigo:"0095", nombre:"Montaje",                          horas:126, icon:"🔧", bg:"#B2DFDB" },
-    { id:"MOD0006", codigo:"0006", nombre:"Metrología y ensayos",             horas:126, icon:"📏", bg:"#BBDEFB" },
+    { id:"MOD0094", codigo:"0094", nombre:"Soldadura en atmósfera protegida", horas:210, horasSem:10, icon:"🛡️", bg:"#E1BEE7" },
+    { id:"MOD0095", codigo:"0095", nombre:"Montaje",                          horas:105, horasSem:5, icon:"🔧", bg:"#B2DFDB" },
+    { id:"MOD0006", codigo:"0006", nombre:"Metrología y ensayos",             horas:105, horasSem:5, icon:"📏", bg:"#BBDEFB" },
   ],
   FPB1: [
-    { id:"MOD3020", codigo:"3020", nombre:"Operaciones básicas de fabricación",  horas:160, icon:"🛠️", bg:"#D7CCC8" },
-    { id:"MOD3021", codigo:"3021", nombre:"Soldadura y carpintería metálica",    horas:160, icon:"🔩", bg:"#FFCCBC" },
-    { id:"MOD3015", codigo:"3015", nombre:"Equipos eléctricos y electrónicos",   horas:192, icon:"🔌", bg:"#FFF9C4" },
+    { id:"MOD3020", codigo:"3020", nombre:"Operaciones básicas de fabricación",  horas:160, horasSem:5, icon:"🛠️", bg:"#D7CCC8" },
+    { id:"MOD3021", codigo:"3021", nombre:"Soldadura y carpintería metálica",    horas:160, horasSem:5, icon:"🔩", bg:"#FFCCBC" },
+    { id:"MOD3015", codigo:"3015", nombre:"Equipos eléctricos y electrónicos",   horas:192, horasSem:6, icon:"🔌", bg:"#FFF9C4" },
   ],
   FPB2: [
-    { id:"MOD3022", codigo:"3022", nombre:"Carpintería de aluminio y PVC",          horas:156, icon:"🪟", bg:"#C8E6C9" },
-    { id:"MOD3073", codigo:"3073", nombre:"Operaciones básicas de calderería ligera", horas:260, icon:"🛢️", bg:"#DCEDC8" },
+    { id:"MOD3022", codigo:"3022", nombre:"Carpintería de aluminio y PVC",          horas:182, horasSem:7, icon:"🪟", bg:"#C8E6C9" },
+    { id:"MOD3073", codigo:"3073", nombre:"Operaciones básicas de calderería ligera", horas:286, horasSem:11, icon:"🛢️", bg:"#DCEDC8" },
   ]
 };
 
@@ -2441,7 +2444,7 @@ function retroceder() {
   const m={
     'screen-clases':['NEXUS',`Departamento de Fabricación Mecánica · ${S.settings.year}`,false],
     'screen-modulos':[getClase()?.nombre,'Módulos profesionales',false],
-    'screen-alumnos':[getModulo()?.nombre,getClase()?.nombre,true],
+    'screen-alumnos':[getModulo()?.nombre,subtituloModulo(),true],
     'screen-alumno':[getAlumno()?.nombre+' '+getAlumno()?.apellidos,getModulo()?.nombre,false],
     'screen-config':['Criterios y prácticas',getModulo()?.nombre,false],
     'screen-clase-practica':['Evaluar a toda la clase',getModulo()?.nombre,false],
@@ -2485,7 +2488,7 @@ function renderClases() {
           </div>
         </div>
         <div class="clase-pie">
-          ${modsActivosDe(c).map(m => `<span class="clase-chip" title="${m.nombre}">${m.codigo}</span>`).join('')}
+          ${modsActivosDe(c).map(m => `<span class="clase-chip" title="${m.nombre}">${m.codigo} <b class="chip-h">${m.horas}h</b></span>`).join('')}
           <span class="clase-chip alumnos">👥 ${nAlu} ${nAlu === 1 ? 'alumno' : 'alumnos'}</span>
           <span class="clase-entrar" style="color:${c.color1}">Entrar ›</span>
         </div>
@@ -2509,15 +2512,20 @@ function renderModulos() {
       <div class="item-icon" style="background:${m.bg}">${m.icon}</div>
       <div class="item-body">
         <h3>${m.nombre}</h3>
-        <p>Cód. ${m.codigo} · ${m.horas}h</p>
+        <p>Cód. ${m.codigo} · <b>${m.horas} h</b> · ${m.horasSem} h/semana</p>
       </div>
       <span class="item-arrow">›</span>
     </div>`).join('')
     || `<div class="empty" style="padding:24px"><p>No impartes ningún módulo en esta clase.</p></div>`;
 }
+// Subtítulo de la cabecera: clase, horas totales y semanales del módulo
+function subtituloModulo() {
+  const m = getModulo();
+  return `${getClase()?.nombre || ''}${m?.horas ? ` · ${m.horas} h · ${m.horasSem} h/sem` : ''}`;
+}
 function selectModulo(id) {
   S.moduloId=id; renderAlumnos();
-  navigate('screen-alumnos',getModulo().nombre,getClase().nombre,true);
+  navigate('screen-alumnos',getModulo().nombre,subtituloModulo(),true);
 }
 function openConfig() {
   S._configModId = S.moduloId || null;
@@ -3930,7 +3938,7 @@ function generarPDF(observaciones = '') {
   doc.setFont('helvetica','normal');
   doc.setFontSize(10);
   doc.text(`${a.nombre} ${a.apellidos}`, M + 38, 21);
-  doc.text(`${mod.nombre}  ·  Cód. ${mod.codigo}  ·  ${mod.horas}h`, M + 38, 28);
+  doc.text(`${mod.nombre}  ·  Cód. ${mod.codigo}  ·  ${mod.horas} h (${mod.horasSem} h/semana)`, M + 38, 28);
 
   // Año académico, centro y profesor en la parte derecha de la cabecera
   doc.setFontSize(8);
@@ -4717,7 +4725,7 @@ function exportResumenPDF() {
   doc.setFontSize(10);
   doc.text(`${clase.nombre}  ·  ${mod.nombre}`, M + 34, 21);
   doc.setFontSize(8);
-  doc.text(`Cód. ${mod.codigo}  ·  ${mod.horas}h`, M + 34, 27);
+  doc.text(`Cód. ${mod.codigo}  ·  ${mod.horas} h (${mod.horasSem} h/semana)`, M + 34, 27);
 
   doc.setFontSize(8);
   const infoRight = [
