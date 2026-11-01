@@ -1,7 +1,8 @@
 {
-  "name": "NEXUS · Evaluación FP Soldadura y Calderería",
+  "id": "./?app=nexus-fm",
+  "name": "NEXUS · Evaluación FP Fabricación Mecánica",
   "short_name": "NEXUS",
-  "description": "Evaluación criterial para Formación Profesional de Soldadura y Calderería",
+  "description": "Evaluación criterial para FP de Soldadura y Calderería y Fabricación de Elementos Metálicos",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

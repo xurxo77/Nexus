@@ -123,6 +123,12 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 /* Lista de alumnos: acción principal y primeros pasos */
 .btn-principal{width:100%;min-height:58px;border:none;border-radius:16px;background:var(--navy);color:#fff;font-size:var(--fs-md);font-weight:700;cursor:pointer;box-shadow:var(--shadow);margin-bottom:6px}
 .chip-prov{border:1.5px dashed currentColor}
+/* Estado de cada parte (prácticas, actitud, teoría) en la lista de alumnos */
+.pat-row{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.pat{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;padding:3px 8px;border-radius:8px;border:1.5px solid}
+.pat.ok{background:#E8F5E9;color:#2E7D32;border-color:#A5D6A7}
+.pat.mal{background:#FFEBEE;color:#C62828;border-color:#EF9A9A}
+.pat.pend{background:#F5F5F5;color:#9E9E9E;border-color:#E0E0E0}
 .primeros-pasos{padding:14px 16px;display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
 .paso-tit{font-weight:700;color:var(--navy);font-size:var(--fs-md)}
 .paso{display:flex;align-items:center;gap:10px;font-size:var(--fs-sm)}
@@ -239,6 +245,10 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .obs-row{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border)}
 .obs-row:last-child{border-bottom:none}
 .obs-text{flex:1;font-size:var(--fs-md);line-height:1.55}
+.obs-row.obs-info{background:#FAFAFA}
+.obs-row.obs-info .obs-text{color:var(--muted)}
+/* Criterios a los que cuenta un indicador */
+.ind-crits{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4}
 .toggle{display:flex;gap:8px;flex-shrink:0}
 .toggle-btn{padding:10px 18px;border-radius:12px;border:2.5px solid var(--border);background:none;font-size:var(--fs-md);font-weight:700;cursor:pointer;transition:all .15s;color:var(--muted);min-height:52px}
 .toggle-btn.yes.active{background:#E8F5E9;border-color:var(--green);color:#2E7D32}
@@ -306,11 +316,22 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 /* ── Examen card ── */
 .examen-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
 .examen-header{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:12px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2)}
-.examen-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.examen-title-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .examen-num{font-weight:700;font-size:16px;color:#E65100;letter-spacing:.02em}
 .examen-date{border:1.5px solid #FFB74D;background:rgba(255,255,255,.75);border-radius:10px;padding:6px 10px;font-size:13px;color:#5D4037;cursor:pointer;font-family:Outfit,sans-serif;font-weight:600}
 .examen-score-row{display:flex;align-items:center;gap:12px}
 .examen-nota{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:800;min-width:58px;text-align:right;background:rgba(255,255,255,.85);padding:4px 10px;border-radius:10px}
+.examen-nombre{width:100%;border:1.5px solid #FFB74D;background:#fff;border-radius:10px;padding:10px 12px;font-size:var(--fs-md);font-weight:700;color:#BF360C}
+.examen-nombre::placeholder{font-weight:500;color:#A1887F}
+.examen-nota-wrap{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#5D4037}
+.examen-nota-input{width:84px;border:1.5px solid #FFB74D;background:#fff;border-radius:10px;padding:6px 8px;font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:800;text-align:right}
+.examen-obligatoria{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#5D4037;cursor:pointer;line-height:1.4}
+.examen-obligatoria input{width:20px;height:20px;accent-color:#C62828;flex-shrink:0;margin-top:1px}
+.examen-card.obligatoria{border:2px solid #C62828}
+.examen-aviso{background:#FFEBEE;color:#C62828;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:700}
+.examen-aviso.pendiente{background:#FFF8E1;color:#E65100}
+.examen-crit-sub{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:6px 14px 0}
+.examen-otros summary{cursor:pointer;padding:10px 14px;font-size:13px;font-weight:600;color:var(--navy);border-top:1px solid var(--border)}
 .examen-del-btn{background:none;border:1.5px solid rgba(198,40,40,.3);color:var(--red);font-size:18px;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .15s;flex-shrink:0}
 .examen-del-btn:hover{background:#FEE2E2;border-color:var(--red)}
 .examen-crits{padding:14px 18px}
@@ -362,6 +383,18 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .cp-name{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:var(--fs-sm);line-height:1.3}
 .cp-name span{font-size:13px;color:var(--muted);white-space:nowrap}
 .cp-detalle{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;min-width:48px;min-height:48px;font-size:22px;color:var(--navy);cursor:pointer;flex-shrink:0}
+/* Indicadores de evaluación en la configuración */
+.ind-aviso{padding:12px 16px;font-size:13px;font-weight:600;line-height:1.5;border-bottom:1px solid var(--border);background:var(--bg)}
+.ind-aviso.bien{color:#2E7D32;background:#E8F5E9}
+.ind-aviso.mal{color:#C62828;background:#FFEBEE}
+.ind-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer}
+.ind-item:last-child{border-bottom:none}
+.ind-item-texto{font-size:var(--fs-sm);line-height:1.35}
+.ind-modo{font-size:11px;font-weight:800;padding:4px 7px;border-radius:7px;flex-shrink:0;min-width:46px;text-align:center}
+.ind-modo.nota{background:var(--teal-lt);color:var(--teal)}
+.ind-modo.sino{background:#E1F5FE;color:#0277BD}
+.ind-modo.info{background:#EEEEEE;color:#616161}
+.ind-ra-tit{font-size:12px;font-weight:700;color:var(--navy);padding:10px 14px 4px;position:sticky;top:0;background:var(--bg)}
 .calif-card{padding:14px 16px;font-size:13px;line-height:1.55;color:var(--text)}
 .calif-card ul{margin:6px 0 0 18px}
 .calif-card .calif-pesos{margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -450,9 +483,10 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 </head>
 <body>
 <!-- ═══════════ SPLASH SCREEN ═══════════ -->
-<div id="splash" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#581C87 0%,#7B1FA2 35%,#C2185B 65%,#F57C00 100%);transition:opacity .5s ease;opacity:1">
-  <img src="icon-512.png" alt="NEXUS"
-       style="width:min(62vw,340px);height:auto;border-radius:32px;box-shadow:0 20px 60px rgba(0,0,0,0.35);animation:splashPulse 1.6s ease-in-out" />
+<!-- Mismo fondo (background_color del manifest) e icono en círculo que la pantalla de arranque de Android, para que el paso de una a otra no se note -->
+<div id="splash" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#581C87;transition:opacity .5s ease;opacity:1">
+  <img src="icon-maskable-512.png" alt="NEXUS"
+       style="width:min(56vw,300px);height:auto;border-radius:50%;box-shadow:0 20px 60px rgba(0,0,0,0.35);animation:splashPulse 1.6s ease-in-out" />
 </div>
 <style>
 @keyframes splashPulse {
@@ -542,6 +576,12 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
       </p>
       <div class="card calif-card" id="config-calif"></div>
       <div class="card" id="config-crits-ra" style="padding:0;overflow:hidden"></div>
+      <div class="section-label" id="config-ind-label">Indicadores de evaluación</div>
+      <p style="font-size:12px;color:var(--muted);padding:0 2px;line-height:1.5;margin-top:-6px">
+        Frases concretas que evalúas en las prácticas (nota de 0 a 10) o en la observación (Sí / No). Cada una cuenta para los criterios vinculados. Las informativas aparecen en la ficha y el informe, pero no cuentan para la nota.
+      </p>
+      <div class="card" id="config-ind-list" style="padding:0;overflow:hidden"></div>
+      <button class="add-act-btn" onclick="openIndicador(null)">＋ Añadir indicador</button>
       <div class="section-label" id="config-mod-label">Prácticas predefinidas</div>
       <div class="card" id="config-acts-list"></div>
       <button class="add-act-btn" onclick="openConfigAct()">＋ Añadir práctica</button>
@@ -549,6 +589,34 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
         Las prácticas definidas aquí aparecerán como sugerencia al evaluar a cada alumno del módulo. Puedes seleccionar qué criterios (P) se evalúan en cada práctica.
       </p>
     </div>
+  </div>
+</div>
+
+<!-- MODAL: Indicador de evaluación -->
+<div class="modal-overlay" id="modal-indicador">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-ind-title">Nuevo indicador</div>
+    <div class="form-group">
+      <label class="form-label">Frase (lo que evalúas u observas)</label>
+      <textarea class="form-input" id="ind-texto" rows="2" maxlength="160" placeholder="Ej: Mantiene su puesto limpio y ordenado sin que haya que recordárselo"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Cómo se evalúa</label>
+      <select class="form-input" id="ind-modo" onchange="renderIndCrits()">
+        <option value="nota">Nota de 0 a 10 · en las prácticas</option>
+        <option value="sino">Sí / No · en la observación</option>
+        <option value="info">Informativo · Sí / No que no cuenta para la nota</option>
+      </select>
+    </div>
+    <div class="form-group" id="ind-crits-group">
+      <label class="form-label">Criterios a los que cuenta</label>
+      <div id="ind-crits" style="max-height:320px;overflow-y:auto;border:1.5px solid var(--border);border-radius:12px;background:var(--bg)"></div>
+      <p id="ind-crits-count" style="font-size:12px;color:var(--muted);margin-top:6px;text-align:right"></p>
+    </div>
+    <button class="btn-primary" onclick="saveIndicador()">Guardar</button>
+    <button class="btn-secondary" id="ind-borrar" style="color:var(--red);border-color:#EF9A9A" onclick="deleteIndicador()">🗑 Borrar indicador</button>
+    <button class="btn-secondary" onclick="closeModal('modal-indicador')">Cancelar</button>
   </div>
 </div>
 
@@ -576,7 +644,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 
     <!-- Selector de criterios a evaluar -->
     <div class="form-group">
-      <label class="form-label">Criterios procedimentales a evaluar</label>
+      <label class="form-label" id="act-crit-label">Criterios procedimentales a evaluar</label>
       <div style="display:flex;gap:8px;margin-bottom:8px">
         <button type="button" class="btn-secondary" style="font-size:12px;padding:8px 12px;min-height:auto;flex:1" onclick="toggleAllCritAct(true)">✓ Todos</button>
         <button type="button" class="btn-secondary" style="font-size:12px;padding:8px 12px;min-height:auto;flex:1" onclick="toggleAllCritAct(false)">✕ Ninguno</button>
@@ -627,7 +695,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 
     <!-- Selector de criterios P a evaluar -->
     <div class="form-group">
-      <label class="form-label">Criterios procedimentales a evaluar</label>
+      <label class="form-label" id="config-crit-label">Criterios procedimentales a evaluar</label>
       <div style="display:flex;gap:8px;margin-bottom:8px">
         <button type="button" class="btn-secondary" style="font-size:12px;padding:8px 12px;min-height:auto;flex:1" onclick="toggleAllCrit(true)">✓ Seleccionar todos</button>
         <button type="button" class="btn-secondary" style="font-size:12px;padding:8px 12px;min-height:auto;flex:1" onclick="toggleAllCrit(false)">✕ Ninguno</button>
@@ -798,6 +866,9 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
           <p>• Si tu programación lo indica, pon el peso de cada RA (si no, todos pesan igual).</p>
           <p>• Define las prácticas: nombre, criterios que evalúa e imagen (plano, croquis o foto de la pieza).</p>
 
+          <p style="margin-top:14px"><strong>Indicadores de evaluación:</strong></p>
+          <p>En ⚙ Criterios y prácticas puedes tener una lista de <strong>indicadores</strong>: frases concretas («Calidad de las uniones soldadas», «Mantiene su puesto limpio…») vinculadas a uno o varios criterios. Las prácticas se puntúan por indicadores (0-10) y la observación usa los indicadores Sí/No; cada nota pasa a sus criterios. Los informativos aparecen en la ficha y el informe, pero no cuentan para la nota. Todos los módulos traen una propuesta inicial que cubre todos sus criterios de práctica y actitud: revísala y adáptala a tu programación.</p>
+
           <p style="margin-top:14px"><strong>Flujo básico:</strong></p>
           <p>1. Elige la clase. Solo aparecen las clases y los módulos que impartes: se marcan en ⚙ Ajustes → Módulos que imparto.</p>
           <p>2. Selecciona el módulo</p>
@@ -812,7 +883,8 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
           <p>Crea una sesión (recomendado: 2 por trimestre) y marca Sí / No en cada criterio. En cada criterio, Sí cuenta 10 y No cuenta 0, y se hace la media de todas las sesiones. Algunos módulos (3015 y 3073) no tienen criterios de actitud en el currículo.</p>
 
           <p style="margin-top:14px"><strong>Examen (teórico · T):</strong></p>
-          <p>Añade cada examen con fecha y nota, y marca los criterios que evalúa. Si no marcas ninguno, cuenta para todos los criterios de teoría del módulo.</p>
+          <p>Añade cada examen con su nombre, fecha y nota (admite decimales), y marca los criterios que evalúa. Además de los de teoría, puedes marcar cualquier otro criterio del módulo, por ejemplo los de prevención de riesgos. Si no marcas ninguno, cuenta para todos los criterios de teoría.</p>
+          <p>Marca un examen como <strong>🔒 obligatorio</strong> (p. ej. la prueba de seguridad para bajar al taller) y el alumno no podrá aprobar el módulo hasta superarlo con un 5.</p>
 
           <p style="margin-top:14px"><strong>Informe PDF:</strong></p>
           <p>Desde cada alumno, <strong>📄 Exportar informe</strong> genera un PDF con la nota de cada RA, la nota del módulo, las prácticas con sus fotos, la observación y los exámenes. Desde el resumen de clase puedes exportar el PDF de toda la clase.</p>
@@ -996,7 +1068,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v44';
+const APP_VERSION = 'v50';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -1822,6 +1894,240 @@ function getIndP() { return soloActivos(indsModulo(S.moduloId).IND_P); }
 function getIndA() { return soloActivos(indsModulo(S.moduloId).IND_A); }
 function getIndT() { return soloActivos(indsModulo(S.moduloId).IND_T); }
 
+// ═══════════ INDICADORES DE EVALUACIÓN ═══════════
+// Frases concretas y observables que el profesor evalúa; cada una reparte su nota a los criterios vinculados.
+//   modo 'nota' → se puntúa de 0 a 10 en las prácticas
+//   modo 'sino' → Sí / No en las hojas de observación
+//   modo 'info' → Sí / No informativo: aparece en la ficha y el informe, pero no cuenta para la nota
+// Propuesta inicial por módulo (el profesor la edita en ⚙ Criterios y prácticas; su versión se guarda en settings).
+const INDICADORES_PROPUESTOS = {
+  MOD3021: [
+    { id:'IND_3021_01', modo:'nota', texto:'Interpreta el plano, hace el croquis y selecciona el material', crits:['3021-P01','3021-P02','3021-P03'] },
+    { id:'IND_3021_02', modo:'nota', texto:'Prepara, monta y ajusta las máquinas y herramientas', crits:['3021-P05','3021-P06','3021-P07'] },
+    { id:'IND_3021_03', modo:'nota', texto:'Prepara y regula el equipo de soldadura (presión, intensidad, llama, electrodos)', crits:['3021-P10','3021-P11','3021-P12'] },
+    { id:'IND_3021_04', modo:'nota', texto:'Planifica el orden de trabajo y prepara los bordes', crits:['3021-P16','3021-P18'] },
+    { id:'IND_3021_05', modo:'nota', texto:'Corta y conforma: recalca, estira, curva y dobla perfiles y chapas', crits:['3021-P17','3021-P19','3021-P20'] },
+    { id:'IND_3021_06', modo:'nota', texto:'Calidad de las uniones soldadas', crits:['3021-P13','3021-P21'] },
+    { id:'IND_3021_07', modo:'nota', texto:'Monta el conjunto: posiciona las piezas y hace uniones fijas y desmontables', crits:['3021-P24','3021-P25','3021-P26','3021-P27'] },
+    { id:'IND_3021_08', modo:'nota', texto:'Verifica medidas con plantillas o instrumentos y corrige defectos', crits:['3021-P22','3021-P28'] },
+    { id:'IND_3021_09', modo:'nota', texto:'Embala, etiqueta y asegura la carga para el transporte', crits:['3021-P30','3021-P31','3021-P32','3021-P33','3021-P35'] },
+    { id:'IND_3021_10', modo:'nota', texto:'Manipula, carga y descarga con seguridad', crits:['3021-P34','3021-P36','3021-P37'] },
+    { id:'IND_3021_11', modo:'nota', texto:'Hace el mantenimiento de primer nivel de máquinas y equipos', crits:['3021-P08','3021-P14'] },
+    { id:'IND_3021_12', modo:'nota', texto:'Trabaja con seguridad: usa los EPI y las protecciones sin que se le recuerde', crits:['3021-P04','3021-P09','3021-P15','3021-P23','3021-P29'] },
+    { id:'IND_3021_13', modo:'sino', texto:'Mantiene su puesto limpio y ordenado sin que haya que recordárselo', crits:['3021-A03','3021-A05','3021-A07','3021-A08'] },
+    { id:'IND_3021_14', modo:'sino', texto:'Trabaja con método: prepara el material, sigue los pasos y no improvisa', crits:['3021-A02','3021-A04','3021-A06','3021-A09','3021-A10'] },
+    { id:'IND_3021_15', modo:'sino', texto:'Explica lo que hace y pregunta sus dudas con claridad', crits:['3021-A01'] },
+    { id:'IND_3021_16', modo:'sino', texto:'Sigue las instrucciones del profesor y las normas de seguridad del taller', crits:['3021-P04','3021-P09','3021-P23','3021-P29'] },
+    { id:'IND_3021_17', modo:'info', texto:'Respeta al profesor y a los compañeros', crits:[] },
+    { id:'IND_3021_18', modo:'info', texto:'Muestra interés y aprovecha el tiempo de taller', crits:[] },
+  ],
+};
+// Propuesta compacta para el resto de módulos: [modo, frase, criterios (sin el código del módulo)]
+// Se convierte al formato de INDICADORES_PROPUESTOS con ids IND_<módulo>_<nº>.
+const INFO_COMUNES = [
+  ['info', 'Respeta al profesor y a los compañeros', []],
+  ['info', 'Muestra interés y aprovecha el tiempo de taller', []],
+];
+const SIGUE_NORMAS = 'Sigue las instrucciones del profesor y las normas de seguridad del taller';
+const PROPUESTA_COMPACTA = {
+  // ── CFGM Soldadura y Calderería ──
+  MOD0006: [
+    ['nota', 'Prepara el puesto de medida: condiciones ambientales, calibración y limpieza del instrumento', ['P01','P02','P03']],
+    ['nota', 'Selecciona el instrumento adecuado y monta la pieza correctamente', ['P04','P05']],
+    ['nota', 'Mide con la precisión requerida y registra los datos sin errores', ['P06','P07']],
+    ['nota', 'Prepara las probetas y ejecuta los ensayos con la precisión exigida', ['P08','P09']],
+    ['nota', 'Interpreta los resultados de los ensayos y los registra', ['P11']],
+    ['nota', 'Elabora gráficos de control y calcula los índices Cp y Cpk', ['P12','P13']],
+    ['nota', 'Interpreta el gráfico de control y decide si el proceso está bajo control', ['P14']],
+    ['nota', 'Cumplimenta los documentos de calidad de forma completa y sin errores', ['P15']],
+    ['nota', 'Trabaja con seguridad durante los ensayos', ['P10']],
+    ['sino', 'Trabaja de forma ordenada y metódica con los equipos de medida', ['A01']],
+    ['sino', 'Respeta las normas y procedimientos de calidad', ['A02']],
+    ...INFO_COMUNES,
+  ],
+  MOD0007: [
+    ['nota', 'Interpreta las líneas del plano y deduce la forma del objeto a partir de las vistas', ['P01','P02']],
+    ['nota', 'Extrae del plano medidas, tolerancias y elementos de unión', ['P03','P04','P05']],
+    ['nota', 'Elige el sistema de representación y prepara los instrumentos', ['P06','P07']],
+    ['nota', 'Hace croquis normalizados, completos y sin ambigüedades', ['P08','P09','P10']],
+    ['nota', 'Interpreta la simbología de los esquemas de automatización', ['P11']],
+    ['sino', 'Valora cómo las tolerancias y los acabados afectan a la calidad del producto', ['A01']],
+    ['sino', 'Propone mejoras en los útiles y las justifica técnicamente', ['A02']],
+    ...INFO_COMUNES,
+  ],
+  MOD0091: [
+    ['nota', 'Organiza el trabajo: secuencia, indicadores de calidad y recogida de residuos', ['P01','P02','P03']],
+    ['nota', 'Prepara plantillas y útiles y monta los útiles de corte', ['P04','P06','P08']],
+    ['nota', 'Programa la máquina CNC y comprueba el programa en vacío', ['P05','P07']],
+    ['nota', 'Traza desarrollos con el procedimiento y los instrumentos correctos', ['P09','P10','P11','P12','P13']],
+    ['nota', 'Verifica cotas y referencias del trazado antes de cortar', ['P14']],
+    ['nota', 'Corte térmico: elige el procedimiento, introduce parámetros y aplica la técnica', ['P15','P16','P17','P18']],
+    ['nota', 'Conformado térmico: elige el procedimiento, introduce parámetros y aplica la técnica', ['P22','P23','P24','P25']],
+    ['nota', 'Conformado mecánico: elige el procedimiento, introduce parámetros y aplica la técnica', ['P29','P30','P31','P32']],
+    ['nota', 'Verifica las piezas cortadas y conformadas y corrige las desviaciones', ['P19','P20','P26','P27','P33','P34']],
+    ['nota', 'Hace el mantenimiento de primer nivel de las máquinas', ['P36','P37','P38','P39','P40']],
+    ['nota', 'Trabaja con seguridad: usa los EPI y respeta las normas de las máquinas', ['P41','P42']],
+    ['sino', 'Deja la zona de trabajo despejada, limpia y recogida sin que haya que recordárselo', ['P21','P28','P35','A01','A04']],
+    ['sino', 'Actúa con rapidez ante un problema y avisa al profesor', ['A02']],
+    ['sino', 'Hace el mantenimiento de las máquinas sin que se le recuerde', ['A03']],
+    ['sino', SIGUE_NORMAS, ['P41','P42']],
+    ...INFO_COMUNES,
+  ],
+  MOD0092: [
+    ['nota', 'Organiza el trabajo: indicadores de calidad y recogida de residuos', ['P01','P02']],
+    ['nota', 'Prepara el material, las herramientas y los útiles según el plano', ['P03','P04','P05','P06']],
+    ['nota', 'Introduce los parámetros de mecanizado en la máquina', ['P07']],
+    ['nota', 'Mecaniza a mano o en máquina y obtiene la pieza dentro de tolerancia', ['P08','P09']],
+    ['nota', 'Mide las cotas críticas y decide si la pieza es conforme', ['P10']],
+    ['nota', 'Programa la máquina CNC: datos, parámetros, aprovechamiento y archivo', ['P11','P12','P13','P16']],
+    ['nota', 'Simula y verifica el programa CNC antes de mecanizar', ['P14','P15']],
+    ['nota', 'Corrige las desviaciones durante el mecanizado CNC', ['P17']],
+    ['nota', 'Hace el mantenimiento de primer nivel de las máquinas', ['P19','P20','P21','P22','P23']],
+    ['nota', 'Trabaja con seguridad: usa los EPI y las protecciones', ['P18','P24','P25']],
+    ['sino', 'Mantiene su puesto limpio y ordenado sin que haya que recordárselo', ['A02','A06']],
+    ['sino', 'Actúa con rapidez ante una incidencia y detiene la máquina', ['A01']],
+    ['sino', 'Trabaja con atención, interés y responsabilidad', ['A03','A04']],
+    ['sino', 'Hace el mantenimiento de las máquinas sin que se le recuerde', ['A05']],
+    ['sino', SIGUE_NORMAS, ['P24','P25']],
+    INFO_COMUNES[0],
+  ],
+  MOD0093: [
+    ['nota', 'Organiza el trabajo: calidad, medidas de seguridad y residuos', ['P01','P02','P03']],
+    ['nota', 'Prepara el equipo: consumibles, accesorios y gases', ['P04','P05','P06']],
+    ['nota', 'Prepara la pieza: bordes, punteado, precalentamiento y montaje en soportes', ['P07','P08','P09','P10']],
+    ['nota', 'Regula los parámetros y aplica la técnica de soldeo', ['P11','P12']],
+    ['nota', 'Calidad de la soldadura (dimensiones, penetración y aspecto)', ['P13']],
+    ['nota', 'Corrige los defectos y las desviaciones del proceso', ['P14','P15']],
+    ['nota', 'Hace el mantenimiento de primer nivel de los equipos de soldeo', ['P16','P17','P18','P19']],
+    ['nota', 'Trabaja con seguridad: usa los EPI y respeta las normas', ['P20','P21']],
+    ['sino', 'Mantiene su puesto limpio y ordenado sin que haya que recordárselo', ['A01','A05']],
+    ['sino', 'Actúa con rapidez ante un problema y avisa al profesor', ['A02']],
+    ['sino', 'Trabaja con método durante el soldeo: prepara, sigue los pasos y no improvisa', ['A03']],
+    ['sino', 'Hace el mantenimiento de los equipos sin que se le recuerde', ['A04']],
+    ['sino', SIGUE_NORMAS, ['P20','P21']],
+    ...INFO_COMUNES,
+  ],
+  MOD0094: [
+    ['nota', 'Organiza el trabajo: calidad, medidas de seguridad y residuos', ['P01','P02','P03']],
+    ['nota', 'Prepara el equipo: consumibles, fluxes, gases de protección y equipos TIG/MAG', ['P04','P05','P07','P08']],
+    ['nota', 'Prepara la pieza: bordes, soporte, punteado, precalentamiento y montaje', ['P06','P09','P10','P11','P12']],
+    ['nota', 'Programa el robot de soldadura y prepara sus útiles', ['P13','P14','P15']],
+    ['nota', 'Maneja el robot y verifica las trayectorias sin colisiones', ['P16','P17','P18','P19']],
+    ['nota', 'Regula y aplica la técnica TIG/MAG, manual o automatizada', ['P20','P21','P22']],
+    ['nota', 'Calidad de la soldadura TIG/MAG y control de deformaciones', ['P23','P24','P25']],
+    ['nota', 'Corrige los defectos y desviaciones del soldeo TIG/MAG', ['P26','P27']],
+    ['nota', 'Arco sumergido (SAW): parámetros, técnica y control del carro', ['P28','P29','P30']],
+    ['nota', 'Calidad de la soldadura SAW y corrección de defectos', ['P31','P32','P33','P34','P35']],
+    ['nota', 'Hace el mantenimiento de primer nivel de los equipos', ['P36','P37','P38','P39']],
+    ['nota', 'Trabaja con seguridad: usa los EPI y respeta las normas', ['P40','P41']],
+    ['sino', 'Mantiene su puesto limpio y ordenado sin que haya que recordárselo', ['A01','A03','A07']],
+    ['sino', 'Actúa con rapidez ante un problema y avisa al profesor', ['A02']],
+    ['sino', 'Respeta las normas y procedimientos durante el soldeo', ['A04','A05']],
+    ['sino', 'Hace el mantenimiento de los equipos sin que se le recuerde', ['A06']],
+    ['sino', SIGUE_NORMAS, ['P40','P41']],
+    ...INFO_COMUNES,
+  ],
+  MOD0095: [
+    ['nota', 'Prepara el montaje: medios, marcado, ubicación de elementos y cama de montaje', ['P01','P02','P03','P04']],
+    ['nota', 'Planifica el montaje: medios, secuencia y accesos', ['P06','P07','P08']],
+    ['nota', 'Monta los andamios necesarios con seguridad', ['P05']],
+    ['nota', 'Mide, aploma y nivela dentro de tolerancia', ['P09','P11']],
+    ['nota', 'Arma y une tubos, bridas y estructuras según el plan de montaje', ['P10','P12','P13']],
+    ['nota', 'Realiza las pruebas de resistencia y estanqueidad', ['P15']],
+    ['nota', 'Prepara las superficies y aplica los acabados (pintura y revestimientos)', ['P16','P17','P18','P19']],
+    ['nota', 'Verifica el acabado y corrige los defectos', ['P20','P21']],
+    ['nota', 'Hace el mantenimiento de primer nivel de los equipos de montaje', ['P23','P24','P25','P26','P27']],
+    ['nota', 'Trabaja con seguridad: EPI, máquinas y tratamientos superficiales', ['P14','P22','P28','P29']],
+    ['sino', 'Hace el mantenimiento de los equipos sin que se le recuerde', ['A01']],
+    ['sino', 'Mantiene su puesto limpio y ordenado sin que haya que recordárselo', ['A02']],
+    ['sino', SIGUE_NORMAS, ['P28','P29']],
+    ...INFO_COMUNES,
+  ],
+  // ── FP Básica Fabricación de Elementos Metálicos ──
+  MOD3015: [
+    ['nota', 'Interpreta esquemas y guías y define la secuencia de montaje', ['P01','P02','P03']],
+    ['nota', 'Prepara esquemas, herramientas y materiales para cada trabajo', ['P04','P05','P06','P14','P15','P24','P25','P28']],
+    ['nota', 'Monta, fija y desmonta componentes según el procedimiento', ['P07','P08','P09','P11']],
+    ['nota', 'Monta componentes y conectores en placas de circuito impreso', ['P10']],
+    ['nota', 'Prepara los cables y hace las conexiones (soldar, crimpar, embornar)', ['P16','P18','P19','P20']],
+    ['nota', 'Etiqueta los cables y trata los residuos', ['P22','P23']],
+    ['nota', 'Localiza y sustituye los elementos averiados', ['P26','P27','P29','P30']],
+    ['nota', 'Elabora el informe de las operaciones realizadas', ['P13','P32']],
+    ['nota', 'Trabaja con seguridad: protecciones personales y normas', ['P12','P17','P21','P31']],
+    ['sino', SIGUE_NORMAS, ['P12','P21','P31']],
+    ['info', 'Mantiene su puesto limpio y ordenado', []],
+    ...INFO_COMUNES,
+  ],
+  MOD3020: [
+    ['nota', 'Interpreta el plano y las instrucciones y obtiene la información necesaria', ['P01','P02','P03']],
+    ['nota', 'Hace croquis a mano alzada de las piezas', ['P04']],
+    ['nota', 'Prepara material, herramientas y equipos: acopio, selección y comprobación', ['P06','P07','P08','P09']],
+    ['nota', 'Prepara, traza, marca y coloca las piezas', ['P13','P14','P15']],
+    ['nota', 'Mecaniza ajustando los parámetros y siguiendo las especificaciones', ['P16','P17','P18']],
+    ['nota', 'Carga, descarga y vigila las máquinas automáticas', ['P20','P21','P22']],
+    ['nota', 'Mide y verifica las piezas con los instrumentos adecuados', ['P26','P27','P28']],
+    ['nota', 'Registra los resultados y las incidencias en los documentos', ['P23','P29','P30']],
+    ['nota', 'Cuida y mantiene herramientas, equipos y aparatos de medida', ['P11','P31']],
+    ['nota', 'Trabaja con seguridad: EPI, protecciones y manipulación de cargas', ['P05','P10','P12','P19','P24','P25']],
+    ['sino', 'Mantiene su puesto limpio y ordenado sin que haya que recordárselo', ['A01','A04','A05']],
+    ['sino', 'Trabaja con autonomía', ['A02']],
+    ['sino', 'Planifica las tareas y trabaja con rigor', ['A03','A07']],
+    ['sino', 'Muestra una actitud responsable e interés por mejorar', ['A06']],
+    ['sino', SIGUE_NORMAS, ['P02','P05','P12','P19','P24']],
+    INFO_COMUNES[0],
+  ],
+  MOD3022: [
+    ['nota', 'Interpreta el plano, hace el croquis y selecciona el material', ['P01','P02','P03']],
+    ['nota', 'Prepara, monta y ajusta las máquinas y herramientas', ['P05','P06','P07']],
+    ['nota', 'Sujeta y mecaniza los perfiles: tronzado, troquelado, fresado, taladrado y roscado', ['P10','P11','P12']],
+    ['nota', 'Acaba las piezas y verifica las medidas', ['P13','P14','P20']],
+    ['nota', 'Monta herrajes, ensambla y hace las uniones', ['P16','P17','P18','P19']],
+    ['nota', 'Embala, etiqueta y asegura la carga para el transporte', ['P22','P23','P24','P25','P27']],
+    ['nota', 'Manipula, carga y descarga con seguridad', ['P26','P28','P29']],
+    ['nota', 'Hace el mantenimiento de primer nivel de máquinas y herramientas', ['P08']],
+    ['nota', 'Trabaja con seguridad: usa los EPI y las protecciones sin que se le recuerde', ['P04','P09','P15','P21']],
+    ['sino', 'Mantiene su puesto limpio y ordenado sin que haya que recordárselo', ['A03','A05','A06']],
+    ['sino', 'Trabaja con método: prepara el material, sigue los pasos y no improvisa', ['A02','A04','A07','A08']],
+    ['sino', 'Explica lo que hace y pregunta sus dudas con claridad', ['A01']],
+    ['sino', SIGUE_NORMAS, ['P04','P09','P15','P21']],
+    ...INFO_COMUNES,
+  ],
+  MOD3073: [
+    ['nota', 'Interpreta el plano y traslada al material medidas, formas e instrucciones', ['P01','P02','P03','P04']],
+    ['nota', 'Dibuja croquis y planos acotados y elabora la hoja de procesos', ['P05','P06','P07','P08']],
+    ['nota', 'Corta con los equipos de corte térmico', ['P09']],
+    ['nota', 'Corta con los equipos de corte mecánico', ['P11']],
+    ['nota', 'Sujeta, traza, marca y prepara chapas y perfiles', ['P13','P14']],
+    ['nota', 'Conforma y endereza: ajusta parámetros, posiciona, regula la boquilla y calienta', ['P15','P16','P17','P18']],
+    ['nota', 'Controla cotas, ángulos y la posición de las plantillas', ['P19']],
+    ['nota', 'Trabaja con seguridad en el corte y el conformado', ['P10','P12','P20']],
+    ['sino', SIGUE_NORMAS, ['P04','P10','P12','P20']],
+    ['info', 'Mantiene su puesto limpio y ordenado', []],
+    ...INFO_COMUNES,
+  ],
+};
+Object.entries(PROPUESTA_COMPACTA).forEach(([modId, filas]) => {
+  const cod = modId.slice(3);
+  INDICADORES_PROPUESTOS[modId] = filas.map(([modo, texto, crits], i) => ({
+    id: `IND_${cod}_${String(i + 1).padStart(2, '0')}`, modo, texto, crits: crits.map(c => `${cod}-${c}`),
+  }));
+});
+const MODOS_INDICADOR = { nota:'Nota 0-10 (prácticas)', sino:'Sí / No (observación)', info:'Informativo (no cuenta)' };
+// Indicadores del módulo: los del profesor o, si no los ha tocado, la propuesta
+function getIndicadores(modId = S.moduloId) {
+  return S.settings.indicadores?.[modId] || INDICADORES_PROPUESTOS[modId] || [];
+}
+const indicadoresDe = (modo, modId = S.moduloId) => getIndicadores(modId).filter(i => i.modo === modo);
+const indicadorPorId = (id, modId = S.moduloId) => getIndicadores(modId).find(i => i.id === id);
+// Criterios activos a los que cuenta un indicador
+const critsDeIndicador = (ind, modId = S.moduloId) => (ind?.crits || []).filter(id => critActivo(id, modId));
+// Al editar, se guarda una copia propia de la lista (la propuesta queda como referencia para restaurar)
+function setIndicadores(modId, lista) {
+  if (!S.settings.indicadores) S.settings.indicadores = {};
+  S.settings.indicadores[modId] = lista;
+  scheduleSave();
+}
+
 // ═══════════════════════════════════════════════════════════════
 // ═══════════ STATE ═══════════
 let S = {
@@ -1860,19 +2166,38 @@ const mediaDe = vals => vals.length ? vals.reduce((a, b) => a + b, 0) / vals.len
 const raDe = ind => ind.ce.match(/^RA(\d+)/)[1];
 const esNota = v => typeof v === 'number' && !isNaN(v);
 
-// Criterios P activos que cubre una práctica (sin lista = todos los P del módulo)
+// Una práctica se evalúa de una de dos formas:
+//  · por indicadores (act.inds): se puntúa cada indicador y su nota pasa a los criterios vinculados
+//  · por criterios (act.crits, formato anterior): se puntúa cada criterio P directamente
+const porIndicadores = act => Array.isArray(act.inds) && act.inds.length > 0;
+// Indicadores de una práctica que siguen existiendo en el módulo
+const indsPractica = (act, modId = S.moduloId) => (act.inds || []).map(id => indicadorPorId(id, modId)).filter(Boolean);
+
+// Criterios activos que cubre una práctica
 function critsPractica(act, modId = S.moduloId) {
+  if (porIndicadores(act)) return [...new Set(indsPractica(act, modId).flatMap(ind => critsDeIndicador(ind, modId)))];
   const idsP = soloActivos(indsModulo(modId).IND_P, modId).map(i => i.id);
   return act.crits && act.crits.length ? act.crits.filter(id => idsP.includes(id)) : idsP;
 }
-// Prácticas puntuadas de 0 a 10 (act.escala = 10). scores[id] = nota ajustada a mano de un criterio,
-// rapida = nota de toda la práctica. Sin valor (o null) = sin nota.
+// Prácticas puntuadas de 0 a 10 (act.escala = 10). scores[id] = nota ajustada a mano de un criterio
+// o de un indicador; rapida = nota de toda la práctica. Sin valor (o null) = sin nota.
 const tieneAjuste = (act, id) => esNota(act.scores?.[id]);
-// Nota de un criterio en una práctica: la ajustada a mano o, si no, la nota rápida de la práctica
-function puntoAct(act, id) {
+// Nota de un criterio (o indicador) ajustada a mano o, si no, la nota rápida de la práctica
+const notaPropiaORapida = (act, id) => {
   const v = tieneAjuste(act, id) ? act.scores[id] : act.rapida;
   return esNota(v) ? v : null;
+};
+// Nota de un criterio en una práctica. Por indicadores: media de los indicadores que lo evalúan.
+function puntoAct(act, id, modId = S.moduloId) {
+  if (!porIndicadores(act)) return notaPropiaORapida(act, id);
+  const vals = indsPractica(act, modId).filter(ind => critsDeIndicador(ind, modId).includes(id))
+    .map(ind => notaPropiaORapida(act, ind.id)).filter(esNota);
+  return mediaDe(vals);
 }
+// Elementos que se puntúan en la tarjeta de una práctica: sus indicadores o sus criterios
+const elementosPractica = (act, modId = S.moduloId) => porIndicadores(act)
+  ? indsPractica(act, modId).map(ind => ind.id)
+  : critsPractica(act, modId);
 
 // Las versiones anteriores puntuaban de 1 a 4 (0 = sin nota). Equivalencia: 1→2, 2→4, 3→7, 4→10.
 const NIVEL_A_NOTA = { 1: 2, 2: 4, 3: 7, 4: 10 };
@@ -1902,26 +2227,42 @@ function evalModulo(key) {
   const m = indsModulo(modId);
   const acts = S.actividades[key] || [];
   const sesiones = Object.keys(S.observaciones).filter(k => k.startsWith(key + '_')).map(k => S.observaciones[k] || {});
-  const pruebas = getPruebas(key).filter(p => p.nota !== null && p.nota !== undefined);
+  const todasPruebas = getPruebas(key);
+  const pruebas = todasPruebas.filter(p => esNota(p.nota));
   const idsT = soloActivos(m.IND_T, modId).map(i => i.id);
+  // Notas de examen de un criterio. Un examen puede evaluar criterios de cualquier tipo
+  // (p. ej. una prueba de prevención evalúa criterios P); sin criterios marcados cuenta para todos los T.
+  const notasExamen = id => pruebas.filter(p => (p.crits && p.crits.length ? p.crits : idsT).includes(id)).map(p => p.nota);
+
+  // Notas de prácticas de un criterio (por criterios o a través de los indicadores de cada práctica)
+  const notasPracticas = id => acts.filter(a => critsPractica(a, modId).includes(id))
+    .map(a => puntoAct(a, id, modId)).filter(esNota);
+  // Notas de observación de un criterio: Sí = 10, No = 0. Cuentan las respuestas guardadas por criterio
+  // (formato anterior) y las de los indicadores Sí/No vinculados a él.
+  const indsSiNo = indicadoresDe('sino', modId);
+  const sino = v => v === 'Sí' ? 10 : v === 'No' ? 0 : null;
+  const notasObservacion = id => sesiones.flatMap(s => [
+    sino(s[id]),
+    ...indsSiNo.filter(ind => critsDeIndicador(ind, modId).includes(id)).map(ind => sino(s[ind.id])),
+  ]).filter(esNota);
+  const notaCriterio = id => mediaDe([...notasPracticas(id), ...notasObservacion(id), ...notasExamen(id)]);
 
   const criterios = [
-    ...soloActivos(m.IND_P, modId).map(i => ({ ...i, tipo:'p', nota: mediaDe(acts
-      .filter(a => critsPractica(a, modId).includes(i.id))
-      .map(a => puntoAct(a, i.id)).filter(v => v !== null)) })),
-    ...soloActivos(m.IND_A, modId).map(i => ({ ...i, tipo:'a', nota: mediaDe(sesiones
-      .map(s => s[i.id]).filter(Boolean).map(v => v === 'Sí' ? 10 : 0)) })),
-    // Un examen sin criterios marcados cuenta para todos los criterios T activos
-    ...soloActivos(m.IND_T, modId).map(i => ({ ...i, tipo:'t', nota: mediaDe(pruebas
-      .filter(p => (p.crits && p.crits.length ? p.crits : idsT).includes(i.id))
-      .map(p => p.nota)) })),
+    ...soloActivos(m.IND_P, modId).map(i => ({ ...i, tipo:'p', nota: notaCriterio(i.id) })),
+    ...soloActivos(m.IND_A, modId).map(i => ({ ...i, tipo:'a', nota: notaCriterio(i.id) })),
+    ...soloActivos(m.IND_T, modId).map(i => ({ ...i, tipo:'t', nota: notaCriterio(i.id) })),
   ];
+  // Exámenes obligatorios (p. ej. prueba de seguridad): hay que aprobarlos para superar el módulo
+  const nombreExamen = p => p.nombre || 'examen obligatorio';
+  const obligSuspensas = todasPruebas.filter(p => p.obligatoria && esNota(p.nota) && p.nota < 5).map(nombreExamen);
+  const obligPendientes = todasPruebas.filter(p => p.obligatoria && !esNota(p.nota)).map(nombreExamen);
 
   const evaluados = t => criterios.filter(c => (!t || c.tipo === t) && c.nota !== null).map(c => c.nota);
   const bloques = { p: mediaDe(evaluados('p')), a: mediaDe(evaluados('a')), t: mediaDe(evaluados('t')) };
   // Partes del módulo que tienen criterios activos pero aún ninguna nota: la nota es provisional
   const faltan = [['p','prácticas'], ['a','actitud'], ['t','teoría']]
-    .filter(([t]) => criterios.some(c => c.tipo === t) && bloques[t] === null).map(([, nombre]) => nombre);
+    .filter(([t]) => criterios.some(c => c.tipo === t) && bloques[t] === null).map(([, nombre]) => nombre)
+    .concat(obligPendientes);
 
   const grupos = {};
   criterios.forEach(c => (grupos[raDe(c)] = grupos[raDe(c)] || []).push(c));
@@ -1945,6 +2286,7 @@ function evalModulo(key) {
   [['p','prácticas'], ['a','actitud'], ['t','teoría']].forEach(([t, nombre]) => {
     if (bloques[t] !== null && bloques[t] < 5) motivos.push(nombre);
   });
+  motivos.push(...obligSuspensas);
   let nota = Math.min(10, Math.max(1, Math.round(notaExacta)));
   if (motivos.length) nota = Math.min(nota, 4);
   return { criterios, bloques, ras, notaExacta, nota, motivos, faltan, provisional: faltan.length > 0 };
@@ -1959,9 +2301,20 @@ function scoreGlobal(key)  { return evalModulo(key).nota; }
 // Hay algún RA o alguna parte (P, A, T) por debajo de 5
 function hayBloqueSuspenso(key) { return evalModulo(key).motivos.length > 0; }
 
+// Nota de una práctica: media de sus indicadores (o de sus criterios, en el formato anterior)
 function actScore(act, modId = S.moduloId) {
-  const vals = critsPractica(act, modId).map(id => puntoAct(act, id)).filter(v => v !== null);
+  const vals = porIndicadores(act)
+    ? indsPractica(act, modId).map(ind => notaPropiaORapida(act, ind.id)).filter(esNota)
+    : critsPractica(act, modId).map(id => puntoAct(act, id, modId)).filter(esNota);
   return vals.length ? redondea1(mediaDe(vals)) : null;
+}
+// Indicadores informativos del módulo con su recuento de Sí en las sesiones de observación de un alumno
+function resumenInformativos(key, modId = modDeKey(key)) {
+  const sesiones = Object.keys(S.observaciones).filter(k => k.startsWith(key + '_')).map(k => S.observaciones[k] || {});
+  return indicadoresDe('info', modId).map(ind => {
+    const resp = sesiones.map(s => s[ind.id]).filter(v => v === 'Sí' || v === 'No');
+    return { ...ind, si: resp.filter(v => v === 'Sí').length, total: resp.length };
+  }).filter(r => r.total > 0);
 }
 function scoreColor(v) {
   if (v===null||v===undefined) return 'var(--muted)';
@@ -2168,13 +2521,24 @@ function editConfigAct(idx) {
   document.getElementById('config-act-name').value = act.nombre || '';
   document.getElementById('modal-config-title').textContent = 'Editar práctica predefinida';
   document.getElementById('config-save-btn').textContent = 'Guardar';
-  renderConfigCritList(act.crits || null);
+  renderConfigCritList(usaIndicadores() ? (act.inds || []) : (act.crits || null));
   openModal('modal-config');
 }
 
 // Render del selector de criterios para el modal de config
+// Lo que se elige al definir una práctica: sus indicadores (si el módulo los tiene) o sus criterios P
+const usaIndicadores = (modId = S.moduloId) => indicadoresDe('nota', modId).length > 0;
+function elementosSeleccionables() {
+  if (!usaIndicadores()) return getIndP();
+  const todos = [...getIndP(), ...getIndA(), ...getIndT()];
+  return indicadoresDe('nota').map(ind => ({ id: ind.id, texto: ind.texto,
+    ce: critsDeIndicador(ind).map(id => todos.find(c => c.id === id)?.ce).filter(Boolean).join(' · ') || 'sin criterios activos' }));
+}
+const textoSelector = () => usaIndicadores() ? 'Qué se evalúa en esta práctica (indicadores)' : 'Criterios procedimentales a evaluar';
+
 function renderConfigCritList(selectedCrits) {
-  const inds = getIndP();
+  const inds = elementosSeleccionables();
+  document.getElementById('config-crit-label').textContent = textoSelector();
   const el = document.getElementById('config-crit-list');
   if (!el) return;
   // Si selectedCrits es null → todos marcados por defecto (práctica nueva o práctica antigua sin crits)
@@ -2211,7 +2575,8 @@ function toggleAllCrit(on) {
 
 // Lo mismo pero para el modal de prácticas extras (modal-act)
 function renderActCritList(selectedCrits) {
-  const inds = getIndP();
+  const inds = elementosSeleccionables();
+  document.getElementById('act-crit-label').textContent = textoSelector();
   const el = document.getElementById('act-crit-list');
   if (!el) return;
   // null = todos; array (incluso vacío) = los especificados
@@ -2269,6 +2634,7 @@ function selectConfigMod(modId) {
     `${mod.icon} ${mod.nombre} · Prácticas`;
   document.getElementById('config-selected-mod').style.display = 'flex';
   renderCritsModulo();
+  renderIndicadoresConfig();
   renderConfig();
 }
 
@@ -2368,11 +2734,121 @@ function setCritsModulo(ids, on) {
   else S.settings.critsActivos[modId] = todos.filter(id => sel.has(id));
   scheduleSave();
   renderCritsModulo();
+  renderIndicadoresConfig();
   renderConfig();
 }
 function setCritsRA(ra, on) {
   const g = critsPorRA(S._configModId).find(g => g.ra === ra);
   if (g) setCritsModulo(g.items.map(i => i.id), on);
+}
+
+// ── Indicadores de evaluación del módulo (pantalla ⚙ Criterios y prácticas) ──
+function renderIndicadoresConfig() {
+  const modId = S._configModId;
+  const el = document.getElementById('config-ind-list');
+  if (!el || !modId) return;
+  const lista = getIndicadores(modId);
+  const todos = critsPorRA(modId).flatMap(g => g.items).filter(c => critActivo(c.id, modId));
+  const ceDe = id => todos.find(c => c.id === id)?.ce;
+  // Cobertura: criterios de práctica y actitud activos que ningún indicador evalúa
+  // (los de teoría se evalúan con los exámenes)
+  const cubiertos = new Set(lista.filter(i => i.modo !== 'info').flatMap(i => critsDeIndicador(i, modId)));
+  const sinCubrir = todos.filter(c => c.tipo !== 't' && !cubiertos.has(c.id));
+  const propia = !!S.settings.indicadores?.[modId];
+  const hayPropuesta = !!INDICADORES_PROPUESTOS[modId];
+  const cabecera = !lista.length
+    ? `<div class="ind-aviso">Este módulo aún no tiene indicadores: sus prácticas se evalúan criterio a criterio y la observación usa los criterios de actitud. Añade indicadores para evaluar con frases.</div>`
+    : `<div class="ind-aviso ${sinCubrir.length ? 'mal' : 'bien'}">${sinCubrir.length
+        ? `⚠ ${sinCubrir.length} criterio(s) de práctica o actitud sin ningún indicador: ${sinCubrir.map(c => c.ce).join(", ")}`
+        : '✓ Todos los criterios de práctica y actitud tienen al menos un indicador'}
+        ${!propia && hayPropuesta ? '<br><span style="font-weight:400">Es una propuesta: revísala y adáptala a tu programación.</span>' : ''}
+        ${propia && hayPropuesta ? `<br><button class="examen-crit-mini-btn" style="margin-top:6px" onclick="restaurarIndicadores()">Volver a la propuesta original</button>` : ''}
+      </div>`;
+  const etiquetas = { nota:'0-10', sino:'Sí/No', info:'Info' };
+  el.innerHTML = cabecera + lista.map((ind, i) => `
+    <div class="ind-item" onclick="openIndicador(${i})">
+      <span class="ind-modo ${ind.modo}">${etiquetas[ind.modo]}</span>
+      <div style="flex:1;min-width:0">
+        <div class="ind-item-texto">${escHTML(ind.texto)}</div>
+        <div class="ind-crits">${ind.modo === 'info' ? 'No cuenta para la nota'
+          : critsDeIndicador(ind, modId).map(ceDe).filter(Boolean).join(' · ') || '⚠ sin criterios activos'}</div>
+      </div>
+      <span class="item-arrow">›</span>
+    </div>`).join('');
+}
+
+function openIndicador(i) {
+  const lista = getIndicadores(S._configModId);
+  const ind = i === null ? null : lista[i];
+  S._editInd = i;
+  S._indCrits = new Set(ind?.crits || []);
+  document.getElementById('modal-ind-title').textContent = ind ? 'Editar indicador' : 'Nuevo indicador';
+  document.getElementById('ind-texto').value = ind?.texto || '';
+  document.getElementById('ind-modo').value = ind?.modo || 'nota';
+  document.getElementById('ind-borrar').style.display = ind ? '' : 'none';
+  renderIndCrits();
+  openModal('modal-indicador');
+}
+
+// Lista de criterios activos del módulo, por RA, para vincular al indicador
+function renderIndCrits() {
+  const modId = S._configModId;
+  const info = document.getElementById('ind-modo').value === 'info';
+  document.getElementById('ind-crits-group').style.display = info ? 'none' : '';
+  if (info) return;
+  const tipos = { p:'Práctica', a:'Actitud', t:'Teoría' };
+  document.getElementById('ind-crits').innerHTML = critsPorRA(modId).map(g => {
+    const items = g.items.filter(c => critActivo(c.id, modId));
+    if (!items.length) return '';
+    return `<div class="ind-ra-tit">RA${g.ra} · ${RA_TEXTOS[modId]?.[g.ra] || ''}</div>` + items.map(c => `
+      <label class="ra-crit">
+        <input type="checkbox" ${S._indCrits.has(c.id) ? 'checked' : ''} onchange="S._indCrits[this.checked?'add':'delete']('${c.id}');contarIndCrits()" />
+        <span class="crit-badge crit-${c.tipo}" title="${tipos[c.tipo]}">${c.tipo.toUpperCase()}</span>
+        <span class="ra-crit-text"><span class="ce-tag">CE${c.letra}</span>${c.texto}</span>
+      </label>`).join('');
+  }).join('');
+  contarIndCrits();
+}
+function contarIndCrits() {
+  document.getElementById('ind-crits-count').textContent = `${S._indCrits.size} criterio(s) vinculado(s)`;
+}
+
+function saveIndicador() {
+  const modId = S._configModId;
+  const texto = document.getElementById('ind-texto').value.trim();
+  const modo = document.getElementById('ind-modo').value;
+  if (!texto) { showToast('⚠ Escribe la frase del indicador'); return; }
+  const crits = modo === 'info' ? [] : [...S._indCrits];
+  if (modo !== 'info' && !crits.length) { showToast('⚠ Vincula al menos un criterio (o márcalo como informativo)'); return; }
+  const lista = getIndicadores(modId).map(i => ({ ...i, crits: [...(i.crits || [])] }));
+  if (S._editInd === null) lista.push({ id: 'IND_' + Date.now().toString(36), modo, texto, crits });
+  else lista[S._editInd] = { ...lista[S._editInd], modo, texto, crits };
+  setIndicadores(modId, lista);
+  closeModal('modal-indicador');
+  renderIndicadoresConfig();
+  showToast('✓ Indicador guardado');
+}
+
+function deleteIndicador() {
+  const modId = S._configModId;
+  const lista = getIndicadores(modId).map(i => ({ ...i }));
+  const ind = lista[S._editInd];
+  if (!ind) return;
+  const usos = (S.configActs[modId] || []).filter(d => d.inds?.includes(ind.id)).length;
+  if (!confirm(`¿Borrar el indicador «${ind.texto}»?${usos ? `\n\nLo usan ${usos} práctica(s): dejará de evaluarse en ellas y se perderán sus notas en ese indicador.` : ''}`)) return;
+  lista.splice(S._editInd, 1);
+  setIndicadores(modId, lista);
+  closeModal('modal-indicador');
+  renderIndicadoresConfig();
+  renderConfig();
+}
+
+function restaurarIndicadores() {
+  if (!confirm('¿Volver a la propuesta original de indicadores?\n\nSe perderán los cambios que hayas hecho en la lista. Las prácticas que usen indicadores que ya no existan dejarán de evaluarlos.')) return;
+  delete S.settings.indicadores[S._configModId];
+  scheduleSave();
+  renderIndicadoresConfig();
+  renderConfig();
 }
 // Peso (%) de un RA según la programación. Vacío = vuelve al reparto a partes iguales.
 function setPesoRA(ra, valor) {
@@ -2458,6 +2934,11 @@ function renderAlumnos() {
               title="${ev.provisional?'Provisional: faltan '+ev.faltan.join(', '):''}">${g}/10${ev.provisional?' · prov.':''}</span>`:''}
           ${ev.motivos.length?`<span style="font-size:12px;color:var(--red);font-weight:700" title="No supera: ${ev.motivos.join(', ')}">⚠</span>`:''}
         </div>
+        <div class="pat-row">${['p','a','t'].map(t => { const v = ev.bloques[t]; const hay = ev.criterios.some(c => c.tipo === t);
+          if (!hay) return '';
+          const cls = v === null ? 'pend' : v >= 5 ? 'ok' : 'mal';
+          return `<span class="pat ${cls}" title="${({p:'Prácticas',a:'Actitud',t:'Teoría'})[t]}: ${v === null ? 'sin evaluar' : v.toFixed(1)}">${t.toUpperCase()} ${v === null ? '—' : v.toFixed(1)}</span>`; }).join('')}
+        </div>
       </div>
       <span class="item-arrow">›</span>
     </div>`;
@@ -2541,6 +3022,9 @@ function updateHeader() {
         <div class="stu-scores">${pill('Prácticas', ev.bloques.p)}${pill('Actitud', ev.bloques.a)}${pill('Teoría', ev.bloques.t)}</div>
         ${raChips ? `<div class="stu-detalle-tit">Por resultados de aprendizaje</div><div class="ra-chips">${raChips}</div>` : ''}
         <div class="stu-detalle-nota">Para aprobar: todos los RA y cada parte con 5 o más.</div>
+        ${(() => { const info = resumenInformativos(key);
+          return info.length ? `<div class="stu-detalle-tit">Otros aspectos observados (no cuentan para la nota)</div>
+            ${info.map(r => `<div class="stu-detalle-nota">${r.si === r.total ? '✓' : r.si === 0 ? '✗' : '◐'} ${escHTML(r.texto)} · Sí en ${r.si} de ${r.total}</div>`).join('')}` : ''; })()}
         <div class="stu-acciones">
           <button onclick="openEditAlumno('${a.id}')">✏ Editar alumno</button>
           <button class="borrar" onclick="openDeleteAlumno('${a.id}')">🗑 Borrar alumno</button>
@@ -2580,21 +3064,27 @@ const LEYENDA_FRANJAS = `<div class="franjas">
 
 function actCardHTML(act, ai) {
   const isOpen = S.openActIdx === ai;
-  // Criterios P activos de la práctica (sin 'crits' = todos, por compatibilidad)
-  const ids = critsPractica(act);
-  const indsToShow = getIndP().filter(ind => ids.includes(ind.id));
-  const totalCrits = indsToShow.length;
+  // Filas que se puntúan: los indicadores de la práctica o, en el formato anterior, sus criterios P
+  const porInd = porIndicadores(act);
+  const todosCrits = [...getIndP(), ...getIndA(), ...getIndT()];
+  const ceDe = id => todosCrits.find(c => c.id === id)?.ce || '';
+  const filas = porInd
+    ? indsPractica(act).map(ind => ({ id: ind.id, texto: ind.texto,
+        etiqueta: critsDeIndicador(ind).map(ceDe).filter(Boolean).join(' · ') || 'sin criterios activos' }))
+    : getIndP().filter(ind => critsPractica(act).includes(ind.id)).map(ind => ({ id: ind.id, texto: ind.texto, etiqueta: ind.ce }));
+  const totalCrits = filas.length;
   const s = actScore(act);
-  const scored = ids.filter(id => puntoAct(act, id) !== null).length;
+  const notaFila = id => porInd ? notaPropiaORapida(act, id) : puntoAct(act, id);
+  const scored = filas.filter(f => notaFila(f.id) !== null).length;
   const pct = totalCrits ? Math.round(scored / totalCrits * 100) : 0;
-  const ajustados = ids.filter(id => tieneAjuste(act, id)).length;
+  const ajustados = filas.filter(f => tieneAjuste(act, f.id)).length;
   return `<div class="act-card">
     <div class="act-card-header-wrap" style="display:flex;align-items:stretch;border-bottom:1px solid var(--border)">
       <button class="act-toggle act-header" onclick="toggleAct(${ai})" style="flex:1;border-bottom:none;gap:14px">
         <div style="flex:1;min-width:0;text-align:left">
           <h3 style="margin-bottom:6px">${act.nombre}</h3>
           <div class="meta">
-            📅 ${fmtFecha(act.fecha)} · ${scored}/${totalCrits} indicadores
+            📅 ${fmtFecha(act.fecha)} · ${scored}/${totalCrits} ${porInd ? 'indicadores' : 'criterios'}
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
@@ -2616,20 +3106,22 @@ function actCardHTML(act, ai) {
         <div class="rapida-title">Nota de la práctica</div>
         ${botonesNota(esNota(act.rapida) ? act.rapida : null, v => `setRapida(${ai},${v})`,
           { quitar: esNota(act.rapida) ? `setRapida(${ai},null)` : null })}
-        <div class="rapida-hint">Se aplica a todos los criterios de la práctica. Si alguno destaca o falla, ajústalo abajo${ajustados?` · <strong>${ajustados} ajustado(s) a mano</strong>`:''}.</div>
+        <div class="rapida-hint">Se aplica a todos los ${porInd ? 'indicadores' : 'criterios'} de la práctica. Si alguno destaca o falla, ajústalo abajo${ajustados?` · <strong>${ajustados} ajustado(s) a mano</strong>`:''}.</div>
         ${LEYENDA_FRANJAS}
       </div>
       <div style="padding:8px 16px 4px"><div class="prog-wrap"><div class="prog-bar" style="width:${pct}%;background:var(--teal)"></div></div></div>
       <div class="ind-list">
-        ${indsToShow.map(ind=>{
-          const propia = tieneAjuste(act, ind.id);
-          const efectiva = puntoAct(act, ind.id);
+        ${filas.map(f=>{
+          const propia = tieneAjuste(act, f.id);
+          const efectiva = notaFila(f.id);
           return `
         <div class="ind-row" style="${efectiva!==null?'':'opacity:0.6'}">
-          <div class="ind-label"><span class="ce-tag">${ind.ce}</span>${ind.texto}${efectiva!==null?'':' <span style=\"font-size:11px;color:var(--muted);font-style:italic\">(no computa)</span>'}</div>
-          ${botonesNota(efectiva, v => `setScore(${ai},'${ind.id}',${v})`, {
+          <div class="ind-label">${porInd
+            ? `${escHTML(f.texto)}<div class="ind-crits">→ ${f.etiqueta}</div>`
+            : `<span class="ce-tag">${f.etiqueta}</span>${f.texto}`}${efectiva!==null?'':' <span style=\"font-size:11px;color:var(--muted);font-style:italic\">(no computa)</span>'}</div>
+          ${botonesNota(efectiva, v => `setScore(${ai},'${f.id}',${v})`, {
             heredada: !propia,
-            quitar: propia ? `setScore(${ai},'${ind.id}',null)` : null,
+            quitar: propia ? `setScore(${ai},'${f.id}',null)` : null,
             quitarTitulo: esNota(act.rapida) ? 'Volver a la nota de la práctica' : 'Quitar nota' })}
         </div>`; }).join('')}
       </div>
@@ -2679,7 +3171,7 @@ function renderRubrica() {
       } else {
         // ── Práctica pendiente: tarjeta de inicio ──
         const defCrits = def.crits || null;
-        const critInfo = defCrits ? `${defCrits.length} criterios P` : `todos los criterios P`;
+        const critInfo = def.inds?.length ? `${def.inds.length} indicadores` : defCrits ? `${defCrits.length} criterios P` : `todos los criterios P`;
         html+=`<div class="act-card" style="opacity:.85">
           <div class="act-header" style="align-items:center">
             <div>
@@ -2734,10 +3226,11 @@ function crearPractica(key, nombre, fecha = today()) {
   if (!S.actividades[key]) S.actividades[key] = [];
   const existente = S.actividades[key].find(a => a.nombre === nombre);
   if (existente) return existente;
-  // Copiar los criterios de la definición predefinida (null = todos)
+  // Copiar lo que evalúa la definición predefinida: sus indicadores o sus criterios (null = todos)
   const def = (S.configActs[S.moduloId] || []).find(d => d.nombre === nombre);
   const defCrits = def && def.crits ? def.crits : null;
   const act = { nombre, fecha, photo: null, scores: {}, crits: defCrits, rapida: null, escala: 10 };
+  if (def?.inds?.length) act.inds = [...def.inds];
   S.actividades[key].push(act);
   return act;
 }
@@ -2807,15 +3300,16 @@ function createActividad() {
   const fecha=document.getElementById('new-act-date').value;
   if (!nombre) { showToast('⚠ Escribe un nombre'); return; }
 
-  // Recoger criterios seleccionados
-  const crits = Array.from(document.querySelectorAll('.act-crit-check:checked'))
+  // Recoger lo seleccionado: indicadores (si el módulo los tiene) o criterios P
+  const sel = Array.from(document.querySelectorAll('.act-crit-check:checked'))
     .map(cb => cb.getAttribute('data-id'));
-  if (!crits.length) { showToast('⚠ Selecciona al menos un criterio'); return; }
+  if (!sel.length) { showToast('⚠ Elige al menos un ' + (usaIndicadores() ? 'indicador' : 'criterio')); return; }
+  const queEvalua = usaIndicadores() ? { inds: sel, crits: null } : { crits: sel };
 
   const key=akey();
   if (!S.actividades[key]) S.actividades[key]=[];
   const doCreate = (photo) => {
-    S.actividades[key].push({ nombre, fecha, photo, scores: {}, crits, rapida: null, escala: 10 });
+    S.actividades[key].push({ nombre, fecha, photo, scores: {}, ...queEvalua, rapida: null, escala: 10 });
     S.openActIdx = S.actividades[key].length - 1; // abrir la nueva automáticamente
     scheduleSave();
     document.getElementById('new-act-name').value = ''; // limpiar para la próxima
@@ -2854,12 +3348,31 @@ function handleActPhotoExist(input,ai) {
 }
 
 // ═══════════ OBSERVACIÓN ═══════════
+// Filas de la hoja de observación: los indicadores Sí/No e informativos del módulo
+// o, si el módulo no tiene, sus criterios de actitud (formato anterior)
+function filasObservacion() {
+  const inds = getIndicadores().filter(i => i.modo === 'sino' || i.modo === 'info');
+  if (!inds.length) return getIndA().map(c => ({ id: c.id, texto: c.texto, etiqueta: c.ce, cuenta: true }));
+  const todos = [...getIndP(), ...getIndA(), ...getIndT()];
+  return inds.map(ind => ({
+    id: ind.id, texto: ind.texto, cuenta: ind.modo === 'sino', indicador: true,
+    etiqueta: ind.modo === 'info' ? 'Informativo · no cuenta para la nota'
+      : critsDeIndicador(ind).map(id => todos.find(c => c.id === id)?.ce).filter(Boolean).join(' · ') || 'sin criterios activos',
+  }));
+}
+// Nota de una sesión (0-10): porcentaje de Sí entre las filas que cuentan
+function notaSesion(data, filas) {
+  const resp = filas.filter(f => f.cuenta).map(f => data[f.id]).filter(v => v === 'Sí' || v === 'No');
+  return resp.length ? +(resp.filter(v => v === 'Sí').length / resp.length * 10).toFixed(1) : null;
+}
+
 function renderObs() {
   const key=akey();
-  // Módulos sin criterios de actitud (p. ej. 3073) o con todos desmarcados: no hay nada que observar
-  if (!getIndA().length) {
+  const filas = filasObservacion();
+  // Sin nada que observar (p. ej. 3073 sin criterios de actitud ni indicadores)
+  if (!filas.length) {
     document.getElementById('obs-content').innerHTML = `<div class="card empty"><div class="empty-icon">👁</div>
-      <p>Este módulo no tiene criterios de actitud activos.<br>Puedes activarlos en <strong>⚙ Criterios y prácticas</strong> si el currículo los incluye.</p></div>`;
+      <p>Este módulo no tiene criterios de actitud ni indicadores de observación.<br>Puedes crear indicadores en <strong>⚙ Criterios y prácticas</strong>.</p></div>`;
     return;
   }
   const sessions=Object.keys(S.observaciones).filter(k=>k.startsWith(key+'_')).sort().reverse();
@@ -2867,16 +3380,14 @@ function renderObs() {
   let html='';
   if (o!==null) {
     html+=`<div class="score-bar"><div class="score-bar-row">
-      <span class="score-bar-label">Observación: <strong style="color:${scoreColor(o)};font-size:22px">${o}/10</strong></span>
+      <span class="score-bar-label">Actitud: <strong style="color:${scoreColor(o)};font-size:22px">${o}/10</strong></span>
       <div class="score-bar-track"><div class="score-bar-fill" style="width:${o*10}%;background:${scoreColor(o)}"></div></div>
     </div></div>`;
   }
   sessions.forEach(sk=>{
     const date=sk.slice(sk.lastIndexOf('_')+1); // la clave es ${alumnoId}_${moduloId}_${fecha}
     const data=S.observaciones[sk]||{};
-    const si=valoresActivos(data).filter(v=>v==='Sí').length;
-    const tot=valoresActivos(data).filter(v=>v).length;
-    const ss=tot?+(si/tot*10).toFixed(1):null;
+    const ss=notaSesion(data, filas);
     html+=`<div class="obs-session">
       <div class="obs-session-header">
         <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
@@ -2890,17 +3401,16 @@ function renderObs() {
           <button class="examen-del-btn" onclick="confirmDelObsSession('${sk}')" title="Eliminar sesión">🗑</button>
         </div>
       </div>
-      ${getIndA().map(ind=>{
-        const isActitud = ['0092-A03','0093-A03','0094-A04'].includes(ind.id);
-        return `
-      <div class="obs-row" style="${isActitud ? 'background:linear-gradient(135deg,#EDE9FE,#F3E5F5);border-left:4px solid var(--purple)' : ''}">
-        <div class="obs-text"><span class="ce-tag" style="color:var(--sky);background:var(--sky-lt)">${ind.ce}</span>${ind.texto}</div>
+      ${filas.map(f=>`
+      <div class="obs-row ${f.cuenta?'':'obs-info'}">
+        <div class="obs-text">${f.indicador
+          ? `${escHTML(f.texto)}<div class="ind-crits">${f.cuenta ? '→ ' : 'ⓘ '}${f.etiqueta}</div>`
+          : `<span class="ce-tag" style="color:var(--sky);background:var(--sky-lt)">${f.etiqueta}</span>${f.texto}`}</div>
         <div class="toggle">
-          <button class="toggle-btn yes ${data[ind.id]==='Sí'?'active':''}" onclick="setObs('${sk}','${ind.id}','Sí',this)">Sí</button>
-          <button class="toggle-btn no ${data[ind.id]==='No'?'active':''}" onclick="setObs('${sk}','${ind.id}','No',this)">No</button>
+          <button class="toggle-btn yes ${data[f.id]==='Sí'?'active':''}" onclick="setObs('${sk}','${f.id}','Sí',this)">Sí</button>
+          <button class="toggle-btn no ${data[f.id]==='No'?'active':''}" onclick="setObs('${sk}','${f.id}','No',this)">No</button>
         </div>
-      </div>`;
-      }).join('')}
+      </div>`).join('')}
     </div>`;
   });
   if (!sessions.length) html+=`<div class="card empty"><div class="empty-icon">👁</div><p>No hay sesiones de observación todavía.</p></div>`;
@@ -2946,12 +3456,7 @@ function setObs(sk,indId,val,btn) {
   btn.classList.add('active');
   scheduleSave();
   updateHeader();
-  const data=S.observaciones[sk];
-  const si=valoresActivos(data).filter(v=>v==='Sí').length;
-  const tot=valoresActivos(data).filter(v=>v).length;
-  const sc=tot?+(si/tot*10).toFixed(1):null;
-  const hdr=btn.closest('.obs-session')?.querySelector('.obs-session-score');
-  if (hdr&&sc!==null){hdr.textContent=sc+'/10';hdr.style.color=scoreColor(sc);}
+  renderObs(); // actualiza la nota de la sesión y la de actitud
 }
 function createObsSession() {
   const date=document.getElementById('new-obs-date').value;
@@ -2974,95 +3479,84 @@ function getPruebas(key) {
 function renderEscrita() {
   const key = akey();
   const pruebas = getPruebas(key);
-  const media = scoreEscrita(key);
-
+  const indsT = getIndT();
+  // Otros criterios activos del módulo que también se pueden evaluar con un examen (p. ej. prevención)
+  const indsOtros = [...getIndP().map(i => ({ ...i, tipo:'p' })), ...getIndA().map(i => ({ ...i, tipo:'a' }))];
   let html = '';
 
-  // Resumen media
-  if (pruebas.length > 0) {
-    html += `<div class="score-bar"><div class="score-bar-row">
-      <span class="score-bar-label">Media exámenes: <strong style="color:${scoreColor(media)};font-size:22px">${media}/10</strong></span>
-      <div class="score-bar-track"><div class="score-bar-fill" style="width:${media*10}%;background:${scoreColor(media)}"></div></div>
-    </div></div>`;
-  }
-
-  const indsT = getIndT();
-
-  // Lista de pruebas existentes
-  if (pruebas.length > 0) {
-    pruebas.forEach((p, i) => {
-      const crits = p.crits || [];
-      html += `<div class="examen-card">
-        <div class="examen-header">
-          <div class="examen-title-row">
-            <span class="examen-num">Examen ${i+1}</span>
-            <input type="date" value="${p.fecha}" class="examen-date"
-              onchange="setPruebaFecha(${i},this.value)" />
-          </div>
-          <div class="examen-score-row">
-            <input type="range" min="0" max="10" step="0.5" value="${p.nota}"
-              style="flex:1;accent-color:var(--teal)"
-              oninput="updatePruebaSlider(${i},this.value,this)" />
-            <span id="pnota-${i}" class="examen-nota" style="color:${scoreColor(p.nota)}">${p.nota.toFixed(1)}</span>
-            <button class="examen-del-btn" onclick="deletePrueba(${i})" title="Eliminar">🗑</button>
-          </div>
-        </div>`;
-
-      // Selector de CE conceptuales
-      if (indsT.length) {
-        html += `<div class="examen-crits">
-          <div class="examen-crits-header">
-            <span class="examen-crits-title">
-              <span class="crit-badge crit-t" style="width:22px;height:22px;font-size:11px">T</span>
-              Criterios conceptuales trabajados
-              <span class="examen-crits-count">${crits.length ? `${crits.length} de ${indsT.length}` : `ninguno marcado: cuenta para los ${indsT.length}`}</span>
-            </span>
-            <div style="display:flex;gap:6px">
-              <button class="examen-crit-mini-btn" onclick="togglePruebaAllCrits(${i},true)">✓ Todos</button>
-              <button class="examen-crit-mini-btn" onclick="togglePruebaAllCrits(${i},false)">✕ Ninguno</button>
-            </div>
-          </div>
-          <div class="examen-crit-list">`;
-
-        indsT.forEach(ind => {
-          const on = crits.includes(ind.id);
-          html += `<label class="examen-crit-item ${on?'on':''}">
-            <input type="checkbox" ${on?'checked':''}
-                   onchange="togglePruebaCrit(${i},'${ind.id}',this.checked)" />
-            <div class="examen-crit-text">
-              <div class="examen-crit-ce">${ind.ce}</div>
-              <div class="examen-crit-desc">${ind.texto}</div>
-            </div>
-          </label>`;
-        });
-
-        html += `</div></div>`;
-      } else {
-        html += `<div class="examen-no-crits">
-          <em>No hay criterios conceptuales definidos para este módulo todavía.</em>
-        </div>`;
-      }
-
-      html += `</div>`; // cierre examen-card
-    });
-  } else {
+  if (!pruebas.length) {
     html += `<div class="card empty"><div class="empty-icon">✏</div>
       <p>No hay exámenes registrados todavía.<br>Pulsa <strong>＋ Añadir examen</strong> para empezar.</p></div>`;
   }
 
-  // Botón añadir
-  html += `<button class="add-act-btn" onclick="addPrueba()">＋ Añadir examen</button>`;
+  pruebas.forEach((p, i) => {
+    const crits = p.crits || [];
+    const tieneNota = esNota(p.nota);
+    const otrosMarcados = indsOtros.filter(ind => crits.includes(ind.id)).length;
+    const critItem = (ind, badge) => {
+      const on = crits.includes(ind.id);
+      return `<label class="examen-crit-item ${on?'on':''}">
+        <input type="checkbox" ${on?'checked':''} onchange="togglePruebaCrit(${i},'${ind.id}',this.checked)" />
+        <div class="examen-crit-text">
+          <div class="examen-crit-ce">${badge ? `<span class="crit-badge crit-${badge}" style="width:18px;height:18px;font-size:10px;margin-right:4px">${badge.toUpperCase()}</span>` : ''}${ind.ce}</div>
+          <div class="examen-crit-desc">${ind.texto}</div>
+        </div>
+      </label>`;
+    };
+    html += `<div class="examen-card ${p.obligatoria?'obligatoria':''}">
+      <div class="examen-header">
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="text" class="examen-nombre" value="${escHTML(p.nombre || '')}" placeholder="Examen ${i+1} · escribe el nombre (p. ej. Prueba de seguridad)"
+                 maxlength="80" onchange="setPruebaCampo(${i},'nombre',this.value.trim())" />
+          <button class="examen-del-btn" onclick="deletePrueba(${i})" title="Eliminar">🗑</button>
+        </div>
+        <div class="examen-title-row">
+          <input type="date" value="${p.fecha}" class="examen-date" onchange="setPruebaCampo(${i},'fecha',this.value)" />
+          <label class="examen-nota-wrap">Nota
+            <input type="number" class="examen-nota-input" min="0" max="10" step="0.25" inputmode="decimal"
+                   value="${tieneNota ? p.nota : ''}" placeholder="—" style="color:${tieneNota?scoreColor(p.nota):'inherit'}"
+                   onchange="setPruebaNota(${i},this.value)" />
+            <span>/10</span>
+          </label>
+        </div>
+        <label class="examen-obligatoria">
+          <input type="checkbox" ${p.obligatoria?'checked':''} onchange="setPruebaCampo(${i},'obligatoria',this.checked)" />
+          <span>🔒 <strong>Obligatoria:</strong> hay que aprobarla (5 o más) para superar el módulo</span>
+        </label>
+        ${p.obligatoria && tieneNota && p.nota < 5 ? `<div class="examen-aviso">⛔ No superada: el alumno no puede aprobar el módulo hasta superarla.</div>` : ''}
+        ${p.obligatoria && !tieneNota ? `<div class="examen-aviso pendiente">⏳ Pendiente de nota.</div>` : ''}
+      </div>
+      <div class="examen-crits">
+        <div class="examen-crits-header">
+          <span class="examen-crits-title">
+            Criterios que evalúa
+            <span class="examen-crits-count">${crits.length ? `${crits.length} marcado(s)` : `ninguno marcado: cuenta para todos los de teoría`}</span>
+          </span>
+          <div style="display:flex;gap:6px">
+            <button class="examen-crit-mini-btn" onclick="togglePruebaAllCrits(${i},true)">✓ Toda la teoría</button>
+            <button class="examen-crit-mini-btn" onclick="togglePruebaAllCrits(${i},false)">✕ Ninguno</button>
+          </div>
+        </div>
+        ${indsT.length ? `<div class="examen-crit-sub"><span class="crit-badge crit-t" style="width:20px;height:20px;font-size:10px">T</span> Teoría</div>
+          <div class="examen-crit-list">${indsT.map(ind => critItem(ind)).join('')}</div>` : ''}
+        ${indsOtros.length ? `<details class="examen-otros" ${otrosMarcados?'open':''}>
+          <summary>Otros criterios del módulo (prevención, prácticas, actitud)${otrosMarcados?` · ${otrosMarcados} marcado(s)`:''}</summary>
+          <div class="examen-crit-list">${indsOtros.map(ind => critItem(ind, ind.tipo)).join('')}</div>
+        </details>` : ''}
+      </div>
+    </div>`;
+  });
 
+  html += `<button class="add-act-btn" onclick="addPrueba()">＋ Añadir examen</button>`;
   document.getElementById('escrita-content').innerHTML = html;
 }
 
 function togglePruebaAllCrits(i, on) {
   const key = akey();
   if (!S.notas[key]?.pruebas?.[i]) return;
-  const indsT = getIndT();
-  S.notas[key].pruebas[i].crits = on ? indsT.map(ind => ind.id) : [];
+  S.notas[key].pruebas[i].crits = on ? getIndT().map(ind => ind.id) : [];
   scheduleSave();
-  renderEscrita();
+  renderEscrita(); updateHeader();
 }
 
 function togglePruebaCrit(i, critId, on) {
@@ -3076,23 +3570,26 @@ function togglePruebaCrit(i, critId, on) {
     p.crits = p.crits.filter(c => c !== critId);
   }
   scheduleSave();
-  renderEscrita();
+  renderEscrita(); updateHeader();
 }
 
-function updatePruebaSlider(i, val, slider) {
+// Nota del examen (0-10, admite decimales). Vacía = sin nota todavía.
+function setPruebaNota(i, valor) {
   const key = akey();
-  if (!S.notas[key] || !S.notas[key].pruebas) return;
-  S.notas[key].pruebas[i].nota = +parseFloat(val).toFixed(1);
-  const el = document.getElementById('pnota-'+i);
-  if (el) { el.textContent = parseFloat(val).toFixed(1); el.style.color = scoreColor(parseFloat(val)); }
-  scheduleSave(); updateHeader();
-}
-
-function setPruebaFecha(i, fecha) {
-  const key = akey();
-  if (!S.notas[key]?.pruebas) return;
-  S.notas[key].pruebas[i].fecha = fecha;
+  if (!S.notas[key]?.pruebas?.[i]) return;
+  const n = parseFloat(String(valor).replace(',', '.'));
+  S.notas[key].pruebas[i].nota = isNaN(n) ? null : Math.max(0, Math.min(10, Math.round(n * 100) / 100));
   scheduleSave();
+  renderEscrita(); updateHeader();
+}
+
+// Nombre, fecha u obligatoriedad del examen
+function setPruebaCampo(i, campo, valor) {
+  const key = akey();
+  if (!S.notas[key]?.pruebas?.[i]) return;
+  S.notas[key].pruebas[i][campo] = valor;
+  scheduleSave();
+  if (campo === 'obligatoria') { renderEscrita(); updateHeader(); }
 }
 
 function addPrueba() {
@@ -3101,9 +3598,13 @@ function addPrueba() {
     S.notas[key] = { pruebas: [{ fecha: today(), nota: S.notas[key].nota, crits: [] }] };
   }
   if (!S.notas[key]) S.notas[key] = { pruebas: [] };
-  S.notas[key].pruebas.push({ fecha: today(), nota: 5, crits: [] });
+  // Empieza sin nota: un examen no hecho no debe contar como aprobado
+  S.notas[key].pruebas.push({ nombre: '', fecha: today(), nota: null, crits: [], obligatoria: false });
   scheduleSave(); renderEscrita(); updateHeader();
-  showToast('✓ Examen añadido');
+  requestAnimationFrame(() => {
+    const campos = document.querySelectorAll('#escrita-content .examen-nombre');
+    campos[campos.length - 1]?.focus();
+  });
 }
 
 function deletePrueba(i) {
@@ -3136,9 +3637,12 @@ function renderConfig(){
   const totalCrits = getIndP().length;
   document.getElementById('config-acts-list').innerHTML = acts.length
     ? acts.map((a,i)=>{
-        // Compatibilidad: prácticas antiguas sin crits = todos los criterios
+        // Por indicadores, o por criterios (prácticas antiguas sin crits = todos los criterios)
         const crits = a.crits || null;
         const n = crits ? crits.filter(id => critActivo(id, mid)).length : totalCrits;
+        const resumen = a.inds && a.inds.length
+          ? `${a.inds.filter(id => indicadorPorId(id, mid)).length} indicador(es)`
+          : `${n}/${totalCrits} criterios P`;
         return `
       <div class="config-act-item" style="cursor:pointer" onclick="editConfigAct(${i})">
         ${a.imagen
@@ -3146,7 +3650,7 @@ function renderConfig(){
           : `<div class="config-act-num">${i+1}</div>`}
         <div class="config-act-name">
           <div>${a.nombre}</div>
-          <div style="font-size:12px;color:var(--muted);font-weight:400;margin-top:2px">${n}/${totalCrits} criterios P · toca para editar</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:400;margin-top:2px">${resumen} · toca para editar</div>
         </div>
         <button class="config-act-del" onclick="event.stopPropagation();deleteConfigAct(${i})">✕</button>
       </div>`;
@@ -3157,20 +3661,22 @@ function saveConfigAct(){
   const nombre = document.getElementById('config-act-name').value.trim();
   if (!nombre) { showToast('⚠ Escribe un nombre'); return; }
 
-  // Recoger criterios seleccionados
-  const crits = Array.from(document.querySelectorAll('.config-crit-check:checked'))
+  // Recoger lo seleccionado: indicadores (si el módulo los tiene) o criterios P
+  const sel = Array.from(document.querySelectorAll('.config-crit-check:checked'))
     .map(cb => cb.getAttribute('data-id'));
+  if (!sel.length) { showToast('⚠ Elige al menos un ' + (usaIndicadores() ? 'indicador' : 'criterio')); return; }
+  const queEvalua = usaIndicadores() ? { inds: sel, crits: null } : { crits: sel };
 
   const mid = S._configModId;
   if (!S.configActs[mid]) S.configActs[mid] = [];
 
   if (S._editingConfigActIdx !== null && S._editingConfigActIdx !== undefined) {
     // Editar existente
-    S.configActs[mid][S._editingConfigActIdx] = { nombre, crits, imagen: S._configImg || null };
+    S.configActs[mid][S._editingConfigActIdx] = { nombre, ...queEvalua, imagen: S._configImg || null };
     showToast('✓ Práctica actualizada');
   } else {
     // Nueva
-    S.configActs[mid].push({ nombre, crits, imagen: S._configImg || null });
+    S.configActs[mid].push({ nombre, ...queEvalua, imagen: S._configImg || null });
     showToast('✓ Práctica añadida');
   }
 
@@ -3595,9 +4101,9 @@ function generarPDF(observaciones = '') {
 
     getIndA().forEach(ind => {
       if (y > 265) { doc.addPage(); y = 14; }
-      const vals = obsSessions.map(sk=>(S.observaciones[sk]||{})[ind.id]).filter(v=>v);
-      const si = vals.filter(v=>v==='Sí').length;
-      const pct = vals.length ? Math.round(si/vals.length*100) : null;
+      // Nota del criterio calculada por el modelo (respuestas directas o a través de indicadores Sí/No)
+      const notaA = ev.criterios.find(c => c.id === ind.id)?.nota ?? null;
+      const pct = notaA === null ? null : Math.round(notaA * 10);
       const superado = pct !== null && pct >= 50; // = nota 5 en el modelo (Sí = 10, No = 0)
       const suspenso = pct !== null && !superado;
 
@@ -3638,6 +4144,26 @@ function generarPDF(observaciones = '') {
     y += 4;
   }
 
+  // ── Otros aspectos observados (indicadores informativos: no cuentan para la nota) ──
+  const informativos = resumenInformativos(key);
+  if (informativos.length) {
+    if (y > 250) { doc.addPage(); y = 14; }
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(...NAVY);
+    doc.text('Otros aspectos observados (no cuentan para la calificación)', M+2, y+4);
+    y += 7;
+    informativos.forEach(r => {
+      if (y > 280) { doc.addPage(); y = 14; }
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(7.5);
+      doc.setTextColor(28,43,58);
+      doc.text(doc.splitTextToSize(`• ${r.texto}: Sí en ${r.si} de ${r.total} observaciones`, W-M*2-4)[0], M+3, y+3.5);
+      y += 5.5;
+    });
+    y += 4;
+  }
+
   // ── Sección: CRITERIOS CONCEPTUALES (T) ──────────────────
   const pruebas = getPruebas(key);
   const mediaEsc = scoreEscrita(key);
@@ -3649,46 +4175,51 @@ function generarPDF(observaciones = '') {
     doc.setFont('helvetica','bold');
     doc.setFontSize(9);
     doc.setTextColor(255,255,255);
-    doc.text('✏  CRITERIOS CONCEPTUALES (T)', M+3, y+5);
+    doc.text('✏  EXÁMENES Y PRUEBAS', M+3, y+5);
     y += 10;
 
+    // Código "RAx-CEy" de cada criterio, sea del tipo que sea (un examen puede evaluar P, A o T)
+    const mInds = indsModulo(mod.id);
+    const ceDe = id => [...(mInds.IND_P||[]), ...(mInds.IND_A||[]), ...(mInds.IND_T||[])].find(i => i.id === id)?.ce || id;
     pruebas.forEach((p, pi) => {
       const critsInP = (p.crits || []);
+      const tieneNota = esNota(p.nota);
       const rowH = critsInP.length ? 14 : 10;
       if (y + rowH > 275) { doc.addPage(); y = 14; }
-      const suspenso = p.nota < 5;
+      const suspenso = tieneNota && p.nota < 5;
       if (suspenso) doc.setFillColor(254, 226, 226);
       else doc.setFillColor(238,242,247);
       doc.roundedRect(M, y, W-M*2, rowH, 2, 2, 'F');
-      const nc = p.nota>=9?GREEN:p.nota>=7?TEAL:p.nota>=5?AMBER:RED;
-      doc.setFont('helvetica','normal');
+      const nc = !tieneNota ? MUTED : p.nota>=9?GREEN:p.nota>=7?TEAL:p.nota>=5?AMBER:RED;
+      doc.setFont('helvetica', p.obligatoria ? 'bold' : 'normal');
       doc.setFontSize(8);
       doc.setTextColor(...(suspenso ? RED : MUTED));
-      doc.text(`Examen ${pi+1} · ${fmtFecha(p.fecha)}`, M+3, y+6.5);
+      const titulo = `${p.nombre || 'Examen ' + (pi+1)}${p.obligatoria ? ' (obligatoria)' : ''} · ${fmtFecha(p.fecha)}`;
+      doc.text(doc.splitTextToSize(titulo, W-M*2-50)[0], M+3, y+6.5);
       // CE trabajados
       if (critsInP.length) {
         doc.setFont('helvetica','normal');
         doc.setFontSize(6.5);
         doc.setTextColor(120,130,150);
-        const codes = critsInP.join(' · ');
-        doc.text(`CE trabajados: ${codes}`, M+3, y+11);
+        const codes = critsInP.map(ceDe).join(' · ');
+        doc.text(doc.splitTextToSize(`CE trabajados: ${codes}`, W-M*2-50)[0], M+3, y+11);
       }
       doc.setFont('helvetica','bold');
       doc.setFontSize(10);
       doc.setTextColor(...nc);
-      doc.text(p.nota.toFixed(1)+'/10', W-M-40, y+6.5, {align:'right'});
-      badge(W-M-28, y+6.5, p.nota>=5);
+      doc.text(tieneNota ? p.nota.toFixed(1)+'/10' : 'sin nota', W-M-40, y+6.5, {align:'right'});
+      if (tieneNota) badge(W-M-28, y+6.5, p.nota>=5);
       y += rowH + 2;
     });
 
-    if (pruebas.length > 1) {
+    if (pruebas.length > 1 && mediaEsc !== null) {
       doc.setFillColor(224,242,241);
       doc.roundedRect(M, y, W-M*2, 10, 2, 2, 'F');
       const nc2 = mediaEsc>=9?GREEN:mediaEsc>=7?TEAL:mediaEsc>=5?AMBER:RED;
       doc.setFont('helvetica','bold');
       doc.setFontSize(8);
       doc.setTextColor(...MUTED);
-      doc.text('MEDIA', M+3, y+6.5);
+      doc.text('NOTA DE TEORÍA (T)', M+3, y+6.5);
       doc.setFontSize(11);
       doc.setTextColor(...nc2);
       doc.text(mediaEsc.toFixed(1)+'/10', W-M-40, y+6.5, {align:'right'});
@@ -3839,9 +4370,10 @@ function renderClasePractica() {
   }
 
   const nCrits = def.crits ? def.crits.filter(id => critActivo(id)).length : getIndP().length;
+  const queEvalua = def.inds?.length ? `${def.inds.length} indicadores` : `${nCrits} criterios de práctica (P)`;
   let html = `<div class="card cp-head">
       <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
-        <div><h3>${escHTML(def.nombre)}</h3><div class="cp-sub">${nCrits} criterios de práctica (P)</div></div>
+        <div><h3>${escHTML(def.nombre)}</h3><div class="cp-sub">${queEvalua}</div></div>
         <button class="examen-crit-mini-btn" onclick="cpElegir(null)">Cambiar</button>
       </div>
       ${botonVerPractica(`verImagenDef(${S._cpIdx})`, def.imagen)}
@@ -3858,7 +4390,7 @@ function renderClasePractica() {
     const act = cpPractica(a.id);
     const r = act && esNota(act.rapida) ? act.rapida : null;
     const s = act ? actScore(act) : null;
-    const ajustados = act ? critsPractica(act).filter(id => tieneAjuste(act, id)).length : 0;
+    const ajustados = act ? elementosPractica(act).filter(id => tieneAjuste(act, id)).length : 0;
     html += `<div class="cp-row">
       <div class="cp-name">
         <div><strong>${escHTML(a.nombre)} ${escHTML(a.apellidos)}</strong><br>
@@ -3881,7 +4413,7 @@ function cpSet(aluId, val, pintar = true) {
   }
   act.rapida = conNota ? val : null;
   // Al quitar la nota, si la práctica queda vacía (sin ajustes ni foto) se borra para no dejarla a medias
-  if (!conNota && !act.photo && !critsPractica(act).some(id => tieneAjuste(act, id))) {
+  if (!conNota && !act.photo && !elementosPractica(act).some(id => tieneAjuste(act, id))) {
     S.actividades[key] = S.actividades[key].filter(x => x !== act);
     if (!S.actividades[key].length) delete S.actividades[key];
   }
@@ -4878,7 +5410,7 @@ document.addEventListener('keydown', (e) => {
     const val = tecla === 'd' ? 10 : parseInt(tecla, 10);
     const act = (S.actividades[akey()] || [])[S.openActIdx];
     if (!act) return;
-    const ids = critsPractica(act);
+    const ids = elementosPractica(act);
     const primero = ids.find(id => !tieneAjuste(act, id));
     if (primero) {
       const eraElPrimero = !ids.some(id => tieneAjuste(act, id));

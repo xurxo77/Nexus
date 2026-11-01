@@ -3,7 +3,7 @@
 // Cachea la app para funcionamiento offline completo
 // ═══════════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'nexus-v44';
+const CACHE_NAME = 'nexus-v50';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -47,6 +47,22 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   // Solo interceptar GET
   if (event.request.method !== 'GET') return;
+
+  // El manifest va primero a la red: Chrome lo usa para instalar la app y debe ver siempre el actual
+  if (new URL(event.request.url).pathname.endsWith('/manifest.json')) {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-store' })
+        .then(response => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request).then(cached => {
