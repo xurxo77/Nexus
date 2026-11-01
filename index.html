@@ -99,13 +99,18 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .clase-banner{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s,filter .12s;-webkit-tap-highlight-color:transparent}
 .clase-banner:hover{transform:scale(1.01)}
 .clase-banner:active{transform:scale(.97);filter:brightness(.9)} /* al tocar se "hunde": se nota que es un botón */
-.clase-banner-inner{padding:22px 20px 18px;display:flex;flex-direction:column;gap:16px}
-.clase-top{display:flex;align-items:center;gap:16px}
-.clase-pie{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.clase-banner-inner{padding:16px 18px 14px;display:flex;flex-direction:column;gap:12px}
+.clase-top{display:flex;align-items:center;gap:14px}
+/* Pie: chips de módulos a la izquierda (pueden ocupar varias líneas) y «Entrar» siempre abajo a la derecha */
+.clase-pie{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.clase-chips{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}
+/* Línea del curso: nombre a la izquierda y número de alumnos a la derecha */
+.clase-banner-info{flex:1;min-width:0}
+.clase-fila{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.clase-datos{display:flex;gap:5px;align-items:center;font-size:13px;font-weight:600;color:rgba(255,255,255,.92);white-space:nowrap}
+.clase-datos svg{width:15px;height:15px}
 .clase-chip{font-size:12px;font-weight:700;letter-spacing:.03em;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.18);color:#fff;font-family:"IBM Plex Mono",monospace}
-.clase-chip .chip-h{font-weight:500;opacity:.8}
-.clase-chip.alumnos{font-family:inherit;letter-spacing:0}
-.clase-entrar{margin-left:auto;background:#fff;font-weight:800;font-size:15px;padding:9px 16px;border-radius:999px;box-shadow:0 3px 10px rgba(0,0,0,.18);white-space:nowrap}
+.clase-entrar{flex-shrink:0;background:#fff;font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px;box-shadow:0 3px 10px rgba(0,0,0,.18);white-space:nowrap}
 /* Icono temático de la clase: solo el icono en blanco, sin recuadro, para que no compita con el nombre */
 .clase-badge{width:52px;height:68px;background:none;border:none;color:#fff!important;opacity:.5;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:none}
 .clase-dot-ico{display:inline-flex;vertical-align:-4px;margin-right:6px}
@@ -507,6 +512,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 @media (max-width:400px) {
   :root{ --fs-xs:13px; --fs-sm:15px; --fs-md:17px; --fs-lg:20px; --fs-xl:24px; --fs-2xl:30px; }
   .clase-badge{width:40px;height:52px}
+  .clase-banner-info h2{font-size:27px}
   .nota-big{font-size:76px}
   .topbar-title h1{font-size:18px}
   .topbar-title p{font-size:11.5px}
@@ -1120,7 +1126,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v66';
+const APP_VERSION = 'v72';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -1130,6 +1136,9 @@ const CLASES = [
   { id:"CL004", nombre:"2º FPB FEM", curso:2, modulos:"FPB2", color1:"#1B5E20", color2:"#43A047", icono:"ventana",  titulo:"Fabricación de Elementos Metálicos" },
 ];
 // Iconos de las clases (dibujo propio, trazo en el color de la clase):
+// Icono de alumnos de las tarjetas de clase: trazo blanco (currentColor), se ve sobre cualquier color de clase
+const ICONO_ALUMNOS = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.8a3.5 3.5 0 0 1 0 6.4M18.5 14.5c1.8.8 3 2.7 3 5.5"/></svg>`;
+
 // llama    = 1º CMSYC (corte térmico y soldadura en atmósfera natural: oxigás, electrodo)
 // careta  = 2º CMSYC (soldadura en atmósfera protegida y montaje)
 // martillo = 1º FPB (operaciones básicas de fabricación, soldadura y carpintería metálica)
@@ -2474,22 +2483,27 @@ function renderClases() {
     </div>`;
     return;
   }
-  // Tarjeta de clase: arriba icono, nombre y ciclo; abajo, lo que hay dentro (módulos y alumnos) y el botón "Entrar"
+  // Tarjeta de clase: arriba icono, curso y alumnos; abajo, los módulos que impartes y el botón "Entrar"
+  // (las horas de cada módulo se ven al entrar: lista de módulos y cabecera del módulo)
   document.getElementById('clasesList').innerHTML = clases.map(c=>{
     const nAlu = (S.alumnos[c.id]||[]).length;
+    const mods = modsActivosDe(c);
     return `
-    <div class="clase-banner" role="button" tabindex="0" onclick="selectClase('${c.id}')" style="background:linear-gradient(135deg,${c.color1},${c.color2})">
+    <div class="clase-banner" role="button" tabindex="0" title="${c.titulo}" onclick="selectClase('${c.id}')" style="background:linear-gradient(135deg,${c.color1},${c.color2})">
       <div class="clase-banner-inner">
         <div class="clase-top">
           <div class="clase-badge">${iconoClase(c)}</div>
           <div class="clase-banner-info">
-            <h2>${c.nombre}</h2>
-            <p>${c.titulo}</p>
+            <div class="clase-fila">
+              <h2>${c.nombre}</h2>
+              <div class="clase-datos">${ICONO_ALUMNOS}<span>${nAlu} ${nAlu === 1 ? 'alumno' : 'alumnos'}</span></div>
+            </div>
           </div>
         </div>
         <div class="clase-pie">
-          ${modsActivosDe(c).map(m => `<span class="clase-chip" title="${m.nombre}">${m.codigo} <b class="chip-h">${m.horas}h</b></span>`).join('')}
-          <span class="clase-chip alumnos">👥 ${nAlu} ${nAlu === 1 ? 'alumno' : 'alumnos'}</span>
+          <div class="clase-chips">
+            ${mods.map(m => `<span class="clase-chip" title="${m.nombre}">${m.codigo}</span>`).join('')}
+          </div>
           <span class="clase-entrar" style="color:${c.color1}">Entrar ›</span>
         </div>
       </div>
