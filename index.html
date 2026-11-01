@@ -7,7 +7,6 @@
 
 <!-- ═══════════ PWA METADATA ═══════════ -->
 <link rel="manifest" href="manifest.json">
-<link rel="preload" as="image" href="icon-maskable-512.png">
 <meta name="theme-color" content="#1A237E">
 <meta name="description" content="Evaluación criterial para FP de Soldadura y Calderería">
 
@@ -511,17 +510,28 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 </head>
 <body>
 <!-- ═══════════ SPLASH SCREEN ═══════════ -->
-<!-- Continúa la pantalla de arranque de Android sin que se note el paso: mismo fondo (background_color del
-     manifest), mismo icono en círculo, mismo tamaño (≈160 px) y mismo centro, sin animación de entrada.
-     Lo único nuevo es la frase, que aparece debajo con un fundido. -->
+<!-- Segunda pantalla de arranque. La primera es la de Android y muestra el logo; esta, sobre el mismo fondo
+     (background_color del manifest), NO repite el logo —así no se nota ningún cambio de tamaño— y presenta
+     la app con texto que aparece con un fundido: dos mensajes distintos, uno tras otro. -->
 <div id="splash" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#581C87;transition:opacity .5s ease;opacity:1">
-  <img src="icon-maskable-512.png" alt="NEXUS" decoding="sync" fetchpriority="high"
-       style="width:160px;height:160px;border-radius:50%" />
-  <div class="splash-lema">Tu cuaderno de evaluación del taller</div>
+  <div class="splash-texto">
+    <div class="splash-marca">NEXUS</div>
+    <div class="splash-lema">Tu cuaderno de evaluación del taller</div>
+    <div class="splash-linea"></div>
+    <div class="splash-dep">Departamento de Fabricación Mecánica<span id="splash-centro"></span></div>
+  </div>
 </div>
 <style>
-.splash-lema{position:absolute;left:24px;right:24px;top:calc(50% + 104px);text-align:center;color:#fff;font-family:'Outfit',system-ui,sans-serif;font-size:17px;font-weight:500;letter-spacing:.02em;opacity:0;animation:splashLema .7s ease .3s forwards}
-@keyframes splashLema { from { opacity: 0; transform: translateY(6px); } to { opacity: .9; transform: none; } }
+.splash-texto{text-align:center;color:#fff;font-family:'Outfit',system-ui,sans-serif;padding:0 28px}
+.splash-texto > *{opacity:0;animation:splashEntra .6s ease forwards}
+.splash-marca{font-size:46px;font-weight:700;letter-spacing:.14em;animation-delay:.05s!important}
+.splash-lema{font-size:19px;font-weight:500;margin-top:10px;animation-delay:.25s!important}
+.splash-linea{width:44px;height:3px;border-radius:2px;background:#F59E0B;margin:20px auto 16px;animation-delay:.4s!important}
+.splash-dep{font-size:14px;font-weight:400;opacity:.8;line-height:1.5;animation-delay:.5s!important}
+.splash-dep span{display:block}
+@keyframes splashEntra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.splash-dep{animation-name:splashEntraSuave!important}
+@keyframes splashEntraSuave { from { opacity: 0; transform: translateY(8px); } to { opacity: .8; transform: none; } }
 #splash.hidden { opacity: 0; pointer-events: none; }
 </style>
 
@@ -1098,7 +1108,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v58';
+const APP_VERSION = 'v59';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -5438,6 +5448,9 @@ if ('serviceWorker' in navigator) {
 // ═══════════ INIT ═══════════
 (async () => {
   const restored = await loadState();
+  // Nombre del centro en la pantalla de arranque, si está puesto en Ajustes
+  const centroSplash = document.getElementById('splash-centro');
+  if (centroSplash && S.settings.centro) centroSplash.textContent = S.settings.centro;
   applySettings();
   renderClases();
   // Forzar que se apliquen las visibilidades de topbar (logo, ⚙, ⓘ) al cargar
