@@ -77,7 +77,9 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 /* Botón flotante de volver */
 .back-fab{position:fixed;right:16px;bottom:calc(20px + var(--safe-bottom));z-index:900;width:52px;height:52px;border-radius:50%;border:1.5px solid rgba(26,35,126,.28);background:rgba(255,255,255,.96);color:var(--navy);cursor:pointer;box-shadow:0 4px 16px rgba(26,35,126,.28);display:flex;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);padding:0}
 .back-fab svg{width:24px;height:24px}
+.back-fab{transition:transform .25s ease,opacity .25s ease}
 .back-fab:active{transform:scale(.94)}
+.back-fab.oculto{transform:translateY(calc(100% + 40px));opacity:0;pointer-events:none}
 @media (min-width:600px){.back-fab{right:calc(50% - 280px + 16px)}}
 .screen.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -121,32 +123,59 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .clase-banner-info p{font-size:var(--fs-sm);color:rgba(255,255,255,.82);margin-top:3px}
 
 /* ── Student header ── */
-.stu-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;border-radius:var(--radius);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+/* Cabecera de la ficha: tarjeta blanca como las filas de la lista (el nombre ya está en la barra de arriba) */
+.stu-header{background:var(--card);color:var(--text);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 3px rgba(26,35,126,.08),0 1px 2px rgba(0,0,0,.04)}
 .stu-top{display:flex;gap:14px;align-items:center}
-.stu-avatar{width:56px;height:56px;position:relative;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;overflow:hidden;flex-shrink:0;cursor:pointer;border:2.5px solid rgba(255,255,255,.35);position:relative}
+.stu-avatar{width:52px;height:52px;position:relative;border-radius:50%;background:#E8EAF6;color:#1A237E;display:flex;align-items:center;justify-content:center;overflow:visible;flex-shrink:0;cursor:pointer}
+.stu-avatar img{border-radius:50%}
 .stu-avatar img{width:100%;height:100%;object-fit:cover}
-.stu-avatar-edit{position:absolute;bottom:0;right:0;width:20px;height:20px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;border:2px solid var(--navy)}
+.stu-avatar-edit{position:absolute;bottom:0;right:0;width:20px;height:20px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;border:2px solid #fff}
 .stu-info{flex:1;min-width:0}
+.stu-info-tit{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.stu-nota{width:64px;height:64px;font-size:30px;border-radius:16px}
 .stu-info h2{font-size:var(--fs-lg);font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stu-info p{font-size:var(--fs-sm);opacity:.78;margin-top:4px}
 .stu-scores{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.score-pill{background:rgba(255,255,255,.15);border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace}
+.score-pill{background:var(--bg);border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace}
 .score-pill .label{opacity:.72;font-size:11px;font-weight:700;letter-spacing:.05em}
-.score-pill .val{font-weight:700;font-size:15px;color:#fff}
+.score-pill .val{font-weight:700;font-size:15px;color:var(--text)}
 .score-pill.global{background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.45)}
-.stu-global-pill{border-radius:18px;padding:12px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:78px;flex-shrink:0;color:#fff;box-shadow:0 4px 14px rgba(0,0,0,0.18)}
-.stu-global-label{font-size:10px;font-weight:700;letter-spacing:.08em;opacity:.9}
-.stu-global-val{font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:800;line-height:1;margin-top:4px}
-.stu-global-pill{padding:10px 12px;min-width:70px}
 /* Lista de alumnos: acción principal y primeros pasos */
 .btn-principal{width:100%;min-height:58px;border:none;border-radius:16px;background:var(--navy);color:#fff;font-size:var(--fs-md);font-weight:700;cursor:pointer;box-shadow:var(--shadow);margin-bottom:6px}
 .chip-prov{border:1.5px dashed currentColor}
-/* Estado de cada parte (prácticas, actitud, teoría) en la lista de alumnos */
-.pat-row{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
-.pat{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;padding:3px 8px;border-radius:8px;border:1.5px solid}
-.pat.ok{background:#E8F5E9;color:#2E7D32;border-color:#A5D6A7}
-.pat.mal{background:#FFEBEE;color:#C62828;border-color:#EF9A9A}
-.pat.pend{background:#F5F5F5;color:#9E9E9E;border-color:#E0E0E0}
+/* Fila de alumno: compacta, con la nota del módulo grande a la derecha.
+   Cada alumno en su propia tarjeta, con un poco de aire entre ellas */
+.alu-lista{display:flex;flex-direction:column;gap:8px}
+.alu-fila{display:flex;align-items:center;gap:12px;padding:10px 12px 10px 14px;cursor:pointer;background:var(--card);border-radius:16px;box-shadow:0 1px 3px rgba(26,35,126,.08),0 1px 2px rgba(0,0,0,.04);transition:transform .12s,background .15s;-webkit-tap-highlight-color:transparent}
+.alu-fila:active{transform:scale(.98);background:var(--bg)}
+/* Silueta de estudiante en un tono neutro (índigo de la app, estilo "container" de Material 3): el color queda solo para las notas */
+.alu-fila .alu-avatar{width:40px;height:40px;background:#E8EAF6;color:#1A237E}
+.alu-cuerpo{flex:1;min-width:0}
+.alu-cuerpo h3{font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Partes (P · A · T) en texto: solo se colorea la suspensa (rojo) o la que falta (gris) */
+.alu-partes{font-size:13px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.alu-partes b{font-weight:700;color:var(--text)}
+.alu-partes .sep{margin:0 5px;opacity:.6}
+.alu-partes .mal,.alu-partes .mal b{color:#C62828}
+.alu-partes .pend,.alu-partes .pend b{color:#9E9E9E}
+/* Tendencia respecto a la última evaluación cerrada */
+.alu-tendencia{margin-left:9px;font-size:12px;font-weight:700;color:var(--muted)}
+.alu-tendencia.sube{color:#2E7D32}
+.alu-tendencia.baja{color:#C62828}
+.alu-nota{width:54px;height:54px;border-radius:14px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:24px;font-weight:800;line-height:1}
+.alu-nota small{font-size:10px;font-weight:700;margin-top:3px;white-space:nowrap}
+.alu-nota.ok{background:#E8F5E9;color:#2E7D32}
+.alu-nota.mal{background:#FFEBEE;color:#C62828}
+.alu-nota.prov{background:#FFF8E1;color:#B26A00}
+.alu-nota.pend{background:#F5F5F5;color:#9E9E9E}
+/* Barra de la evaluación en curso, encima de la lista de alumnos */
+.eval-barra{padding:12px 14px;display:flex;flex-direction:column;gap:6px;margin-bottom:4px}
+.eval-fila{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.eval-estado{font-size:var(--fs-sm);color:var(--text);display:flex;align-items:center;gap:7px}
+.eval-punto{width:9px;height:9px;border-radius:50%;background:#10B981;box-shadow:0 0 0 3px rgba(16,185,129,.2);flex-shrink:0}
+.eval-cerrar{border:1.5px solid var(--navy);background:none;color:var(--navy);font-weight:700;font-size:14px;padding:7px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.eval-cerradas{font-size:12.5px;color:var(--muted)}
+.eval-reabrir{border:none;background:none;color:var(--navy);font-size:12.5px;font-weight:700;text-decoration:underline;padding:0;cursor:pointer}
 .primeros-pasos{padding:14px 16px;display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
 .paso-tit{font-weight:700;color:var(--navy);font-size:var(--fs-md)}
 .paso{display:flex;align-items:center;gap:10px;font-size:var(--fs-sm)}
@@ -156,15 +185,16 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .paso-txt{flex:1;min-width:0}
 .paso button{border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:10px;min-height:40px;padding:0 12px;font-weight:600;cursor:pointer;flex-shrink:0}
 /* Nota provisional: aún falta alguna parte por evaluar */
-.stu-global-pill.prov{opacity:.85;border:2px dashed rgba(255,255,255,.8);box-shadow:none}
-.stu-global-pill.prov .stu-global-label{font-size:8.5px}
-.stu-estado{font-size:13px!important;opacity:.9!important;margin-top:3px!important}
-.stu-estado.mal{color:#FFCDD2;font-weight:700;opacity:1!important}
-.stu-detalle summary{cursor:pointer;font-size:13px;font-weight:600;opacity:.85;list-style:none;padding:2px 0}
+.stu-estado{font-size:14px!important;font-weight:700;opacity:1!important;margin-top:3px!important;line-height:1.3}
+.stu-estado.mal{color:#C62828}
+.stu-estado.prov{color:#B26A00}
+.stu-estado.ok{color:#2E7D32}
+.stu-estado.pend{color:var(--muted)}
+.stu-detalle summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--navy);list-style:none;padding:2px 0}
 .stu-detalle summary::-webkit-details-marker{display:none}
 .stu-detalle summary::before{content:'▸ '}
 .stu-detalle[open] summary::before{content:'▾ '}
-.stu-detalle-body{margin-top:8px;background:#fff;color:var(--text);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.stu-detalle-body{margin-top:8px;background:none;color:var(--text);border-top:1px solid var(--border);padding:12px 0 0;display:flex;flex-direction:column;gap:8px}
 .stu-detalle-tit{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .stu-detalle-body .stu-scores{margin-top:0}
 .stu-detalle-body .score-pill{background:var(--bg)}
@@ -180,8 +210,8 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 /* ── Tabs (refuerzo activa) ── */
 .tabs{display:flex;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
 .tab-btn{flex:1;padding:16px 8px;border:none;background:none;cursor:pointer;font-size:var(--fs-xs);font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:5px;transition:all .2s;border-bottom:4px solid transparent}
-.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);background:var(--teal-lt)}
-.tab-btn .ticon{font-size:28px}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--navy);background:#E8EAF6}
+.tab-btn .ticon{flex-shrink:0}
 .tab-content{display:none;flex-direction:column;gap:16px}
 .tab-content.active{display:flex}
 
@@ -252,14 +282,14 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .nota-btns{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .nota-btn{min-height:46px;border-radius:10px;border:2px solid;background:#fff;font-family:'IBM Plex Mono',monospace;font-size:var(--fs-md);font-weight:700;cursor:pointer;transition:all .12s;padding:0}
 .nota-btn.b0{border-color:#EF9A9A;color:#C62828}
-.nota-btn.b5{border-color:#FFCC80;color:#E65100}
-.nota-btn.b7{border-color:#90CAF9;color:#1565C0}
-.nota-btn.b9{border-color:#A5D6A7;color:#2E7D32}
+.nota-btn.b5{border-color:#C5E1A5;color:#558B2F}
+.nota-btn.b7{border-color:#A5D6A7;color:#2E7D32}
+.nota-btn.b9{border-color:#81C784;color:#1B5E20}
 .nota-btn.active{color:#fff}
 .nota-btn.b0.active{background:#C62828;border-color:#C62828}
-.nota-btn.b5.active{background:#E65100;border-color:#E65100}
-.nota-btn.b7.active{background:#1565C0;border-color:#1565C0}
-.nota-btn.b9.active{background:#2E7D32;border-color:#2E7D32}
+.nota-btn.b5.active{background:#558B2F;border-color:#558B2F}
+.nota-btn.b7.active{background:#2E7D32;border-color:#2E7D32}
+.nota-btn.b9.active{background:#1B5E20;border-color:#1B5E20}
 .nota-btn.active.heredada{opacity:.45;border-style:dashed}
 .nota-btn.quitar{border-color:var(--border);color:var(--muted);font-family:inherit}
 .nota-btn.quitar:disabled{opacity:.3;cursor:default}
@@ -310,7 +340,6 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 @media (min-width:500px){.crit-hint{display:inline}}
 
 /* ── Alumno card ── */
-.alu-status-bar{position:absolute;left:0;top:8px;bottom:8px;width:5px;border-radius:0 3px 3px 0}
 .alu-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--navy)}
 .alu-avatar span{font-size:16px;font-weight:700;color:#fff;letter-spacing:.02em}
 .alu-legend{display:flex;flex-wrap:wrap;gap:14px;padding:12px 4px 4px;font-size:11px;color:var(--muted);justify-content:center}
@@ -334,8 +363,8 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .resumen-sort-bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px 12px;background:var(--card);border-radius:12px;margin-bottom:12px;box-shadow:var(--shadow)}
 .resumen-sort-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-right:4px}
 .resumen-sort-btn{border:1.5px solid var(--border);background:var(--bg);color:var(--muted);padding:6px 12px;border-radius:16px;font-size:12px;font-weight:600;cursor:pointer;min-height:auto}
-.resumen-sort-btn.active{background:var(--teal);color:#fff;border-color:var(--teal)}
-.resumen-mobile{display:flex;flex-direction:column;gap:8px}
+.resumen-sort-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.resumen-mobile{display:block}
 .resumen-desktop{display:none}
 .resumen-card-mobile{background:var(--card);border-radius:12px;padding:12px 14px 12px 18px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow);position:relative;overflow:hidden}
 .resumen-status-bar{position:absolute;left:0;top:8px;bottom:8px;width:5px;border-radius:0 3px 3px 0}
@@ -370,6 +399,10 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .examen-card.obligatoria{border:2px solid #C62828}
 .examen-aviso{background:#FFEBEE;color:#C62828;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:700}
 .examen-aviso.pendiente{background:#FFF8E1;color:#E65100}
+/* Examen de toda la clase visto desde la ficha del alumno */
+.examen-clase-tit{font-size:var(--fs-md);font-weight:700;color:var(--text)}
+.examen-clase-info{font-size:13px;color:var(--muted)}
+.examen-clase-nota{font-size:12px;color:var(--muted)}
 .examen-crit-sub{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;padding:6px 14px 0}
 .examen-otros summary{cursor:pointer;padding:10px 14px;font-size:13px;font-weight:600;color:var(--navy);border-top:1px solid var(--border)}
 .examen-del-btn{background:none;border:1.5px solid rgba(198,40,40,.3);color:var(--red);font-size:18px;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .15s;flex-shrink:0}
@@ -419,6 +452,21 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .cp-fecha{padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px}
 .cp-todos-label{font-size:13px;font-weight:700;color:var(--teal)}
 .cp-row{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+/* Examen a toda la clase: una fila por alumno con la casilla de nota */
+.cpx-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 14px;border-bottom:1px solid var(--border)}
+.cpx-nombre{font-weight:600;font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cpx-nota{width:76px;height:44px;flex-shrink:0;text-align:center;font-size:19px;font-weight:800;border:1.5px solid var(--border);border-radius:12px;background:var(--bg);font-family:inherit}
+.cpx-nota:focus{outline:none;border-color:var(--navy);background:#fff}
+.cpx-crits{margin:0 14px 12px}
+/* Observación a toda la clase: navegador de indicadores y botones Sí/No compactos */
+.cpo-nav{display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:14px;padding:8px}
+.cpo-flecha{width:40px;height:40px;flex-shrink:0;border:none;border-radius:50%;background:var(--card);color:var(--navy);font-size:24px;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
+.cpo-flecha:disabled{opacity:.3;cursor:default}
+.cpo-ind{flex:1;min-width:0}
+.cpo-num{font-size:12px;font-weight:700;color:var(--muted)}
+.cpo-texto{font-size:15px;font-weight:600;color:var(--text);line-height:1.35;margin-top:2px}
+.cpo-todos{flex:1;min-height:44px;padding:8px}
+.cpo-btn{min-height:42px;padding:6px 14px;font-size:15px}
 .cp-row:last-child{border-bottom:none}
 .cp-name{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:var(--fs-sm);line-height:1.3}
 .cp-name span{font-size:13px;color:var(--muted);white-space:nowrap}
@@ -458,6 +506,25 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .modal-title{font-size:var(--fs-xl);font-weight:700}
 
 /* ── Info accordion ── */
+/* Configurar módulo: bloques plegados para lo que se configura una vez al curso */
+.config-plegable{background:var(--card);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.config-plegable summary{list-style:none;cursor:pointer;padding:14px 44px 14px 18px;position:relative;display:flex;align-items:center;gap:16px;min-height:68px}
+.config-plegable-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.config-plegable-tx b{font-weight:500;font-size:var(--fs-lg);color:var(--text)}
+.config-plegable summary::-webkit-details-marker{display:none}
+.config-plegable summary::after{content:"▾";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--muted);transition:transform .2s}
+.config-plegable[open] summary::after{transform:translateY(-50%) rotate(180deg)}
+.config-plegable summary small{font-size:12px;font-weight:400;color:var(--muted)}
+/* Configurar módulo: título de cada tipo y color propio (P verde azulado, A azul, T naranja), como los criterios */
+.config-tipo-tit{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:var(--fs-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.config-tipo-tit .crit-badge{width:22px;height:22px;font-size:11px}
+.tipo-p .config-act-num{background:var(--teal-lt);color:var(--teal)}
+.tipo-a .config-act-num{background:var(--sky-lt);color:#0277BD}
+.tipo-t .config-act-num{background:#FFF3E0;color:#E65100}
+.card.tipo-p,.config-plegable.tipo-p{border-left:4px solid var(--teal)}
+.card.tipo-a,.config-plegable.tipo-a{border-left:4px solid #0288D1}
+.card.tipo-t{border-left:4px solid #E65100}
+.config-plegable-body{display:flex;flex-direction:column;gap:12px;padding:0 12px 14px}
 .info-section{background:var(--bg);border-radius:14px;overflow:hidden;border:1.5px solid var(--border)}
 .info-section summary{padding:14px 18px;cursor:pointer;font-weight:600;font-size:var(--fs-md);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;user-select:none}
 .info-section summary::-webkit-details-marker{display:none}
@@ -586,9 +653,10 @@ try {
   <!-- S3: ALUMNOS -->
   <div class="screen" id="screen-alumnos">
     <div class="card primeros-pasos" id="primeros-pasos" style="display:none"></div>
-    <button class="btn-principal" id="btn-clase-practica" onclick="openClasePractica()" style="display:none">📋 Evaluar una práctica a toda la clase</button>
+    <button class="btn-principal" id="btn-clase-practica" onclick="openClasePractica()" style="display:none">📋 Evaluar a toda la clase</button>
+    <div class="card eval-barra" id="eval-barra" style="display:none"></div>
     <div class="section-label" id="alumnos-label">Alumnos</div>
-    <div class="card" id="alumnosList"></div>
+    <div class="alu-lista" id="alumnosList"></div>
     <button class="add-act-btn" onclick="openAddAlumno()">＋ Añadir alumno</button>
     <button class="add-act-btn" id="btn-resumen" onclick="openResumen()" style="margin-top:4px">📊 Ver resumen de clase</button>
   </div>
@@ -600,18 +668,17 @@ try {
 
   <!-- S3b: RESUMEN DE CLASE -->
   <div class="screen" id="screen-resumen">
-    <div class="section-label" id="resumen-label">Resumen de clase</div>
     <div id="resumen-content"></div>
-    <button class="add-act-btn" onclick="exportResumenPDF()" style="background:var(--teal);color:#fff;border:none;margin-top:8px">📄 Exportar PDF de la clase</button>
+    <button class="btn-principal" onclick="exportResumenPDF()" style="margin-top:8px">📄 Exportar PDF de la clase</button>
   </div>
 
   <!-- S4: ALUMNO -->
   <div class="screen" id="screen-alumno">
     <div class="stu-header" id="stuHeader"></div>
     <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('rubrica')"><span class="ticon">📋</span>Prácticas</button>
-      <button class="tab-btn" onclick="switchTab('observacion')"><span class="ticon">👁</span>Observación</button>
-      <button class="tab-btn" onclick="switchTab('escrita')"><span class="ticon">✏</span>Examen</button>
+      <button class="tab-btn active" onclick="switchTab('rubrica')"><svg class="ticon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 10.5l2 2 4-4M8.5 16h7"/></svg>Prácticas</button>
+      <button class="tab-btn" onclick="switchTab('observacion')"><svg class="ticon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg>Observación</button>
+      <button class="tab-btn" onclick="switchTab('escrita')"><svg class="ticon" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>Examen</button>
     </div>
     <div class="tab-content active" id="tab-rubrica">
       <div id="rubrica-content"></div>
@@ -631,24 +698,47 @@ try {
       <div class="card" id="config-mod-selector"></div>
     </div>
     <div id="config-selected-mod" style="display:none;flex-direction:column;gap:12px;margin-top:4px">
-      <div class="section-label" id="config-crits-label">Criterios que trabajo en este módulo</div>
-      <p style="font-size:12px;color:var(--muted);padding:0 2px;line-height:1.5;margin-top:-6px">
-        Desmarca los criterios que no vas a trabajar este curso. Dejan de aparecer en prácticas, observación, exámenes y PDF, y no cuentan en la nota. Lo ya puntuado no se borra: si vuelves a marcarlo, reaparece.
-      </p>
-      <div class="card calif-card" id="config-calif"></div>
-      <div class="card" id="config-crits-ra" style="padding:0;overflow:hidden"></div>
-      <div class="section-label" id="config-ind-label">Indicadores de evaluación</div>
-      <p style="font-size:12px;color:var(--muted);padding:0 2px;line-height:1.5;margin-top:-6px">
-        Frases concretas que evalúas en las prácticas (nota de 0 a 10) o en la observación (Sí / No). Cada una cuenta para los criterios vinculados. Las informativas aparecen en la ficha y el informe, pero no cuentan para la nota.
-      </p>
-      <div class="card" id="config-ind-list" style="padding:0;overflow:hidden"></div>
-      <button class="add-act-btn" onclick="openIndicador(null)">＋ Añadir indicador</button>
-      <div class="section-label" id="config-mod-label">Prácticas predefinidas</div>
-      <div class="card" id="config-acts-list"></div>
+      <!-- Mismo orden que las pestañas de la ficha: Prácticas · Observación · Exámenes.
+           Lo que se configura una vez al curso (criterios), plegado al final -->
+      <!-- Cada tipo con su color (el mismo de los criterios P, A y T) y todo en tarjetas iguales -->
+      <div class="config-tipo-tit tipo-p"><span class="crit-badge crit-p">P</span><span id="config-mod-label">Prácticas</span></div>
+      <div class="card tipo-p" id="config-acts-list"></div>
+      <details class="config-plegable tipo-p">
+        <summary><span class="config-act-num">≡</span><span class="config-plegable-tx"><b>Indicadores</b><small id="config-ind-label">Frases que se puntúan de 0 a 10 · toca para ver y editar</small></span></summary>
+        <div class="config-plegable-body">
+          <div class="card" id="config-ind-list" style="padding:0;overflow:hidden"></div>
+          <button class="add-act-btn" onclick="openIndicador(null,'nota')">＋ Añadir indicador de práctica</button>
+        </div>
+      </details>
       <button class="add-act-btn" onclick="openConfigAct()">＋ Añadir práctica</button>
-      <p style="font-size:12px;color:var(--muted);padding:0 2px;line-height:1.5">
-        Las prácticas definidas aquí aparecerán como sugerencia al evaluar a cada alumno del módulo. Puedes seleccionar qué criterios (P) se evalúan en cada práctica.
-      </p>
+
+      <div class="config-tipo-tit tipo-a"><span class="crit-badge crit-a">A</span><span>Observación de actitud</span></div>
+      <details class="config-plegable tipo-a">
+        <summary><span class="config-act-num">👁</span><span class="config-plegable-tx"><b>Hoja de observación</b><small id="config-obs-sub">Frases Sí / No · toca para ver y editar</small></span></summary>
+        <div class="config-plegable-body">
+          <p style="font-size:12px;color:var(--muted);padding:0 2px;line-height:1.5">
+            Frases que observas en el taller y marcas con Sí / No (cuentan para los criterios vinculados). Las informativas aparecen en la ficha y el informe, pero no cuentan para la nota.
+          </p>
+          <div class="card" id="config-obs-list" style="padding:0;overflow:hidden"></div>
+          <button class="add-act-btn" onclick="openIndicador(null,'sino')">＋ Añadir frase de observación</button>
+        </div>
+      </details>
+
+      <div class="config-tipo-tit tipo-t"><span class="crit-badge crit-t">T</span><span id="config-ex-label">Exámenes</span></div>
+      <div id="config-examenes"></div>
+
+      <div class="config-tipo-tit"><span class="crit-badge" style="background:var(--muted)">⚙</span><span>Una vez al curso</span></div>
+
+      <details class="config-plegable">
+        <summary><span class="config-act-num">✓</span><span class="config-plegable-tx"><b>Criterios que trabajo</b><small><span id="config-crits-label"></span> · cálculo de la nota y pesos de los RA</small></span></summary>
+        <div class="config-plegable-body">
+          <p style="font-size:12px;color:var(--muted);padding:0 2px;line-height:1.5">
+            Desmarca los criterios que no vas a trabajar este curso. Dejan de aparecer en prácticas, observación, exámenes y PDF, y no cuentan en la nota. Lo ya puntuado no se borra: si vuelves a marcarlo, reaparece.
+          </p>
+          <div class="card calif-card" id="config-calif"></div>
+          <div class="card" id="config-crits-ra" style="padding:0;overflow:hidden"></div>
+        </div>
+      </details>
     </div>
   </div>
 </div>
@@ -720,6 +810,29 @@ try {
 </div>
 
 <!-- MODAL: Nueva sesión observación -->
+<!-- MODAL: Contraseña de la copia de seguridad (cifrar al exportar / descifrar al restaurar) -->
+<div class="modal-overlay" id="modal-clave" style="z-index:260">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="clave-titulo">🔐 Contraseña de la copia</div>
+    <p id="clave-texto" style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:12px"></p>
+    <div class="form-group">
+      <input type="password" class="form-input" id="clave-1" placeholder="Contraseña" autocomplete="new-password"
+             onkeydown="if(event.key==='Enter')claveAceptar()" />
+    </div>
+    <div class="form-group" id="clave-2-grupo">
+      <input type="password" class="form-input" id="clave-2" placeholder="Repite la contraseña" autocomplete="new-password"
+             onkeydown="if(event.key==='Enter')claveAceptar()" />
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:10px">
+      <input type="checkbox" onchange="['clave-1','clave-2'].forEach(id=>document.getElementById(id).type=this.checked?'text':'password')" /> Mostrar contraseña
+    </label>
+    <div id="clave-error" style="color:var(--red);font-size:13px;font-weight:700;min-height:18px;margin-bottom:8px"></div>
+    <button class="btn-primary" onclick="claveAceptar()">Aceptar</button>
+    <button class="btn-secondary" onclick="claveCancelar()">Cancelar</button>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-obs">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -851,16 +964,16 @@ try {
       <div style="display:flex;flex-direction:column;gap:8px">
         <div style="font-size:var(--fs-sm);font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">📥 Copia de seguridad</div>
         <button onclick="exportBackup(true)" class="btn-secondary" style="text-align:left;padding:14px 16px">
-          <div style="font-weight:600">Copia completa (con fotos)</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px">Todos los datos + fotos. Útil para cambiar de dispositivo.</div>
+          <div style="font-weight:600">🔐 Copia completa (con fotos)</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Todos los datos y fotos, cifrados con tu contraseña. Para cambiar de móvil.</div>
         </button>
         <button onclick="exportBackup(false)" class="btn-secondary" style="text-align:left;padding:14px 16px">
-          <div style="font-weight:600">Copia rápida (sin fotos)</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px">Solo datos. Mucho más ligero, rápido de restaurar.</div>
+          <div style="font-weight:600">🔐 Copia rápida (sin fotos)</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Solo datos, cifrados con tu contraseña. Mucho más ligera.</div>
         </button>
         <button onclick="document.getElementById('import-file').click()" class="btn-secondary" style="text-align:left;padding:14px 16px">
           <div style="font-weight:600">📤 Restaurar copia</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px">Importa un archivo .json previamente exportado.</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Abre una copia hecha antes (te pedirá su contraseña). También lee las copias antiguas sin cifrar.</div>
         </button>
         <input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importBackup(this)" />
       </div>
@@ -938,7 +1051,7 @@ try {
 
           <p style="margin-top:14px"><strong>Prácticas (procedimental · P):</strong></p>
           <p>Pon la <strong>nota de la práctica de 0 a 10</strong>: se aplica a todos sus criterios. Si un criterio destaca o falla, ajústalo con su propia nota. Con <strong>📐 Ver la práctica</strong> se abre su imagen a pantalla completa.</p>
-          <p>Para calificar a toda la clase en una sola pantalla, usa <strong>📋 Evaluar una práctica a toda la clase</strong> desde la lista de alumnos: cada alumno con su nota, sin entrar en su ficha.</p>
+          <p>Para calificar a toda la clase en una sola pantalla, usa <strong>📋 Evaluar a toda la clase</strong> desde la lista de alumnos. Sirve para <strong>prácticas</strong> (cada alumno con su nota de 0 a 10), para la <strong>observación de actitud</strong> (un indicador cada vez, Sí o No por alumno, con «Todos Sí» para ir rápido) y para <strong>exámenes</strong>: el examen se crea una sola vez (nombre, fecha, si es obligatorio y criterios) y escribes la nota de cada alumno seguida, pasando al siguiente con Intro. En la ficha de cada alumno aparece con su nota.</p>
 
           <p style="margin-top:14px"><strong>Observación (actitudinal · A):</strong></p>
           <p>Crea una sesión (recomendado: 2 por trimestre) y marca Sí / No en cada criterio. En cada criterio, Sí cuenta 10 y No cuenta 0, y se hace la media de todas las sesiones. Algunos módulos (3015 y 3073) no tienen criterios de actitud en el currículo.</p>
@@ -962,7 +1075,8 @@ try {
           </p>
           <p><strong>Condición de aprobado:</strong> todos los RA con 5 o más y cada parte (prácticas, actitud y teoría) con 5 o más. Si no, la nota queda en <strong>4 como máximo</strong>.</p>
           <p>La nota final es <strong>entera, de 1 a 10</strong>. Los pesos de los RA se configuran en ⚙ Criterios y prácticas (por defecto, todos iguales).</p>
-          <p>Mientras falte por evaluar alguna parte (prácticas, actitud o teoría), la nota aparece como <strong>provisional</strong>, también en el informe PDF. El detalle por partes y por RA está en la ficha del alumno, en «Ver detalle de la nota».</p>
+          <p>La nota es <strong>acumulada</strong> (todo lo evaluado desde el inicio de curso) y está <strong>en curso</strong> hasta que cierras la evaluación con el botón «Cerrar» de la lista de alumnos. Al cerrar, se guarda la nota de cada alumno en ese momento y ya no cambia; aparece en la lista, en la ficha y en el informe PDF. Si te equivocas, puedes reabrir la última evaluación cerrada.</p>
+          <p>Si a un alumno le falta por evaluar alguna parte (prácticas, actitud o teoría), su nota sale en ámbar con el aviso «falta…». El detalle por partes y por RA está en la ficha del alumno, en «Ver detalle de la nota».</p>
 
           <p style="margin-top:12px"><strong>Escala de las prácticas (0-10):</strong></p>
           <p>0-4 No conseguido · 5-6 Conseguido justo · 7-8 Conseguido · 9-10 Excelente</p>
@@ -999,8 +1113,8 @@ try {
           <p>Si usas la app solo como página web y pasas mucho tiempo sin abrirla (ej. Safari iOS tras ~7 días), el navegador <strong>puede</strong> borrar los datos. Por eso conviene instalarla.</p>
 
           <p style="margin-top:12px"><strong>Copias de seguridad:</strong></p>
-          <p>Ve a ⚙ Ajustes → Gestión de datos → Copia completa. Descarga un archivo .json; para recuperarlo, usa "Restaurar copia". Si pasan 7 días sin copia, la app te lo recuerda al abrirla. La fecha de la última copia aparece en Gestión de datos.</p>
-          <p>⚠ El archivo de copia contiene los nombres y las notas del alumnado <strong>sin cifrar</strong>: guárdalo en un sitio seguro (preferiblemente el almacenamiento corporativo de la Junta) y no lo envíes por correo ni mensajería.</p>
+          <p>Ve a ⚙ Ajustes → Gestión de datos → Copia completa. Te pide una contraseña y descarga un archivo cifrado: sin la contraseña nadie puede leerlo, aunque el archivo acabe en manos de otra persona. Si olvidas la contraseña, esa copia no se puede recuperar. Para recuperarla, usa "Restaurar copia". Si pasan 7 días sin copia, la app te lo recuerda al abrirla. La fecha de la última copia aparece en Gestión de datos.</p>
+          <p>🔐 Las copias se guardan <strong>cifradas</strong> (AES de 256 bits) con la contraseña que eliges al hacerlas: sin ella, el archivo no se puede leer. Aun así, guárdalo preferiblemente en el almacenamiento corporativo de la Junta y usa una contraseña que no uses en otros sitios. Las copias antiguas (anteriores a la v88) no están cifradas: bórralas cuando tengas una copia nueva.</p>
         </div>
       </details>
 
@@ -1129,7 +1243,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v74';
+const APP_VERSION = 'v88';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -1139,6 +1253,15 @@ const CLASES = [
   { id:"CL004", nombre:"2º FPB FEM", curso:2, modulos:"FPB2", color1:"#1B5E20", color2:"#43A047", icono:"ventana",  titulo:"Fabricación de Elementos Metálicos" },
 ];
 // Iconos de las clases (dibujo propio, trazo en el color de la clase):
+// Icono de alumno en la lista: silueta clásica de estudiante (cabeza, hombros y birrete con borla), rellena.
+// Toma el color del texto (currentColor); el contorno claro (color del círculo) separa el birrete de la cabeza.
+const ICONO_ESTUDIANTE = `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+  <path d="M4.6 22.4c.5-4.1 3.6-6.5 7.4-6.5s6.9 2.4 7.4 6.5z" fill="currentColor"/>
+  <circle cx="12" cy="11.4" r="3.6" fill="currentColor" stroke="#E8EAF6" stroke-width=".9"/>
+  <path d="M7.6 7.2v2.4c0 .9 2 2.1 4.4 2.1s4.4-1.2 4.4-2.1V7.2" fill="currentColor" stroke="#E8EAF6" stroke-width=".9"/>
+  <path d="M12 2.4l9 3.9-9 3.9-9-3.9z" fill="currentColor" stroke="#E8EAF6" stroke-width=".9" stroke-linejoin="round"/>
+  <path d="M19.4 7v3.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+  <circle cx="19.4" cy="11.1" r=".9" fill="currentColor"/></svg>`;
 // Icono de alumnos de las tarjetas de clase: trazo blanco (currentColor), se ve sobre cualquier color de clase
 const ICONO_ALUMNOS = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.8a3.5 3.5 0 0 1 0 6.4M18.5 14.5c1.8.8 3 2.7 3 5.5"/></svg>`;
 
@@ -2201,6 +2324,8 @@ let S = {
   actividades:{}, observaciones:{}, notas:{},
   stuPhotos:{}, configActs:{}, photoActTmp:null, _editingStu:null,
   obsProfesor:{}, // observaciones del profesor por clave alumnoId_moduloId
+  cierres:{},     // evaluaciones cerradas por clave claseId_moduloId (ver CIERRE DE EVALUACIONES)
+  examenes:{},    // exámenes de toda la clase por módulo (ver getPruebas)
   alumnos: { CL001: [], CL002: [], CL003: [], CL004: [] }, // clases vacías por defecto
   _editAluId: null, _delAluId: null, openActIdx: null,
   settings: { year:'2026-2027', centro:'', profesor:'',
@@ -2382,12 +2507,14 @@ function resumenInformativos(key, modId = modDeKey(key)) {
     return { ...ind, si: resp.filter(v => v === 'Sí').length, total: resp.length };
   }).filter(r => r.total > 0);
 }
+// Paleta única de notas en toda la app: rojo = no llega a 5; verdes cada vez más intensos = aprobado.
+// (El ámbar queda solo para "falta una parte" y el gris para "sin nota".)
 function scoreColor(v) {
   if (v===null||v===undefined) return 'var(--muted)';
-  if (v>=9) return '#2E7D32';   // MD3 Green 800
-  if (v>=7) return '#1565C0';   // MD3 Blue 800
-  if (v>=5) return '#E65100';   // MD3 Deep Orange 800
-  return '#C62828';             // MD3 Red 800
+  if (v>=9) return '#1B5E20';   // 9-10 Excelente (Green 900)
+  if (v>=7) return '#2E7D32';   // 7-8 Conseguido (Green 800)
+  if (v>=5) return '#558B2F';   // 5-6 Conseguido justo (Light Green 800)
+  return '#C62828';             // 0-4 No conseguido (Red 800)
 }
 function scoreLabel(v) { return v===null||v===undefined?'—':parseFloat(v).toFixed(1); }
 
@@ -2409,6 +2536,7 @@ function showScreen(id,title,sub,showConf=false) {
   }
   document.getElementById('backBtn').style.display=navHistory.length>1?'':'none';
   document.getElementById('backFab').style.display=navHistory.length>1?'':'none';
+  document.getElementById('backFab').classList.remove('oculto');
   document.getElementById('configBtn').style.display=showConf?'flex':'none';
   document.getElementById('pdfBtn').style.display=id==='screen-alumno'?'flex':'none';
   document.getElementById('settingsBtn').style.display=isHome?'flex':'none';
@@ -2423,6 +2551,16 @@ function navigate(id,title,sub,showConf=false) {
 // Mientras no estemos en la pantalla de inicio se mantiene UNA entrada extra en el historial del navegador
 // (la "guarda"). El atrás del sistema la consume: se detecta en popstate y se vuelve a la pantalla anterior
 // de la app. En la pantalla de inicio no hay guarda, así que el atrás del sistema cierra la app como siempre.
+// Botón flotante de volver: se aparta al bajar (para no tapar notas) y vuelve al subir o al llegar al final
+let _scrollPrevio = 0;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY, fab = document.getElementById('backFab');
+  const alFinal = window.innerHeight + y >= document.documentElement.scrollHeight - 40;
+  if (alFinal || y < 80 || y < _scrollPrevio - 6) fab.classList.remove('oculto');
+  else if (y > _scrollPrevio + 6) fab.classList.add('oculto');
+  if (Math.abs(y - _scrollPrevio) > 6) _scrollPrevio = y;
+}, { passive: true });
+
 let _guardaActiva = false, _ignorarPop = false;
 function ponerGuardaAtras() {
   if (_guardaActiva || navHistory.length <= 1) return;
@@ -2458,7 +2596,7 @@ function retroceder() {
     'screen-modulos':[getClase()?.nombre,'Módulos profesionales',false],
     'screen-alumnos':[getModulo()?.nombre,subtituloModulo(),true],
     'screen-alumno':[getAlumno()?.nombre+' '+getAlumno()?.apellidos,getModulo()?.nombre,false],
-    'screen-config':['Criterios y prácticas',getModulo()?.nombre,false],
+    'screen-config':[`Configurar · ${getModulo()?.nombre}`,`Cód. ${getModulo()?.codigo}`,false],
     'screen-clase-practica':['Evaluar a toda la clase',getModulo()?.nombre,false],
   };
   const t=m[prev]||['NEXUS','',false];
@@ -2466,6 +2604,7 @@ function retroceder() {
   if (prev==='screen-alumno') renderAlumnoScreen();
   if (prev==='screen-alumnos') renderAlumnos();
   if (prev==='screen-clase-practica') renderClasePractica();
+  if (prev==='screen-config' && S._configModId) selectConfigMod(S._configModId);
 }
 const getClase  = ()=>CLASES.find(c=>c.id===S.claseId);
 const getModulo = ()=>Object.values(MODULOS).flat().find(m=>m.id===S.moduloId);
@@ -2747,11 +2886,10 @@ function selectConfigMod(modId) {
   S._configModId = modId;
   renderConfigModSelector();
   const mod = Object.values(MODULOS).flat().find(m => m.id === modId);
-  document.getElementById('config-mod-label').textContent =
-    `${mod.icon} ${mod.nombre} · Prácticas`;
   document.getElementById('config-selected-mod').style.display = 'flex';
   renderCritsModulo();
   renderIndicadoresConfig();
+  renderExamenesConfig();
   renderConfig();
 }
 
@@ -2782,8 +2920,7 @@ function renderCritsModulo() {
   const grupos = critsPorRA(modId);
   const total = grupos.reduce((n, g) => n + g.items.length, 0);
   const activos = grupos.reduce((n, g) => n + g.items.filter(i => critActivo(i.id, modId)).length, 0);
-  document.getElementById('config-crits-label').textContent =
-    `Criterios que trabajo en este módulo · ${activos} de ${total}`;
+  document.getElementById('config-crits-label').textContent = `${activos} de ${total} criterios activos`;
 
   // Pesos de los RA con algún criterio activo (los demás no cuentan en la nota)
   const rasActivos = grupos.filter(g => g.items.some(i => critActivo(i.id, modId))).map(g => g.ra);
@@ -2860,29 +2997,65 @@ function setCritsRA(ra, on) {
 }
 
 // ── Indicadores de evaluación del módulo (pantalla ⚙ Criterios y prácticas) ──
+// Exámenes del módulo en Configurar: son los mismos que en "Evaluar a toda la clase".
+// Se crean o abren en el editor de esa pantalla (nombre, fecha, obligatorio, criterios y notas).
+function renderExamenesConfig() {
+  const el = document.getElementById('config-examenes');
+  if (!el) return;
+  const modId = S._configModId;
+  // El editor necesita la clase y el módulo abiertos (se llega desde la lista de alumnos)
+  if (!S.claseId || modId !== S.moduloId) {
+    el.innerHTML = `<div class="ind-aviso">Para preparar los exámenes, entra en el módulo desde su clase y abre ⚙ desde la lista de alumnos.</div>`;
+    return;
+  }
+  const exs = examenesModulo(modId);
+  const alus = S.alumnos[S.claseId] || [];
+  document.getElementById('config-ex-label').textContent = `Exámenes · ${exs.length}`;
+  // Mismas tarjetas que las prácticas: número (o candado si es obligatorio), nombre y resumen
+  el.innerHTML = `<div class="card tipo-t">${exs.length ? exs.map((ex, i) => {
+      const hechos = alus.filter(a => esNota(ex.notas[a.id])).length;
+      const nCrits = (ex.crits || []).length;
+      return `<div class="config-act-item" style="cursor:pointer" onclick="configAbrirExamen('${ex.id}')">
+        <div class="config-act-num" title="${ex.obligatoria ? 'Obligatorio' : ''}">${ex.obligatoria ? '🔒' : i + 1}</div>
+        <div class="config-act-name">
+          <div>${escHTML(ex.nombre || 'Examen sin nombre')}</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:400;margin-top:2px">${fmtFecha(ex.fecha)} · ${nCrits ? `${nCrits} criterio(s)` : 'toda la teoría'} · ${hechos} de ${alus.length} con nota</div>
+        </div>
+        <span class="item-arrow">›</span>
+      </div>`;
+    }).join('') : `<div class="empty"><div class="empty-icon">✏</div><p>No hay exámenes preparados. Puedes crearlos con antelación (fecha prevista y criterios) y poner las notas el día del examen.</p></div>`}</div>
+    <button class="add-act-btn" onclick="configNuevoExamen()" style="margin-top:12px">＋ Añadir examen</button>`;
+}
+function configAbrirExamen(id) {
+  openClasePractica();
+  cpElegirExamen(id);
+}
+function configNuevoExamen() {
+  openClasePractica();
+  cpNuevoExamen();
+}
+
+// Indicadores del módulo en Configurar, repartidos como en la ficha:
+// los de 0-10 en "Prácticas" y los Sí / No e informativos en "Hoja de observación".
 function renderIndicadoresConfig() {
   const modId = S._configModId;
-  const el = document.getElementById('config-ind-list');
-  if (!el || !modId) return;
+  const elP = document.getElementById('config-ind-list');
+  const elO = document.getElementById('config-obs-list');
+  if (!elP || !elO || !modId) return;
   const lista = getIndicadores(modId);
   const todos = critsPorRA(modId).flatMap(g => g.items).filter(c => critActivo(c.id, modId));
   const ceDe = id => todos.find(c => c.id === id)?.ce;
   // Cobertura: criterios de práctica y actitud activos que ningún indicador evalúa
   // (los de teoría se evalúan con los exámenes)
   const cubiertos = new Set(lista.filter(i => i.modo !== 'info').flatMap(i => critsDeIndicador(i, modId)));
-  const sinCubrir = todos.filter(c => c.tipo !== 't' && !cubiertos.has(c.id));
+  const sinCubrir = tipo => todos.filter(c => c.tipo === tipo && !cubiertos.has(c.id));
   const propia = !!S.settings.indicadores?.[modId];
   const hayPropuesta = !!INDICADORES_PROPUESTOS[modId];
-  const cabecera = !lista.length
-    ? `<div class="ind-aviso">Este módulo aún no tiene indicadores: sus prácticas se evalúan criterio a criterio y la observación usa los criterios de actitud. Añade indicadores para evaluar con frases.</div>`
-    : `<div class="ind-aviso ${sinCubrir.length ? 'mal' : 'bien'}">${sinCubrir.length
-        ? `⚠ ${sinCubrir.length} criterio(s) de práctica o actitud sin ningún indicador: ${sinCubrir.map(c => c.ce).join(", ")}`
-        : '✓ Todos los criterios de práctica y actitud tienen al menos un indicador'}
-        ${!propia && hayPropuesta ? '<br><span style="font-weight:400">Es una propuesta: revísala y adáptala a tu programación.</span>' : ''}
-        ${propia && hayPropuesta ? `<br><button class="examen-crit-mini-btn" style="margin-top:6px" onclick="restaurarIndicadores()">Volver a la propuesta original</button>` : ''}
-      </div>`;
+  const aviso = (faltan, queTipo) => !lista.length ? '' : `<div class="ind-aviso ${faltan.length ? 'mal' : 'bien'}">${faltan.length
+      ? `⚠ ${faltan.length} criterio(s) de ${queTipo} sin ningún indicador: ${faltan.map(c => c.ce).join(', ')}`
+      : `✓ Todos los criterios de ${queTipo} tienen al menos un indicador`}</div>`;
   const etiquetas = { nota:'0-10', sino:'Sí/No', info:'Info' };
-  el.innerHTML = cabecera + lista.map((ind, i) => `
+  const fila = (ind, i) => `
     <div class="ind-item" onclick="openIndicador(${i})">
       <span class="ind-modo ${ind.modo}">${etiquetas[ind.modo]}</span>
       <div style="flex:1;min-width:0">
@@ -2891,17 +3064,37 @@ function renderIndicadoresConfig() {
           : critsDeIndicador(ind, modId).map(ceDe).filter(Boolean).join(' · ') || '⚠ sin criterios activos'}</div>
       </div>
       <span class="item-arrow">›</span>
-    </div>`).join('');
+    </div>`;
+  // Se conserva el índice en la lista completa, que es el que usa openIndicador
+  const conIndice = lista.map((ind, i) => ({ ind, i }));
+  const deP = conIndice.filter(x => x.ind.modo === 'nota');
+  const deO = conIndice.filter(x => x.ind.modo !== 'nota');
+  const faltanP = sinCubrir('p'), faltanA = sinCubrir('a');
+
+  const propuesta = !lista.length
+    ? `<div class="ind-aviso">Este módulo aún no tiene indicadores: sus prácticas se evalúan criterio a criterio y la observación usa los criterios de actitud. Añade frases para evaluar con ellas.</div>`
+    : !propia && hayPropuesta ? `<div class="ind-aviso">Los indicadores son una propuesta: revísalos y adáptalos a tu programación.</div>`
+    : propia && hayPropuesta ? `<div class="ind-aviso"><button class="examen-crit-mini-btn" onclick="restaurarIndicadores()">Volver a la propuesta original de indicadores</button></div>` : '';
+  elP.innerHTML = propuesta + aviso(faltanP, 'práctica') + deP.map(x => fila(x.ind, x.i)).join('');
+  elO.innerHTML = aviso(faltanA, 'actitud') + (deO.length ? deO.map(x => fila(x.ind, x.i)).join('')
+    : `<div class="ind-aviso">Sin frases de observación: la observación usa directamente los criterios de actitud.</div>`);
+
+  // Títulos con el recuento (el bloque de prácticas está plegado: avisa aunque esté cerrado)
+  document.getElementById('config-ind-label').textContent =
+    `${deP.length} frase(s) de 0 a 10${deP.length && faltanP.length ? ` · ⚠ ${faltanP.length} criterio(s) sin indicador` : ''} · toca para ver y editar`;
+  const nInfo = deO.filter(x => x.ind.modo === 'info').length;
+  document.getElementById('config-obs-sub').textContent = (deO.length ? `${deO.length} frase(s): ${deO.length - nInfo} Sí / No${nInfo ? ` · ${nInfo} informativa(s)` : ''}` : 'Usa los criterios de actitud')
+    + (lista.length && faltanA.length ? ` · ⚠ ${faltanA.length} criterio(s) sin frase` : '') + ' · toca para ver y editar';
 }
 
-function openIndicador(i) {
+function openIndicador(i, modoNuevo = 'nota') {
   const lista = getIndicadores(S._configModId);
   const ind = i === null ? null : lista[i];
   S._editInd = i;
   S._indCrits = new Set(ind?.crits || []);
-  document.getElementById('modal-ind-title').textContent = ind ? 'Editar indicador' : 'Nuevo indicador';
+  document.getElementById('modal-ind-title').textContent = ind ? 'Editar indicador' : modoNuevo === 'nota' ? 'Nuevo indicador de práctica' : 'Nueva frase de observación';
   document.getElementById('ind-texto').value = ind?.texto || '';
-  document.getElementById('ind-modo').value = ind?.modo || 'nota';
+  document.getElementById('ind-modo').value = ind?.modo || modoNuevo;
   document.getElementById('ind-borrar').style.display = ind ? '' : 'none';
   renderIndCrits();
   openModal('modal-indicador');
@@ -2986,6 +3179,122 @@ function resetPesosRA() {
 }
 
 // ═══════════ ALUMNOS ═══════════
+// Por qué no supera, en corto, para ponerlo bajo la nota: partes (P·A·T), RA o examen obligatorio
+const motivoCorto = ev => {
+  if (!ev.motivos.length) return '';
+  const partes = ['p','a','t'].filter(t => ev.bloques[t] !== null && ev.bloques[t] < 5).map(t => t.toUpperCase());
+  if (partes.length) return `${partes.join('·')} < 5`;
+  const ras = ev.ras.filter(r => r.superado === false).map(r => `RA${r.ra}`);
+  if (ras.length) return ras.length > 1 ? 'RA < 5' : `${ras[0]} < 5`;
+  return 'examen';
+};
+// Clase de color del recuadro de la nota
+const estadoNota = ev => ev.nota === null ? 'pend' : ev.motivos.length || ev.nota < 5 ? 'mal' : ev.provisional ? 'prov' : 'ok';
+const fmtParte = v => v === null ? '—' : Number.isInteger(+v.toFixed(1)) ? String(Math.round(v)) : v.toFixed(1);
+
+// Fila de alumno (lista de alumnos y resumen de clase): silueta de estudiante, nombre, P/A/T y tendencia;
+// a la derecha la nota grande y, si suspende, el motivo
+function filaAlumnoHTML(a) {
+  const key=`${a.id}_${S.moduloId}`;
+  const ev=evalModulo(key);
+  const photo=S.stuPhotos[a.id];
+  const est=estadoNota(ev);
+  const motivo=motivoCorto(ev);
+  const falta = ev.faltan.map(f => ({ 'prácticas':'P', 'actitud':'A', 'teoría':'T' })[f] || f).join('·');
+  const tituloNota = ev.nota === null ? 'Sin notas todavía'
+    : ev.motivos.length ? `No supera: ${ev.motivos.join(', ')}`
+    : ev.provisional ? `Falta evaluar: ${ev.faltan.join(', ')}` : 'Aprueba (nota en curso)';
+  // Tendencia respecto a la última evaluación cerrada: ↑ sube, ↓ baja, = igual
+  const cierre = ultimoCierreAlumno(a.id);
+  const tendencia = !cierre || cierre.nota === null || ev.nota === null ? ''
+    : ev.nota > cierre.nota ? 'sube' : ev.nota < cierre.nota ? 'baja' : 'igual';
+  const partes = ['p','a','t'].filter(t => ev.criterios.some(c => c.tipo === t)).map(t => {
+    const v = ev.bloques[t];
+    const cls = v === null ? 'pend' : v >= 5 ? '' : 'mal';
+    return `<span class="parte ${cls}" title="${({p:'Prácticas',a:'Actitud',t:'Teoría'})[t]}: ${v === null ? 'sin evaluar' : v.toFixed(1)}">${t.toUpperCase()} <b>${fmtParte(v)}</b></span>`;
+  }).join('<span class="sep">·</span>');
+  return `
+  <div class="alu-fila" onclick="selectAlumno('${a.id}')">
+    <div class="alu-avatar">
+      ${photo?`<img src="${photo}" style="width:100%;height:100%;object-fit:cover">` : ICONO_ESTUDIANTE}
+    </div>
+    <div class="alu-cuerpo">
+      <h3>${escHTML(a.nombre)} ${escHTML(a.apellidos)}</h3>
+      <div class="alu-partes">${partes}${cierre ? `<span class="alu-tendencia ${tendencia}" title="Nota cerrada en la ${cierre.nombre.toLowerCase()} (${fechaCorta(cierre.fecha)})">${({ sube:'↑', baja:'↓', igual:'=' })[tendencia] || ''} ${abreviaEval(cierre.nombre)}: ${cierre.nota ?? '—'}</span>` : ''}</div>
+    </div>
+    <div class="alu-nota ${est}" title="${tituloNota}">${ev.nota === null ? '—' : ev.nota}${motivo ? `<small>${motivo}</small>` : est === 'prov' ? `<small>falta ${falta}</small>` : ''}</div>
+  </div>`;
+}
+
+// ═══════════ CIERRE DE EVALUACIONES ═══════════
+// Las notas son acumuladas (todo el curso) y están "en curso" hasta que el profesor cierra una evaluación.
+// Al cerrar se guarda una foto fija de la nota de cada alumno, que ya no cambia aunque se sigan poniendo notas.
+// S.cierres["claseId_moduloId"] = [{ nombre, fecha, notas: { alumnoId: { nota, p, a, t, motivos, faltan } } }]
+const EVALUACIONES = ['1ª evaluación', '2ª evaluación', '3ª evaluación', 'Evaluación final'];
+const claveCierre = () => `${S.claseId}_${S.moduloId}`;
+const cierresDe = (clave = claveCierre()) => (S.cierres && S.cierres[clave]) || [];
+// Evaluación que está en curso, o null si ya se cerró la final
+const evaluacionEnCurso = (clave = claveCierre()) => EVALUACIONES[cierresDe(clave).length] || null;
+const abreviaEval = nombre => nombre === 'Evaluación final' ? 'Final' : nombre.split(' ')[0];
+const fechaCorta = f => f ? f.split('-').reverse().join('/') : '';
+// Nota cerrada más reciente de un alumno en el módulo actual (o null)
+function ultimoCierreAlumno(aluId, clave = claveCierre()) {
+  const lista = cierresDe(clave);
+  for (let i = lista.length - 1; i >= 0; i--) if (lista[i].notas[aluId]) return { ...lista[i].notas[aluId], nombre: lista[i].nombre, fecha: lista[i].fecha };
+  return null;
+}
+
+function cerrarEvaluacion() {
+  const nombre = evaluacionEnCurso();
+  const alus = S.alumnos[S.claseId] || [];
+  if (!nombre || !alus.length) return;
+  if (!confirm(`¿Cerrar la ${nombre.toLowerCase()} de ${getModulo().nombre}?\n\n` +
+      `Se guardará la nota que tienen ahora los ${alus.length} alumnos y ya no cambiará, ` +
+      `aunque sigas poniendo notas. Si te equivocas, puedes reabrirla.`)) return;
+  const r1 = v => v === null ? null : +v.toFixed(1);
+  const notas = {};
+  alus.forEach(a => {
+    const ev = evalModulo(`${a.id}_${S.moduloId}`);
+    notas[a.id] = { nota: ev.nota, p: r1(ev.bloques.p), a: r1(ev.bloques.a), t: r1(ev.bloques.t),
+                    motivos: ev.motivos, faltan: ev.faltan };
+  });
+  if (!S.cierres) S.cierres = {};
+  (S.cierres[claveCierre()] = cierresDe()).push({ nombre, fecha: today(), notas });
+  scheduleSave();
+  renderAlumnos();
+  showToast(`✓ ${nombre} cerrada`);
+}
+
+function reabrirEvaluacion() {
+  const lista = cierresDe();
+  if (!lista.length) return;
+  const ultima = lista[lista.length - 1];
+  if (!confirm(`¿Reabrir la ${ultima.nombre.toLowerCase()}?\n\nSe borrarán las notas que guardaste al cerrarla ` +
+      `(${fechaCorta(ultima.fecha)}) y las notas volverán a estar en curso.`)) return;
+  lista.pop();
+  if (!lista.length) delete S.cierres[claveCierre()];
+  scheduleSave();
+  renderAlumnos();
+  showToast(`✓ ${ultima.nombre} reabierta`);
+}
+
+function renderEvalBarra(alus) {
+  const barra = document.getElementById('eval-barra');
+  if (!alus.length) { barra.style.display = 'none'; return; }
+  const enCurso = evaluacionEnCurso();
+  const cerradas = cierresDe();
+  barra.style.display = '';
+  barra.innerHTML = `
+    <div class="eval-fila">
+      <div class="eval-estado">${enCurso
+        ? `<span class="eval-punto"></span><b>${enCurso}</b> · en curso`
+        : `<b>✓ Evaluación final cerrada</b>`}</div>
+      ${enCurso ? `<button class="eval-cerrar" onclick="cerrarEvaluacion()">Cerrar ${abreviaEval(enCurso)}</button>` : ''}
+    </div>
+    ${cerradas.length ? `<div class="eval-cerradas">Cerradas: ${cerradas.map(c => `${abreviaEval(c.nombre)} (${fechaCorta(c.fecha)})`).join(' · ')}
+      · <button class="eval-reabrir" onclick="reabrirEvaluacion()">Reabrir ${abreviaEval(cerradas[cerradas.length - 1].nombre)}</button></div>` : ''}`;
+}
+
 function renderAlumnos() {
   // Guard: only run when the alumnos screen is actually visible
   const aluLabel = document.getElementById('alumnos-label');
@@ -2993,6 +3302,7 @@ function renderAlumnos() {
   const alus=S.alumnos[S.claseId]||[];
   const defs=S.configActs[S.moduloId]||[];
   aluLabel.textContent=`Alumnos · ${alus.length}`;
+  renderEvalBarra(alus);
 
   // Primeros pasos: mientras falten prácticas definidas o alumnos, se guía al profesor
   const pasos = document.getElementById('primeros-pasos');
@@ -3002,73 +3312,25 @@ function renderAlumnos() {
     pasos.innerHTML = `<div class="paso-tit">Primeros pasos en este módulo</div>
       ${paso(defs.length, 1, 'Define las prácticas y qué criterios evalúa cada una', '<button onclick="openConfig()">⚙ Definir</button>')}
       ${paso(alus.length, 2, 'Añade a tus alumnos', '<button onclick="openAddAlumno()">＋ Añadir</button>')}
-      ${paso(false, 3, 'Evalúa: una práctica a toda la clase, o alumno por alumno', '')}`;
+      ${paso(false, 3, 'Evalúa a toda la clase (prácticas, observación y exámenes) o alumno por alumno', '')}`;
     pasos.style.display = '';
   } else {
     pasos.style.display = 'none';
   }
-  // La evaluación de toda la clase es lo más usado: arriba, en cuanto hay alumnos y prácticas
-  document.getElementById('btn-clase-practica').style.display = alus.length && defs.length ? '' : 'none';
+  // La evaluación de toda la clase es lo más usado: arriba, en cuanto hay alumnos (prácticas y exámenes)
+  document.getElementById('btn-clase-practica').style.display = alus.length ? '' : 'none';
   document.getElementById('btn-resumen').style.display = alus.length ? '' : 'none';
 
-  const getInitials = (a) => {
-    const n = (a.nombre||'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    const ap = (a.apellidos||'').replace(/[★☆]/g,'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    return ((n[0]||'?') + (ap[0]||'')).toUpperCase();
-  };
-
-  const getEstado = (ev, numActs) => {
-    if (numActs === 0 && ev.nota === null) return { color:'#BDBDBD', label:'sin evaluar' };
-    if (ev.nota === null) return { color:'#BDBDBD', label:'en proceso' };
-    if (ev.motivos.length) return { color:'#EF4444', label:'RA o parte suspensa' };
-    if (ev.nota < 5) return { color:'#EF4444', label:'suspenso' };
-    if (ev.nota < 6) return { color:'#F59E0B', label:'aprobado justo' };
-    return { color:'#10B981', label:'aprobado' };
-  };
-
-  document.getElementById('alumnosList').innerHTML = alus.map(a=>{
-    const key=`${a.id}_${S.moduloId}`;
-    const ev=evalModulo(key);
-    const g=ev.nota;
-    const photo=S.stuPhotos[a.id];
-    const initials = getInitials(a);
-    const isRepetidor=a.apellidos.includes('★');
-    const numActs=(S.actividades[key]||[]).length;
-    const estado = getEstado(ev, numActs);
-    return `
-    <div class="card-list-item" onclick="selectAlumno('${a.id}')"
-         style="position:relative;padding-left:22px">
-      <div class="alu-status-bar" style="background:${estado.color}" title="${estado.label}"></div>
-      <div class="alu-avatar">
-        ${photo?`<img src="${photo}" style="width:100%;height:100%;object-fit:cover">`
-               :`<span>${initials}</span>`}
-      </div>
-      <div class="item-body">
-        <h3>${escHTML(a.nombre)} ${escHTML(a.apellidos)}${isRepetidor?' <span style="font-size:13px;color:var(--amber)">★</span>':''}</h3>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap">
-          <span style="font-size:var(--fs-sm);color:var(--muted)">${numActs} práctica(s)</span>
-          ${g!==null?`<span class="chip ${ev.provisional?'chip-prov':''}" style="background:${scoreColor(g)}22;color:${scoreColor(g)}"
-              title="${ev.provisional?'Provisional: faltan '+ev.faltan.join(', '):''}">${g}/10${ev.provisional?' · prov.':''}</span>`:''}
-          ${ev.motivos.length?`<span style="font-size:12px;color:var(--red);font-weight:700" title="No supera: ${ev.motivos.join(', ')}">⚠</span>`:''}
-        </div>
-        <div class="pat-row">${['p','a','t'].map(t => { const v = ev.bloques[t]; const hay = ev.criterios.some(c => c.tipo === t);
-          if (!hay) return '';
-          const cls = v === null ? 'pend' : v >= 5 ? 'ok' : 'mal';
-          return `<span class="pat ${cls}" title="${({p:'Prácticas',a:'Actitud',t:'Teoría'})[t]}: ${v === null ? 'sin evaluar' : v.toFixed(1)}">${t.toUpperCase()} ${v === null ? '—' : v.toFixed(1)}</span>`; }).join('')}
-        </div>
-      </div>
-      <span class="item-arrow">›</span>
-    </div>`;
-  }).join('');
+  document.getElementById('alumnosList').innerHTML = alus.map(filaAlumnoHTML).join('');
 
   // Leyenda de colores al final
   if (alus.length) {
     document.getElementById('alumnosList').innerHTML += `
     <div class="alu-legend">
-      <span><span class="legend-dot" style="background:#10B981"></span>Aprobado</span>
-      <span><span class="legend-dot" style="background:#F59E0B"></span>Justo</span>
-      <span><span class="legend-dot" style="background:#EF4444"></span>Suspenso</span>
-      <span><span class="legend-dot" style="background:#BDBDBD"></span>Pendiente</span>
+      <span><span class="legend-dot" style="background:#2E7D32"></span>Aprobado</span>
+      <span><span class="legend-dot" style="background:#B26A00"></span>Falta una parte</span>
+      <span><span class="legend-dot" style="background:#C62828"></span>Suspenso</span>
+      <span><span class="legend-dot" style="background:#BDBDBD"></span>Sin notas</span>
     </div>`;
   }
   document.getElementById('alumnosList').style.display = alus.length ? '' : 'none';
@@ -3098,10 +3360,6 @@ function updateHeader() {
   const a=getAlumno(), key=akey();
   if (!a) return;
   const photo=S.stuPhotos[a.id];
-  // Iniciales robustas (sin tildes, sin estrellas)
-  const n = (a.nombre||'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  const ap = (a.apellidos||'').replace(/[★☆]/g,'').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  const initials = ((n[0]||'?') + (ap[0]||'')).toUpperCase();
   const ev = evalModulo(key);
   const g = ev.nota;
   // Una línea de estado bajo el nombre: lo único que hace falta ver de un vistazo.
@@ -3116,21 +3374,19 @@ function updateHeader() {
   const pill = (letra, v) => `<span class="score-pill"><span class="label">${letra}</span><span class="val" style="color:${scoreColor(v)}">${scoreLabel(v)}</span></span>`;
   const raChips = ev.ras.map(x => `<span class="ra-chip ${x.superado===false?'mal':x.superado?'bien':''}"
       title="RA${x.ra} · ${x.evaluados}/${x.total} criterios evaluados · peso ${Math.round(x.peso*10)/10} %">RA${x.ra} ${x.nota!==null?x.nota.toFixed(1):'—'}</span>`).join('');
+  // El nombre ya está en la barra de arriba: aquí solo el estado y la nota, con los mismos colores que la lista
+  const est = estadoNota(ev);
   document.getElementById('stuHeader').innerHTML=`
     <div class="stu-top">
-      <div class="stu-avatar" onclick="triggerStuPhoto('${a.id}')">
-        ${photo?`<img src="${photo}" alt="${initials}">`:`<span>${initials}</span>`}
+      <div class="stu-avatar" onclick="triggerStuPhoto('${a.id}')" title="Poner foto">
+        ${photo?`<img src="${photo}" alt="">`:ICONO_ESTUDIANTE}
         <div class="stu-avatar-edit">📷</div>
       </div>
       <div class="stu-info">
-        <h2>${escHTML(a.nombre)} ${escHTML(a.apellidos)}</h2>
-        <p class="stu-estado ${ev.motivos.length?'mal':''}">${estado}</p>
+        <div class="stu-info-tit">${evaluacionEnCurso() ? `Nota en curso · ${evaluacionEnCurso()}` : 'Nota del módulo'}</div>
+        <p class="stu-estado ${est}">${estado}</p>
       </div>
-      <div class="stu-global-pill ${ev.provisional && g!==null?'prov':''}" style="background:${g!==null?scoreColor(g):'rgba(255,255,255,.18)'}"
-           title="${ev.notaExacta!==null?'Media ponderada de los RA: '+ev.notaExacta.toFixed(2):''}">
-        <div class="stu-global-label">${ev.provisional && g!==null?'PROVISIONAL':'NOTA'}</div>
-        <div class="stu-global-val">${g!==null?g:'—'}</div>
-      </div>
+      <div class="alu-nota stu-nota ${est}" title="${ev.notaExacta!==null?'Media ponderada de los RA: '+ev.notaExacta.toFixed(2):''}">${g!==null?g:'—'}</div>
     </div>
     <details class="stu-detalle" ${S._detalleAbierto?'open':''} ontoggle="S._detalleAbierto=this.open">
       <summary>Ver detalle de la nota</summary>
@@ -3139,6 +3395,10 @@ function updateHeader() {
         <div class="stu-scores">${pill('Prácticas', ev.bloques.p)}${pill('Actitud', ev.bloques.a)}${pill('Teoría', ev.bloques.t)}</div>
         ${raChips ? `<div class="stu-detalle-tit">Por resultados de aprendizaje</div><div class="ra-chips">${raChips}</div>` : ''}
         <div class="stu-detalle-nota">Para aprobar: todos los RA y cada parte con 5 o más.</div>
+        ${(() => { const cerradas = cierresDe().filter(c => c.notas[a.id]);
+          return cerradas.length ? `<div class="stu-detalle-tit">Evaluaciones cerradas</div>
+            <div class="ra-chips">${cerradas.map(c => { const n = c.notas[a.id].nota;
+              return `<span class="ra-chip ${n === null ? '' : n >= 5 ? 'bien' : 'mal'}" title="Cerrada el ${fechaCorta(c.fecha)}">${abreviaEval(c.nombre)} ${n ?? '—'}</span>`; }).join('')}</div>` : ''; })()}
         ${(() => { const info = resumenInformativos(key);
           return info.length ? `<div class="stu-detalle-tit">Otros aspectos observados (no cuentan para la nota)</div>
             ${info.map(r => `<div class="stu-detalle-nota">${r.si === r.total ? '✓' : r.si === 0 ? '✗' : '◐'} ${escHTML(r.texto)} · Sí en ${r.si} de ${r.total}</div>`).join('')}` : ''; })()}
@@ -3174,9 +3434,9 @@ function botonesNota(valor, accion, { heredada = false, quitar = null, quitarTit
 // Leyenda de las franjas de la rúbrica sobre la escala 0-10
 const LEYENDA_FRANJAS = `<div class="franjas">
   <span><i style="background:#C62828"></i>0-4 No conseguido</span>
-  <span><i style="background:#E65100"></i>5-6 Conseguido justo</span>
-  <span><i style="background:#1565C0"></i>7-8 Conseguido</span>
-  <span><i style="background:#2E7D32"></i>9-10 Excelente</span>
+  <span><i style="background:#558B2F"></i>5-6 Conseguido justo</span>
+  <span><i style="background:#2E7D32"></i>7-8 Conseguido</span>
+  <span><i style="background:#1B5E20"></i>9-10 Excelente</span>
 </div>`;
 
 function actCardHTML(act, ai) {
@@ -3592,26 +3852,62 @@ function createObsSession() {
 }
 
 // ═══════════ PRUEBA ESCRITA ═══════════
-function getPruebas(key) {
+// Exámenes propios de un alumno (creados en su ficha)
+function pruebasPropias(key) {
   const n = S.notas[key];
   if (!n) return [];
   // Retrocompatibilidad
   if (typeof n.nota === 'number') return [{fecha: today(), nota: n.nota}];
   return n.pruebas || [];
 }
+// Exámenes de toda la clase: se definen una vez por módulo y guardan la nota de cada alumno.
+// S.examenes[moduloId] = [{ id, nombre, fecha, obligatoria, crits, notas: { alumnoId: nota } }]
+const examenesModulo = (modId = S.moduloId) => (S.examenes && S.examenes[modId]) || [];
+// Todos los exámenes de un alumno: los de la clase (con su nota) y los propios. Es lo que cuenta para la nota.
+function getPruebas(key) {
+  const aluId = key.slice(0, key.lastIndexOf('_'));
+  const deClase = examenesModulo(modDeKey(key)).map(ex => ({ nombre: ex.nombre, fecha: ex.fecha, obligatoria: ex.obligatoria,
+    crits: ex.crits, nota: esNota(ex.notas[aluId]) ? ex.notas[aluId] : null, examenId: ex.id }));
+  return [...deClase, ...pruebasPropias(key)];
+}
 
 function renderEscrita() {
   const key = akey();
-  const pruebas = getPruebas(key);
+  const pruebas = pruebasPropias(key);
+  const deClase = examenesModulo();
   const indsT = getIndT();
   // Otros criterios activos del módulo que también se pueden evaluar con un examen (p. ej. prevención)
   const indsOtros = [...getIndP().map(i => ({ ...i, tipo:'p' })), ...getIndA().map(i => ({ ...i, tipo:'a' }))];
   let html = '';
 
-  if (!pruebas.length) {
+  if (!pruebas.length && !deClase.length) {
     html += `<div class="card empty"><div class="empty-icon">✏</div>
-      <p>No hay exámenes registrados todavía.<br>Pulsa <strong>＋ Añadir examen</strong> para empezar.</p></div>`;
+      <p>No hay exámenes todavía.<br>Lo más rápido: créalo una vez en <strong>📋 Evaluar a toda la clase</strong> y pon la nota de todos.<br>
+      Para un examen solo de este alumno, pulsa <strong>＋ Añadir examen</strong>.</p></div>`;
   }
+
+  // Exámenes de toda la clase: aquí solo se pone o cambia la nota de este alumno
+  deClase.forEach(ex => {
+    const nota = esNota(ex.notas[S.alumnoId]) ? ex.notas[S.alumnoId] : null;
+    html += `<div class="examen-card ${ex.obligatoria?'obligatoria':''}">
+      <div class="examen-header">
+        <div class="examen-clase-tit">${escHTML(ex.nombre || 'Examen sin nombre')}</div>
+        <div class="examen-title-row">
+          <span class="examen-clase-info">👥 Examen de toda la clase · ${fmtFecha(ex.fecha)}${ex.obligatoria ? ' · 🔒 obligatorio' : ''}</span>
+          <label class="examen-nota-wrap">Nota
+            <input type="number" class="examen-nota-input" min="0" max="10" step="0.25" inputmode="decimal"
+                   value="${nota ?? ''}" placeholder="—" style="color:${nota !== null ? scoreColor(nota) : 'inherit'}"
+                   onchange="setNotaExamen('${ex.id}','${S.alumnoId}',this.value)" />
+            <span>/10</span>
+          </label>
+        </div>
+        ${ex.obligatoria && nota !== null && nota < 5 ? `<div class="examen-aviso">⛔ No superado: el alumno no puede aprobar el módulo hasta superarlo.</div>` : ''}
+        ${ex.obligatoria && nota === null ? `<div class="examen-aviso pendiente">⏳ Pendiente de nota.</div>` : ''}
+        <div class="examen-clase-nota">Nombre, fecha y criterios se cambian en 📋 Evaluar a toda la clase.</div>
+      </div>
+    </div>`;
+  });
+  if (deClase.length && pruebas.length) html += `<div class="section-label" style="margin-top:6px">Exámenes solo de este alumno</div>`;
 
   pruebas.forEach((p, i) => {
     const crits = p.crits || [];
@@ -3740,6 +4036,233 @@ function deletePrueba(i) {
   showToast('✓ Examen eliminado');
 }
 
+// ═══════════ OBSERVACIÓN A TODA LA CLASE ═══════════
+// Un indicador cada vez, con Sí / No por alumno. Escribe en la misma sesión de observación
+// que la ficha del alumno: S.observaciones["alumnoId_moduloId_fecha"][indicadorId] = 'Sí' | 'No'.
+function cpObsAbrir() {
+  S._cpIdx = null; S._cpExamen = null;
+  S._cpObs = true;
+  S._cpObsIdx = 0;
+  S._cpObsFecha = S._cpObsFecha || today();
+  renderClasePractica();
+  window.scrollTo(0, 0);
+}
+function cpObsFila(delta) {
+  const n = filasObservacion().length;
+  S._cpObsIdx = Math.max(0, Math.min(n - 1, (S._cpObsIdx || 0) + delta));
+  renderClasePractica();
+}
+function cpObsFecha(valor) {
+  S._cpObsFecha = valor || today();
+  renderClasePractica();
+}
+// val: 'Sí', 'No' o null (quitar). Pulsar otra vez la respuesta marcada la quita.
+function cpObsSet(aluId, val, pintar = true) {
+  const fila = filasObservacion()[S._cpObsIdx || 0];
+  if (!fila) return;
+  const sk = `${aluId}_${S.moduloId}_${S._cpObsFecha}`;
+  const sesion = S.observaciones[sk] || {};
+  if (pintar && sesion[fila.id] === val) val = null;
+  if (val) sesion[fila.id] = val; else delete sesion[fila.id];
+  if (Object.keys(sesion).length) S.observaciones[sk] = sesion; else delete S.observaciones[sk];
+  scheduleSave();
+  if (pintar) { haptic(8); renderClasePractica(); }
+}
+function cpObsTodos(val) {
+  const fila = filasObservacion()[S._cpObsIdx || 0];
+  const alus = S.alumnos[S.claseId] || [];
+  const distintos = alus.filter(a => { const v = S.observaciones[`${a.id}_${S.moduloId}_${S._cpObsFecha}`]?.[fila.id]; return v && v !== val; }).length;
+  if (distintos && !confirm(`${distintos} alumno(s) ya tienen otra respuesta en este indicador.\n\n¿Poner «${val}» a toda la clase?`)) return;
+  alus.forEach(a => cpObsSet(a.id, val, false));
+  haptic(8);
+  renderClasePractica();
+}
+
+function renderObsClase(el, alus) {
+  const filas = filasObservacion();
+  if (!filas.length) {
+    el.innerHTML = `<div class="card empty"><div class="empty-icon">👁</div><p>Este módulo no tiene criterios de actitud ni indicadores de observación.</p></div>
+      <button class="add-act-btn" onclick="cpElegir(null)">Volver</button>`;
+    return;
+  }
+  const i = Math.min(S._cpObsIdx || 0, filas.length - 1);
+  const fila = filas[i];
+  const resp = a => S.observaciones[`${a.id}_${S.moduloId}_${S._cpObsFecha}`]?.[fila.id] || null;
+  const marcados = alus.filter(a => resp(a)).length;
+  el.innerHTML = `
+    <div class="card cp-head">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+        <h3>Observación de actitud</h3>
+        <button class="examen-crit-mini-btn" onclick="cpElegir(null)">Cambiar</button>
+      </div>
+      <label class="cp-sub" style="display:flex;align-items:center;gap:8px">Fecha
+        <input type="date" class="cp-fecha" value="${S._cpObsFecha}" onchange="cpObsFecha(this.value)" />
+      </label>
+      <div class="cpo-nav">
+        <button class="cpo-flecha" onclick="cpObsFila(-1)" ${i === 0 ? 'disabled' : ''} aria-label="Indicador anterior">‹</button>
+        <div class="cpo-ind">
+          <div class="cpo-num">Indicador ${i + 1} de ${filas.length}${fila.cuenta ? '' : ' · informativo, no cuenta para la nota'}</div>
+          <div class="cpo-texto">${escHTML(fila.texto)}</div>
+        </div>
+        <button class="cpo-flecha" onclick="cpObsFila(1)" ${i === filas.length - 1 ? 'disabled' : ''} aria-label="Indicador siguiente">›</button>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="toggle-btn yes cpo-todos" onclick="cpObsTodos('Sí')">Todos Sí</button>
+        <button class="toggle-btn no cpo-todos" onclick="cpObsTodos('No')">Todos No</button>
+      </div>
+      <div class="cp-sub">Marca a todos y cambia solo a quien se salga. Pulsar otra vez una respuesta la quita. Luego pasa al siguiente indicador con ›.</div>
+    </div>
+    <div class="section-label">Respuestas · ${marcados} de ${alus.length}</div>
+    <div class="card">${alus.map(a => { const v = resp(a);
+      return `<div class="cpx-row">
+        <span class="cpx-nombre">${escHTML(a.nombre)} ${escHTML(a.apellidos)}</span>
+        <div class="toggle">
+          <button class="toggle-btn yes cpo-btn ${v === 'Sí' ? 'active' : ''}" onclick="cpObsSet('${a.id}','Sí')">Sí</button>
+          <button class="toggle-btn no cpo-btn ${v === 'No' ? 'active' : ''}" onclick="cpObsSet('${a.id}','No')">No</button>
+        </div>
+      </div>`; }).join('')}
+    </div>
+    ${i < filas.length - 1 ? `<button class="btn-principal" onclick="cpObsFila(1);window.scrollTo(0,0)">Siguiente indicador ›</button>` : ''}`;
+}
+
+// ═══════════ EXÁMENES DE TODA LA CLASE ═══════════
+// Se crean una vez por módulo (nombre, fecha, obligatorio, criterios) y se pone la nota de todos en una pantalla.
+const cpExamen = () => examenesModulo().find(e => e.id === S._cpExamen) || null;
+
+// Nota de un alumno en un examen de la clase (0-10, admite decimales). Vacía = sin nota.
+function setNotaExamen(exId, aluId, valor, pintar = true) {
+  const ex = examenesModulo().find(e => e.id === exId);
+  if (!ex) return;
+  const n = parseFloat(String(valor).replace(',', '.'));
+  if (isNaN(n)) delete ex.notas[aluId];
+  else ex.notas[aluId] = Math.max(0, Math.min(10, Math.round(n * 100) / 100));
+  scheduleSave();
+  if (pintar) { renderEscrita(); updateHeader(); }
+}
+
+function cpNuevoExamen() {
+  if (!S.examenes) S.examenes = {};
+  const ex = { id: 'EX' + Date.now(), nombre: '', fecha: today(), obligatoria: false, crits: [], notas: {} };
+  (S.examenes[S.moduloId] = examenesModulo()).push(ex);
+  scheduleSave();
+  cpElegirExamen(ex.id);
+  requestAnimationFrame(() => document.getElementById('cpx-nombre')?.focus());
+}
+function cpElegirExamen(id) {
+  S._cpIdx = null;
+  S._cpObs = false;
+  S._cpExamen = id;
+  renderClasePractica();
+  window.scrollTo(0, 0);
+}
+// Nombre, fecha u obligatoriedad
+function cpxCampo(campo, valor) {
+  const ex = cpExamen();
+  if (!ex) return;
+  ex[campo] = valor;
+  scheduleSave();
+  if (campo === 'obligatoria') renderClasePractica();
+}
+function cpxCrit(id, on) {
+  const ex = cpExamen();
+  if (!ex) return;
+  ex.crits = on ? [...new Set([...(ex.crits || []), id])] : (ex.crits || []).filter(c => c !== id);
+  scheduleSave(); renderClasePractica();
+}
+function cpxTodosCrits(on) {
+  const ex = cpExamen();
+  if (!ex) return;
+  ex.crits = on ? getIndT().map(i => i.id) : [];
+  scheduleSave(); renderClasePractica();
+}
+function cpxBorrar() {
+  const ex = cpExamen();
+  if (!ex) return;
+  const conNota = Object.keys(ex.notas).length;
+  if (!confirm(`¿Eliminar el examen «${ex.nombre || 'sin nombre'}»?` + (conNota ? `\n\nSe perderán las notas de ${conNota} alumno(s).` : ''))) return;
+  S.examenes[S.moduloId] = examenesModulo().filter(e => e !== ex);
+  if (!S.examenes[S.moduloId].length) delete S.examenes[S.moduloId];
+  S._cpExamen = null;
+  scheduleSave(); renderClasePractica();
+  showToast('✓ Examen eliminado');
+}
+// En la lista de notas no se repinta la pantalla (se perdería el foco): solo se actualiza la casilla y el contador
+function cpxNota(exId, aluId, input) {
+  setNotaExamen(exId, aluId, input.value, false);
+  const ex = cpExamen(), v = ex?.notas[aluId];
+  input.value = esNota(v) ? v : '';
+  input.style.color = esNota(v) ? scoreColor(v) : 'inherit';
+  const alus = S.alumnos[S.claseId] || [];
+  const cuenta = document.getElementById('cpx-cuenta');
+  if (cuenta) cuenta.textContent = `Notas · ${alus.filter(a => esNota(ex.notas[a.id])).length} de ${alus.length}`;
+}
+// Intro pasa a la casilla del siguiente alumno
+function cpxSiguiente(ev, input) {
+  if (ev.key !== 'Enter') return;
+  ev.preventDefault();
+  const casillas = [...document.querySelectorAll('.cpx-nota')];
+  const sig = casillas[casillas.indexOf(input) + 1];
+  if (sig) sig.focus(); else input.blur();
+}
+
+function renderExamenClase(el, alus) {
+  const ex = cpExamen();
+  const crits = ex.crits || [];
+  const indsT = getIndT();
+  const indsOtros = [...getIndP().map(i => ({ ...i, tipo:'p' })), ...getIndA().map(i => ({ ...i, tipo:'a' }))];
+  const critItem = (ind, badge) => {
+    const on = crits.includes(ind.id);
+    return `<label class="examen-crit-item ${on?'on':''}">
+      <input type="checkbox" ${on?'checked':''} onchange="cpxCrit('${ind.id}',this.checked)" />
+      <div class="examen-crit-text">
+        <div class="examen-crit-ce">${badge ? `<span class="crit-badge crit-${badge}" style="width:18px;height:18px;font-size:10px;margin-right:4px">${badge.toUpperCase()}</span>` : ''}${ind.ce}</div>
+        <div class="examen-crit-desc">${ind.texto}</div>
+      </div>
+    </label>`;
+  };
+  const hechos = alus.filter(a => esNota(ex.notas[a.id])).length;
+  el.innerHTML = `
+    <div class="examen-card ${ex.obligatoria?'obligatoria':''}">
+      <div class="examen-header">
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="text" id="cpx-nombre" class="examen-nombre" value="${escHTML(ex.nombre || '')}" placeholder="Nombre del examen (p. ej. Prueba de seguridad)"
+                 maxlength="80" onchange="cpxCampo('nombre',this.value.trim())" />
+          <button class="examen-del-btn" onclick="cpxBorrar()" title="Eliminar examen">🗑</button>
+        </div>
+        <div class="examen-title-row">
+          <input type="date" value="${ex.fecha}" class="examen-date" onchange="cpxCampo('fecha',this.value||today())" />
+          <button class="examen-crit-mini-btn" onclick="cpElegir(null)">Cambiar</button>
+        </div>
+        <label class="examen-obligatoria">
+          <input type="checkbox" ${ex.obligatoria?'checked':''} onchange="cpxCampo('obligatoria',this.checked)" />
+          <span>🔒 <strong>Obligatorio:</strong> hay que aprobarlo (5 o más) para superar el módulo</span>
+        </label>
+      </div>
+      <details class="examen-otros cpx-crits" ${S._cpxCritsAbierto?'open':''} ontoggle="S._cpxCritsAbierto=this.open">
+        <summary>Criterios que evalúa · ${crits.length ? `${crits.length} marcado(s)` : 'ninguno marcado: cuenta para toda la teoría'}</summary>
+        <div style="display:flex;gap:6px;padding:8px 0 4px">
+          <button class="examen-crit-mini-btn" onclick="cpxTodosCrits(true)">✓ Toda la teoría</button>
+          <button class="examen-crit-mini-btn" onclick="cpxTodosCrits(false)">✕ Ninguno</button>
+        </div>
+        ${indsT.length ? `<div class="examen-crit-sub"><span class="crit-badge crit-t" style="width:20px;height:20px;font-size:10px">T</span> Teoría</div>
+          <div class="examen-crit-list">${indsT.map(ind => critItem(ind)).join('')}</div>` : ''}
+        ${indsOtros.length ? `<div class="examen-crit-sub">Otros criterios (prevención, prácticas, actitud)</div>
+          <div class="examen-crit-list">${indsOtros.map(ind => critItem(ind, ind.tipo)).join('')}</div>` : ''}
+      </details>
+    </div>
+    <div class="section-label" id="cpx-cuenta">Notas · ${hechos} de ${alus.length}</div>
+    <div class="card">${alus.map(a => {
+      const n = esNota(ex.notas[a.id]) ? ex.notas[a.id] : null;
+      return `<div class="cpx-row">
+        <span class="cpx-nombre">${escHTML(a.nombre)} ${escHTML(a.apellidos)}</span>
+        <input type="number" class="cpx-nota" min="0" max="10" step="0.25" inputmode="decimal" enterkeyhint="next"
+               value="${n ?? ''}" placeholder="—" style="color:${n !== null ? scoreColor(n) : 'inherit'}"
+               onchange="cpxNota('${ex.id}','${a.id}',this)" onkeydown="cpxSiguiente(event,this)" />
+      </div>`; }).join('')}
+    </div>
+    <div class="cp-sub" style="padding:0 4px">Escribe la nota y pulsa Intro para pasar al siguiente. Quien no lo haya hecho, déjalo vacío.</div>`;
+}
+
 // Mantener por retrocompat (por si hay localStorage antiguo)
 function updateNota(v) {}
 function saveNota() {}
@@ -3759,6 +4282,7 @@ function renderConfig(){
   if (!mid) return;
   const acts = S.configActs[mid] || [];
   const totalCrits = getIndP().length;
+  document.getElementById('config-mod-label').textContent = `Prácticas · ${acts.length}`;
   document.getElementById('config-acts-list').innerHTML = acts.length
     ? acts.map((a,i)=>{
         // Por indicadores, o por criterios (prácticas antiguas sin crits = todos los criterios)
@@ -3834,7 +4358,7 @@ function openEditAlumno(id) {
   S._editAluId = id;
   document.getElementById('modal-alumno-title').textContent = 'Editar alumno';
   document.getElementById('alu-nombre').value = a.nombre;
-  document.getElementById('alu-apellidos').value = a.apellidos.replace(' ★','');
+  document.getElementById('alu-apellidos').value = a.apellidos;
   openModal('modal-alumno');
 }
 
@@ -3848,9 +4372,8 @@ function saveAlumno() {
     // Editar existente
     const a = S.alumnos[S.claseId].find(x=>x.id===S._editAluId);
     if (a) {
-      const wasRep = a.apellidos.includes('★');
       a.nombre = nombre;
-      a.apellidos = apellidos + (wasRep?' ★':'');
+      a.apellidos = apellidos;
     }
     scheduleSave();
   showToast('✓ Alumno actualizado');
@@ -3888,6 +4411,8 @@ function confirmDeleteAlumno() {
   Object.keys(S.observaciones).filter(k=>k.startsWith(id+'_')).forEach(k=>delete S.observaciones[k]);
   Object.keys(S.notas).filter(k=>k.startsWith(id+'_')).forEach(k=>delete S.notas[k]);
   Object.keys(S.obsProfesor||{}).filter(k=>k.startsWith(id+'_')).forEach(k=>delete S.obsProfesor[k]);
+  Object.values(S.cierres||{}).forEach(lista => lista.forEach(c => delete c.notas[id]));
+  Object.values(S.examenes||{}).forEach(lista => lista.forEach(ex => delete ex.notas[id]));
   delete S.stuPhotos[id];
   scheduleSave();
   closeModal('modal-del-alu');
@@ -3923,6 +4448,11 @@ function confirmGenerarPDF() {
   setTimeout(() => generarPDF(text), 300);
 }
 
+// Colores de nota en los PDF: la misma paleta que la app (rojo si no llega a 5; verdes cada vez más
+// intensos para 5-6, 7-8 y 9-10). El ámbar queda para "falta por evaluar".
+function colorNotaPDF(v) {
+  return v === null || v === undefined ? [107,122,141] : v >= 9 ? [27,94,32] : v >= 7 ? [46,125,50] : v >= 5 ? [85,139,47] : [198,40,40];
+}
 function generarPDF(observaciones = '') {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit:'mm', format:'a4' });
@@ -3933,7 +4463,7 @@ function generarPDF(observaciones = '') {
         esc = scoreEscrita(key), glo = scoreGlobal(key);
 
   const NAVY = [26,35,126], TEAL = [0,137,123], MUTED = [107,122,141];
-  const GREEN = [16,185,129], RED = [239,68,68], AMBER = [245,158,11];
+  const GREEN = [46,125,50], RED = [198,40,40], AMBER = [178,106,0];
   const W = 210, M = 14;
   let y = 0;
 
@@ -3996,12 +4526,12 @@ function generarPDF(observaciones = '') {
     doc.roundedRect(barX, barY, barW, barH, 1, 1, 'F');
     if (b.val !== null) {
       const pct = Math.max(0, Math.min(1, b.val/10));
-      const col = b.val>=9?GREEN : b.val>=7?TEAL : b.val>=5?AMBER : RED;
+      const col = colorNotaPDF(b.val);
       doc.setFillColor(...col);
       doc.roundedRect(barX, barY, barW*pct, barH, 1, 1, 'F');
     }
     // Nota
-    const col = b.val===null ? MUTED : b.val>=9?GREEN : b.val>=7?TEAL : b.val>=5?AMBER : RED;
+    const col = b.val===null ? MUTED : colorNotaPDF(b.val);
     doc.setFont('helvetica','bold');
     doc.setFontSize(13);
     doc.setTextColor(...col);
@@ -4010,13 +4540,13 @@ function generarPDF(observaciones = '') {
   y += blocks.length * blockH + 2;
 
   // ── Nota global ──────────────────────────────────────────
-  const gcol = glo===null ? MUTED : glo>=9?GREEN : glo>=7?TEAL : glo>=5?AMBER : RED;
+  const gcol = glo===null ? MUTED : colorNotaPDF(glo);
   doc.setFillColor(...NAVY);
   doc.roundedRect(M, y, W-M*2, 14, 2, 2, 'F');
   doc.setFont('helvetica','bold');
   doc.setFontSize(10);
   doc.setTextColor(255,255,255);
-  doc.text('CALIFICACIÓN DEL MÓDULO', M+3, y+9);
+  doc.text(evaluacionEnCurso() ? 'CALIFICACIÓN DEL MÓDULO (EN CURSO)' : 'CALIFICACIÓN DEL MÓDULO', M+3, y+9);
   doc.setFontSize(15);
   doc.setTextColor(...(glo===null?[200,200,200]:glo>=5?[144,238,144]:[255,180,180]));
   doc.text(glo!==null ? glo+'/10' : '—', W-M-3, y+9.5, {align:'right'});
@@ -4034,11 +4564,21 @@ function generarPDF(observaciones = '') {
 
   // ── Sección: RESULTADOS DE APRENDIZAJE (art. 5.4 de la Orden 18/09/2025) ──
   const ev = evalModulo(key);
+  // Evaluaciones ya cerradas: su nota no cambia aunque se sigan poniendo notas
+  const cerradas = cierresDe().filter(c => c.notas[S.alumnoId]);
+  if (cerradas.length) {
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...NAVY);
+    const lineas = doc.splitTextToSize('Evaluaciones cerradas: ' + cerradas.map(c => `${c.nombre} (${fechaCorta(c.fecha)}): ${c.notas[S.alumnoId].nota ?? '—'}`).join('  ·  '), W - M*2 - 4);
+    doc.text(lineas, M+2, y-1);
+    y += 4 * lineas.length + 1;
+  }
   if (ev.provisional && glo !== null) {
     doc.setFont('helvetica','bold');
     doc.setFontSize(8);
     doc.setTextColor(...AMBER);
-    doc.text(`Nota provisional: aún no se han evaluado ${ev.faltan.join(', ')}.`, M+2, y-1);
+    doc.text(`Falta por evaluar: ${ev.faltan.join(', ')}.`, M+2, y-1);
     y += 5;
   }
   if (ev.ras.length) {
@@ -4070,7 +4610,7 @@ function generarPDF(observaciones = '') {
       if (x.nota !== null) {
         doc.setFont('helvetica','bold');
         doc.setFontSize(9);
-        doc.setTextColor(...(x.nota>=9?GREEN:x.nota>=7?TEAL:x.nota>=5?AMBER:RED));
+        doc.setTextColor(...(colorNotaPDF(x.nota)));
         doc.text(x.nota.toFixed(1), W-M-30, y+5, {align:'right'});
         badge(W-M-26, y+5, x.superado);
       }
@@ -4143,7 +4683,7 @@ function generarPDF(observaciones = '') {
       doc.text(fmtFecha(act.fecha || '—'), x+3, y+photoH+11);
 
       if (s !== null) {
-        const col2 = s>=9?GREEN:s>=7?TEAL:s>=5?AMBER:RED;
+        const col2 = colorNotaPDF(s);
         doc.setFont('helvetica','bold');
         doc.setFontSize(9);
         doc.setTextColor(...col2);
@@ -4198,7 +4738,7 @@ function generarPDF(observaciones = '') {
       doc.text(lines[0]+(lines.length>1?'…':''), M+2, y+7);
 
       if (avg !== null) {
-        const col = avg>=9?GREEN:avg>=7?TEAL:avg>=5?AMBER:RED;
+        const col = colorNotaPDF(avg);
         doc.setFont('helvetica','bold');
         doc.setFontSize(9);
         doc.setTextColor(...col);
@@ -4255,7 +4795,7 @@ function generarPDF(observaciones = '') {
       doc.text(lines[0]+(lines.length>1?'…':''), M+2, y+7);
 
       if (pct !== null) {
-        const col = pct>=80?GREEN:pct>=60?TEAL:pct>=40?AMBER:RED;
+        const col = colorNotaPDF(pct / 10);
         doc.setFont('helvetica','bold');
         doc.setFontSize(9);
         doc.setTextColor(...col);
@@ -4314,7 +4854,7 @@ function generarPDF(observaciones = '') {
       if (suspenso) doc.setFillColor(254, 226, 226);
       else doc.setFillColor(238,242,247);
       doc.roundedRect(M, y, W-M*2, rowH, 2, 2, 'F');
-      const nc = !tieneNota ? MUTED : p.nota>=9?GREEN:p.nota>=7?TEAL:p.nota>=5?AMBER:RED;
+      const nc = !tieneNota ? MUTED : colorNotaPDF(p.nota);
       doc.setFont('helvetica', p.obligatoria ? 'bold' : 'normal');
       doc.setFontSize(8);
       doc.setTextColor(...(suspenso ? RED : MUTED));
@@ -4339,7 +4879,7 @@ function generarPDF(observaciones = '') {
     if (pruebas.length > 1 && mediaEsc !== null) {
       doc.setFillColor(224,242,241);
       doc.roundedRect(M, y, W-M*2, 10, 2, 2, 'F');
-      const nc2 = mediaEsc>=9?GREEN:mediaEsc>=7?TEAL:mediaEsc>=5?AMBER:RED;
+      const nc2 = colorNotaPDF(mediaEsc);
       doc.setFont('helvetica','bold');
       doc.setFontSize(8);
       doc.setTextColor(...MUTED);
@@ -4454,12 +4994,17 @@ const cpPractica = aluId => (S.actividades[`${aluId}_${S.moduloId}`] || []).find
 function openClasePractica() {
   if (!S.moduloId || !S.claseId) return;
   S._cpIdx = null;
+  S._cpExamen = null;
+  S._cpObs = false;
   S._cpFecha = today();
   navigate('screen-clase-practica', 'Evaluar a toda la clase', getModulo().nombre);
   renderClasePractica();
 }
+// Elige una práctica (o null para volver a la lista de prácticas y exámenes)
 function cpElegir(i) {
   S._cpIdx = i;
+  S._cpExamen = null;
+  S._cpObs = false;
   renderClasePractica();
   window.scrollTo(0, 0);
 }
@@ -4475,13 +5020,14 @@ function renderClasePractica() {
     el.innerHTML = `<div class="card empty"><div class="empty-icon">👥</div><p>No hay alumnos en esta clase.</p></div>`;
     return;
   }
+  if (S._cpObs) { renderObsClase(el, alus); return; }
+  if (cpExamen()) { renderExamenClase(el, alus); return; }
   if (!def) {
     S._cpIdx = null;
-    el.innerHTML = !defs.length
-      ? `<div class="card empty"><div class="empty-icon">📋</div><p>Primero define las prácticas del módulo y qué criterios evalúa cada una.</p></div>
-         <button class="add-act-btn" onclick="openConfig()">⚙ Criterios y prácticas</button>`
-      : `<div class="section-label">Elige la práctica</div>
-         <div class="card">${defs.map((d, i) => {
+    const practicas = !defs.length
+      ? `<div class="card empty" style="padding:20px"><p>Aún no has definido prácticas en este módulo.</p></div>
+         <button class="add-act-btn" onclick="openConfig()">⚙ Definir prácticas</button>`
+      : `<div class="card">${defs.map((d, i) => {
            const hechos = alus.filter(a => {
              const act = (S.actividades[`${a.id}_${S.moduloId}`] || []).find(x => x.nombre === d.nombre);
              return act && actScore(act) !== null;
@@ -4490,6 +5036,24 @@ function renderClasePractica() {
              <div class="item-body"><h3>${escHTML(d.nombre)}</h3><p>${hechos} de ${alus.length} alumnos con nota</p></div>
              <span class="item-arrow">›</span></div>`;
          }).join('')}</div>`;
+    const exs = examenesModulo();
+    const examenes = exs.length ? `<div class="card">${exs.map(ex => {
+        const hechos = alus.filter(a => esNota(ex.notas[a.id])).length;
+        return `<div class="card-list-item" onclick="cpElegirExamen('${ex.id}')">
+          <div class="item-body"><h3>${escHTML(ex.nombre || 'Examen sin nombre')}${ex.obligatoria ? ' 🔒' : ''}</h3>
+            <p>${fmtFecha(ex.fecha)} · ${hechos} de ${alus.length} alumnos con nota</p></div>
+          <span class="item-arrow">›</span></div>`;
+      }).join('')}</div>` : '';
+    // Observación: la última sesión con respuestas de esta clase, para saber cuándo se observó por última vez
+    const ultimaObs = Object.keys(S.observaciones).filter(k => alus.some(a => k.startsWith(`${a.id}_${S.moduloId}_`)) && Object.keys(S.observaciones[k] || {}).length)
+      .map(k => k.slice(k.lastIndexOf("_") + 1)).sort().pop();
+    const observacion = `<div class="card"><div class="card-list-item" onclick="cpObsAbrir()">
+        <div class="item-body"><h3>👁 Observar a toda la clase</h3><p>${ultimaObs ? `Última sesión: ${fmtFecha(ultimaObs)}` : "Aún no hay sesiones de observación"}</p></div>
+        <span class="item-arrow">›</span></div></div>`;
+    el.innerHTML = `<div class="section-label">Prácticas</div>${practicas}
+      <div class="section-label" style="margin-top:8px">Observación de actitud</div>${observacion}
+      <div class="section-label" style="margin-top:8px">Exámenes</div>${examenes}
+      <button class="add-act-btn" onclick="cpNuevoExamen()">＋ Nuevo examen para toda la clase</button>`;
     return;
   }
 
@@ -4624,7 +5188,7 @@ function renderResumen() {
   }
 
   const arrow = (col) => _resumenSort.col === col ? (_resumenSort.dir === 'asc' ? ' ▲' : ' ▼') : '';
-  const colorFor = (v) => v===null?'var(--muted)':v>=9?'#10B981':v>=7?'var(--teal)':v>=5?'#F59E0B':'#EF4444';
+  const colorFor = scoreColor;
   const fmt = v => v===null ? '—' : Number.isInteger(v) ? String(v) : v.toFixed(1);
 
   // Controles de ordenación (compactos, siempre visibles)
@@ -4637,32 +5201,9 @@ function renderResumen() {
     <button class="resumen-sort-btn ${_resumenSort.col==='glo'?'active':''}" onclick="resumenSort('glo')">Global${arrow('glo')}</button>
   </div>`;
 
-  // Vista móvil: cards
-  html += `<div class="resumen-mobile">`;
-  data.forEach(r => {
-    const estadoColor = r.glo === null ? '#BDBDBD'
-                      : r.glo < 5 ? '#EF4444'
-                      : r.glo < 6 ? '#F59E0B'
-                      : '#10B981';
-    html += `<div class="resumen-card-mobile">
-      <div class="resumen-status-bar" style="background:${estadoColor}"></div>
-      <div class="resumen-mobile-main">
-        <div class="resumen-mobile-name">
-          <strong>${r.apellidos}, ${r.nombre}</strong>
-        </div>
-        <div class="resumen-mobile-scores">
-          <span class="resumen-score"><span class="lbl">P</span><span class="val" style="color:${colorFor(r.rub)}">${fmt(r.rub)}</span></span>
-          <span class="resumen-score"><span class="lbl">A</span><span class="val" style="color:${colorFor(r.obs)}">${fmt(r.obs)}</span></span>
-          <span class="resumen-score"><span class="lbl">T</span><span class="val" style="color:${colorFor(r.esc)}">${fmt(r.esc)}</span></span>
-        </div>
-      </div>
-      <div class="resumen-global-mobile" style="background:${colorFor(r.glo)}22;color:${colorFor(r.glo)}">
-        <div class="lbl">GLOBAL</div>
-        <div class="val">${fmt(r.glo)}</div>
-      </div>
-    </div>`;
-  });
-  html += `</div>`;
+  // Vista móvil: las mismas filas que la lista de alumnos (nota, motivo, partes y tendencia), en el orden elegido
+  const alus = S.alumnos[S.claseId] || [];
+  html += `<div class="resumen-mobile"><div class="alu-lista">${data.map(r => filaAlumnoHTML(alus.find(a => a.id === r.id))).join('')}</div></div>`;
 
   // Vista desktop: tabla tradicional
   html += `<div class="resumen-desktop"><div class="card" style="overflow:hidden;padding:0">
@@ -4682,8 +5223,7 @@ function renderResumen() {
     const bg = i % 2 === 0 ? 'var(--card)' : 'var(--bg)';
     html += `<tr style="background:${bg};border-bottom:1px solid var(--border)">
       <td style="padding:12px 10px">
-        <div style="font-weight:600;color:var(--text)">${r.apellidos}</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:2px">${r.nombre} · ${r.id}</div>
+        <div style="font-weight:600;color:var(--text)">${escHTML(r.nombre)} ${escHTML(r.apellidos)}</div>
       </td>
       <td style="padding:12px 6px;text-align:center;color:${colorFor(r.rub)};font-weight:700;font-family:'IBM Plex Mono',monospace">${fmt(r.rub)}</td>
       <td style="padding:12px 6px;text-align:center;color:${colorFor(r.obs)};font-weight:700;font-family:'IBM Plex Mono',monospace">${fmt(r.obs)}</td>
@@ -4724,7 +5264,7 @@ function exportResumenPDF() {
   const mod = getModulo();
 
   const NAVY = [26,35,126], TEAL = [0,137,123], MUTED = [107,122,141];
-  const GREEN = [16,185,129], RED = [239,68,68], AMBER = [245,158,11];
+  const GREEN = [46,125,50], RED = [198,40,40], AMBER = [178,106,0];
   const W = 210, M = 14;
   let y = 0;
 
@@ -4767,40 +5307,40 @@ function exportResumenPDF() {
     return;
   }
 
-  // Cabecera de tabla
-  doc.setFillColor(...NAVY);
-  doc.rect(M, y, W-M*2, 8, 'F');
-  doc.setFont('helvetica','bold');
-  doc.setFontSize(8);
-  doc.setTextColor(255,255,255);
-  const colX = { alu: M+2, rub: M+115, obs: M+140, esc: M+160, glo: M+180 };
-  doc.text('Alumno', colX.alu, y+5.5);
-  doc.text('Proc.', colX.rub+8, y+5.5, {align:'center'});
-  doc.text('Actit.', colX.obs+8, y+5.5, {align:'center'});
-  doc.text('Conc.', colX.esc+8, y+5.5, {align:'center'});
-  doc.text('NOTA', colX.glo+8, y+5.5, {align:'center'});
-  y += 8;
+  // Cabecera de tabla. Si hay evaluaciones cerradas, cada una lleva su columna con la nota guardada al cerrar.
+  const cerradas = cierresDe();
+  const anchoCierre = 13;
+  const xP = M + 115;                                  // las columnas P, A, T y nota van siempre en el mismo sitio
+  const colX = { alu: M+2, rub: xP, obs: M+140, esc: M+160, glo: M+180 };
+  const xCierre = j => xP - anchoCierre * (cerradas.length - j);
+  const tituloNota = evaluacionEnCurso() ? 'EN CURSO' : 'NOTA';
+  const cabeceraTabla = () => {
+    doc.setFillColor(...NAVY);
+    doc.rect(M, y, W-M*2, 8, 'F');
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(8);
+    doc.setTextColor(255,255,255);
+    doc.text('Alumno', colX.alu, y+5.5);
+    cerradas.forEach((c, j) => doc.text(abreviaEval(c.nombre), xCierre(j) + anchoCierre/2, y+5.5, {align:'center'}));
+    doc.text('Proc.', colX.rub+8, y+5.5, {align:'center'});
+    doc.text('Actit.', colX.obs+8, y+5.5, {align:'center'});
+    doc.text('Conc.', colX.esc+8, y+5.5, {align:'center'});
+    doc.setFontSize(tituloNota === 'NOTA' ? 8 : 7);
+    doc.text(tituloNota, colX.glo+8, y+5.5, {align:'center'});
+    y += 8;
+  };
+  cabeceraTabla();
 
-  const colorFor = (v) => v===null?MUTED : v>=9?GREEN : v>=7?TEAL : v>=5?AMBER : RED;
+  const colorFor = (v) => v===null?MUTED : colorNotaPDF(v);
   const fmt = v => v===null ? '—' : Number.isInteger(v) ? String(v) : v.toFixed(1);
   const rowH = 8;
+  const maxNombre = 48 - 7 * cerradas.length;
 
   data.forEach((r, i) => {
     if (y + rowH > 280) {
       doc.addPage();
       y = 14;
-      // Repetir cabecera
-      doc.setFillColor(...NAVY);
-      doc.rect(M, y, W-M*2, 8, 'F');
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(8);
-      doc.setTextColor(255,255,255);
-      doc.text('Alumno', colX.alu, y+5.5);
-      doc.text('Proc.', colX.rub+8, y+5.5, {align:'center'});
-      doc.text('Actit.', colX.obs+8, y+5.5, {align:'center'});
-      doc.text('Conc.', colX.esc+8, y+5.5, {align:'center'});
-      doc.text('NOTA', colX.glo+8, y+5.5, {align:'center'});
-      y += 8;
+      cabeceraTabla();   // se repite en cada página
     }
 
     // Fila alterna
@@ -4815,9 +5355,18 @@ function exportResumenPDF() {
     doc.setFont('helvetica','bold');
     doc.setFontSize(8.5);
     doc.setTextColor(30,40,60);
-    doc.text(`${r.apellidos}, ${r.nombre}`.substring(0,48), colX.alu, y+5);
+    doc.text(`${r.apellidos}, ${r.nombre}`.substring(0, maxNombre), colX.alu, y+5);
 
-    // Notas
+    // Notas cerradas (fijas) de cada evaluación
+    cerradas.forEach((c, j) => {
+      const v = c.notas[r.id]?.nota ?? null;
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(9);
+      doc.setTextColor(...colorFor(v));
+      doc.text(v === null ? '—' : String(v), xCierre(j) + anchoCierre/2, y+5.5, {align:'center'});
+    });
+
+    // Notas en curso
     [['rub', colX.rub], ['obs', colX.obs], ['esc', colX.esc], ['glo', colX.glo]].forEach(([k, x], idx) => {
       const v = r[k];
       doc.setFont('helvetica', idx === 3 ? 'bold' : 'normal');
@@ -4828,6 +5377,17 @@ function exportResumenPDF() {
 
     y += rowH;
   });
+
+  // Leyenda de columnas
+  y += 4;
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(7);
+  doc.setTextColor(...MUTED);
+  doc.text(doc.splitTextToSize(
+    (cerradas.length ? `${cerradas.map(c => `${abreviaEval(c.nombre)}: nota cerrada el ${fechaCorta(c.fecha)}`).join(' · ')}. ` : '')
+    + `Proc., Actit., Conc.: media de prácticas, actitud y teoría. ${tituloNota === 'NOTA' ? 'Nota: calificación del módulo.' : 'En curso: nota acumulada hasta hoy, aún no cerrada.'}`
+    + ' Para aprobar: todos los RA y cada parte con 5 o más; si no, máximo 4.', W - M*2), M, y);
+  y += 4;
 
   // Estadísticas al final
   y += 6;
@@ -5079,6 +5639,8 @@ async function persistState() {
       configActs:    S.configActs,
       alumnos:       S.alumnos,
       obsProfesor:   S.obsProfesor,
+      cierres:       S.cierres,
+      examenes:      S.examenes,
       settings:      S.settings,
     };
     await idbSet('state', data);
@@ -5118,6 +5680,16 @@ function activarModulosNuevos(vistosGuardados) {
   return cambios > 0;
 }
 
+// Versiones antiguas marcaban a los repetidores con una ★ en los apellidos. Ya no se usa: se quita.
+function quitarEstrellas() {
+  let cambios = false;
+  Object.values(S.alumnos).forEach(lista => (lista || []).forEach(a => {
+    const limpio = (a.apellidos || '').replace(/\s*[★☆]/g, '').trim();
+    if (limpio !== a.apellidos) { a.apellidos = limpio; cambios = true; }
+  }));
+  return cambios;
+}
+
 async function loadState() {
   try {
     // 1. Intenta cargar de IndexedDB
@@ -5145,6 +5717,8 @@ async function loadState() {
     if (data.stuPhotos)     S.stuPhotos     = data.stuPhotos;
     if (data.configActs)    S.configActs    = data.configActs;
     if (data.obsProfesor)   S.obsProfesor   = data.obsProfesor;
+    if (data.cierres)       S.cierres       = data.cierres;
+    if (data.examenes)      S.examenes      = data.examenes;
     if (data.settings) {
       S.settings = {
         ...S.settings,
@@ -5156,7 +5730,8 @@ async function loadState() {
     if (data.alumnos) S.alumnos = { ...S.alumnos, ...data.alumnos };
     // Notas de prácticas de versiones anteriores (1-4) → 0-10, y se guarda ya convertido
     const convertidas = migrarEscala10();
-    if (activarModulosNuevos(data.settings?.modulosVistos) || convertidas) scheduleSave();
+    const sinEstrellas = quitarEstrellas();
+    if (activarModulosNuevos(data.settings?.modulosVistos) || convertidas || sinEstrellas) scheduleSave();
     return true;
   } catch(e) {
     console.warn('Error cargando estado:', e);
@@ -5183,6 +5758,7 @@ async function refreshStorageInfo() {
   nFotosStu = Object.keys(S.stuPhotos || {}).length;
   nSesiones = Object.keys(S.observaciones || {}).length;
   Object.values(S.notas || {}).forEach(n => { nPruebas += (n.pruebas||[]).length; });
+  Object.values(S.examenes || {}).forEach(lista => { nPruebas += lista.length; });
 
   // Estimar bytes usados
   let usedBytes = 0, quotaBytes = 0;
@@ -5226,7 +5802,67 @@ async function refreshStorageInfo() {
 }
 
 // Exportar backup como archivo JSON descargable
+// ═══════════ COPIA CIFRADA ═══════════
+// La copia lleva datos de menores: se cifra con AES-GCM de 256 bits y una clave derivada de la
+// contraseña del profesor (PBKDF2-SHA256). Sin la contraseña, el archivo no se puede leer.
+// Fuera del cifrado solo van la fecha y si incluye fotos (para mostrarlo antes de pedir la contraseña).
+const ITER_COPIA = 310000;
+const aB64 = buf => { const b = new Uint8Array(buf); let s = ''; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s); };
+const deB64 = t => Uint8Array.from(atob(t), c => c.charCodeAt(0));
+async function claveAES(pass, salt, iter) {
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name:'PBKDF2', salt, iterations: iter, hash:'SHA-256' }, base,
+    { name:'AES-GCM', length:256 }, false, ['encrypt', 'decrypt']);
+}
+async function cifrarCopia(json, pass, meta) {
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const clave = await claveAES(pass, salt, ITER_COPIA);
+  const datos = await crypto.subtle.encrypt({ name:'AES-GCM', iv }, clave, new TextEncoder().encode(json));
+  return JSON.stringify({ nexusCopiaCifrada: 1, _meta: meta, kdf: 'PBKDF2-SHA256', iter: ITER_COPIA,
+    salt: aB64(salt), iv: aB64(iv), datos: aB64(datos) });
+}
+// Devuelve el JSON original; lanza un error si la contraseña no es la correcta
+async function descifrarCopia(obj, pass) {
+  const clave = await claveAES(pass, deB64(obj.salt), obj.iter || ITER_COPIA);
+  const plano = await crypto.subtle.decrypt({ name:'AES-GCM', iv: deB64(obj.iv) }, clave, deB64(obj.datos));
+  return new TextDecoder().decode(plano);
+}
+
+// Ventana de contraseña. nueva = true pide repetirla (al exportar). Devuelve la contraseña o null si se cancela.
+let _claveResolver = null;
+function pedirClave({ titulo, texto, nueva }) {
+  document.getElementById('clave-titulo').textContent = titulo;
+  document.getElementById('clave-texto').textContent = texto;
+  document.getElementById('clave-2-grupo').style.display = nueva ? '' : 'none';
+  ['clave-1', 'clave-2'].forEach(id => { const el = document.getElementById(id); el.value = ''; el.type = 'password'; });
+  document.getElementById('clave-error').textContent = '';
+  S._claveNueva = nueva;
+  openModal('modal-clave');
+  setTimeout(() => document.getElementById('clave-1').focus(), 50);
+  return new Promise(res => { _claveResolver = res; });
+}
+function claveError(txt) { document.getElementById('clave-error').textContent = txt; }
+function claveAceptar() {
+  const c1 = document.getElementById('clave-1').value, c2 = document.getElementById('clave-2').value;
+  if (S._claveNueva) {
+    if (c1.length < 6) return claveError('Usa al menos 6 caracteres.');
+    if (c1 !== c2) return claveError('Las dos contraseñas no coinciden.');
+  } else if (!c1) return claveError('Escribe la contraseña.');
+  closeModal('modal-clave');
+  const r = _claveResolver; _claveResolver = null;
+  if (r) r(c1);
+}
+function claveCancelar() {
+  closeModal('modal-clave');
+  const r = _claveResolver; _claveResolver = null;
+  if (r) r(null);
+}
+
 async function exportBackup(withPhotos) {
+  if (!window.crypto?.subtle) { alert('Este navegador no permite cifrar la copia. Actualiza Chrome e inténtalo de nuevo.'); return; }
+  const pass = await pedirClave({ titulo: '🔐 Contraseña de la copia', nueva: true,
+    texto: 'La copia se guarda cifrada: sin esta contraseña nadie puede abrirla, ni siquiera tú. Apúntala en un sitio seguro; si la olvidas, la copia no se puede recuperar.' });
+  if (!pass) return;
   try {
     const data = {
       _meta: {
@@ -5242,6 +5878,8 @@ async function exportBackup(withPhotos) {
       configActs:    S.configActs,
       alumnos:       S.alumnos,
       obsProfesor:   S.obsProfesor,
+      cierres:       S.cierres,
+      examenes:      S.examenes,
       settings:      S.settings,
     };
 
@@ -5254,20 +5892,21 @@ async function exportBackup(withPhotos) {
       data.actividades = actsCopy;
     }
 
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
+    showToast('🔐 Cifrando copia…');
+    const cifrado = await cifrarCopia(JSON.stringify(data), pass, data._meta);
+    const blob = new Blob([cifrado], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     const date = new Date().toISOString().slice(0,10);
-    a.download = `nexus-backup-${withPhotos?'completo':'sindatos'}-${date}.json`;
+    a.download = `nexus-copia-cifrada-${withPhotos?'completa':'sin-fotos'}-${date}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
     const size = (blob.size / 1024).toFixed(0);
-    showToast(`✓ Copia ${withPhotos?'completa':'rápida'} descargada (${size} KB)`);
+    showToast(`✓ Copia cifrada ${withPhotos?'completa':'sin fotos'} descargada (${size} KB)`);
     S.settings.ultimaCopia = new Date().toISOString();
     hideAviso('copia');
     persistState();
@@ -5285,7 +5924,19 @@ function importBackup(input) {
   const reader = new FileReader();
   reader.onload = async e => {
     try {
-      const data = JSON.parse(e.target.result);
+      let data = JSON.parse(e.target.result);
+      // Copia cifrada: se pide la contraseña hasta acertar o cancelar. Las copias antiguas (sin cifrar) se leen igual.
+      if (data && data.nexusCopiaCifrada) {
+        if (!window.crypto?.subtle) throw new Error('este navegador no puede descifrar la copia. Actualiza Chrome.');
+        const fechaC = data._meta?.exported ? new Date(data._meta.exported).toLocaleString('es-ES') : 'desconocida';
+        let texto = `Copia cifrada del ${fechaC}. Escribe la contraseña que pusiste al hacerla.`;
+        for (;;) {
+          const pass = await pedirClave({ titulo: '🔐 Abrir copia cifrada', nueva: false, texto });
+          if (!pass) { input.value = ''; return; }
+          try { data = JSON.parse(await descifrarCopia(data, pass)); break; }
+          catch (err) { texto = '✗ Contraseña incorrecta. Inténtalo de nuevo.'; }
+        }
+      }
       // Validación mínima
       if (!data || typeof data !== 'object') throw new Error('Archivo no válido');
       const isValid = data._meta || data.actividades || data.alumnos || data.settings;
@@ -5307,11 +5958,14 @@ function importBackup(input) {
       if (data.stuPhotos)     S.stuPhotos     = data.stuPhotos;
       if (data.configActs)    S.configActs    = data.configActs;
       if (data.obsProfesor)   S.obsProfesor   = data.obsProfesor;
+      S.cierres = data.cierres || {};
+      S.examenes = data.examenes || {};
       if (data.alumnos)       S.alumnos       = { ...S.alumnos, ...data.alumnos };
       if (data.settings)      S.settings      = { ...S.settings, ...data.settings,
         modulosActivos: { ...S.settings.modulosActivos, ...(data.settings.modulosActivos || {}) } };
       // Una copia de una versión anterior no conoce los módulos añadidos después: se activan
       activarModulosNuevos(data.settings?.modulosVistos);
+      quitarEstrellas();
 
       await persistState();
       showToast('✓ Copia restaurada. Recargando…');
