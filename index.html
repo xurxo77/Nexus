@@ -176,6 +176,24 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 
 /* ── Activity cards ── */
 .act-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow)}
+/* Cabecera de la tarjeta de práctica: miniatura · nombre · nota */
+.act-card{margin-bottom:12px;overflow:hidden}
+.act-card.abierta{box-shadow:0 0 0 2px var(--teal),var(--shadow)}
+.act-head{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer}
+.act-card.abierta .act-head{background:var(--teal-lt);border-bottom:1px solid var(--border)}
+.act-thumb{position:relative;width:56px;height:56px;border-radius:12px;background:var(--bg);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:24px;border:1px solid var(--border)}
+.act-thumb img{width:100%;height:100%;object-fit:cover}
+.act-thumb i{position:absolute;right:2px;bottom:2px;font-style:normal;font-size:11px;background:rgba(0,0,0,.55);color:#fff;border-radius:5px;padding:0 4px;line-height:16px}
+.act-head-info{flex:1;min-width:0}
+.act-nombre{font-size:var(--fs-md);font-weight:700;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.act-card.abierta .act-nombre{display:block;-webkit-line-clamp:unset}
+.act-meta{font-size:13px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.act-meta.pend{color:var(--amber);font-weight:600}
+.act-nota{font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:800;min-width:54px;text-align:center;padding:8px 6px;border-radius:12px;flex-shrink:0}
+.act-evaluar{background:var(--teal);color:#fff;font-weight:700;font-size:15px;padding:10px 14px;border-radius:12px;flex-shrink:0}
+.act-card.pendiente{background:#FFFDF7}
+.act-borrar{display:block;margin:6px auto 14px;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:8px 12px;border-radius:8px}
+.act-borrar:hover{color:var(--red);background:#FEE2E2}
 .act-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .act-del-btn{background:none;border:none;border-left:1px solid var(--border);color:var(--muted);font-size:20px;cursor:pointer;padding:0 16px;min-width:52px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
 .act-del-btn:hover{background:#FEE2E2;color:var(--red)}
@@ -184,6 +202,10 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .act-score{font-family:'IBM Plex Mono',monospace;font-size:var(--fs-xl);font-weight:700;background:var(--bg);padding:6px 14px;border-radius:24px;white-space:nowrap;flex-shrink:0}
 .act-photo-zone{height:220px;background:var(--bg);cursor:pointer;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
 .act-photo-zone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+/* Sin foto: botón compacto en lugar del hueco grande */
+.act-photo-zone.vacia{height:56px;margin:12px 16px 4px;border:2px dashed var(--border);border-radius:12px;background:#fff}
+.act-photo-zone.vacia .act-photo-placeholder{flex-direction:row!important;gap:8px!important;font-size:var(--fs-sm)}
+.act-photo-zone.vacia .act-photo-placeholder span:first-child{font-size:22px!important}
 /* ── Accordion ── */
 .act-body{overflow:hidden;transition:opacity .22s ease}
 .act-body.closed{max-height:0;opacity:0;pointer-events:none}
@@ -1068,7 +1090,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v50';
+const APP_VERSION = 'v51';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -3078,25 +3100,20 @@ function actCardHTML(act, ai) {
   const scored = filas.filter(f => notaFila(f.id) !== null).length;
   const pct = totalCrits ? Math.round(scored / totalCrits * 100) : 0;
   const ajustados = filas.filter(f => tieneAjuste(act, f.id)).length;
-  return `<div class="act-card">
-    <div class="act-card-header-wrap" style="display:flex;align-items:stretch;border-bottom:1px solid var(--border)">
-      <button class="act-toggle act-header" onclick="toggleAct(${ai})" style="flex:1;border-bottom:none;gap:14px">
-        <div style="flex:1;min-width:0;text-align:left">
-          <h3 style="margin-bottom:6px">${act.nombre}</h3>
-          <div class="meta">
-            📅 ${fmtFecha(act.fecha)} · ${scored}/${totalCrits} ${porInd ? 'indicadores' : 'criterios'}
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
-          <div class="act-score" style="color:${scoreColor(s)}">${s!==null?s+'/10':'—'}</div>
-          <span class="act-toggle-chevron ${isOpen?'open':''}">▼</span>
-        </div>
-      </button>
-      <button class="act-del-btn" onclick="confirmDelAct(${ai})" title="Eliminar práctica">🗑</button>
-    </div>
+  // Miniatura: el plano de la práctica o, si no tiene, la foto de la pieza del alumno
+  const plano = imagenPractica(act.nombre);
+  const miniatura = plano || act.photo;
+  return `<div class="act-card ${isOpen?'abierta':''}">
+    ${cabeceraPractica({
+      onclick: `toggleAct(${ai})`,
+      miniatura, verPlano: plano ? `verImagenDeAct(${ai})` : '',
+      nombre: act.nombre,
+      meta: `${fmtFecha(act.fecha)} · ${scored}/${totalCrits} ${porInd ? 'indicadores' : 'criterios'}`,
+      derecha: `<span class="act-nota" style="color:${scoreColor(s)};background:${s!==null?scoreColor(s)+'1A':'var(--bg)'}">${s!==null?s:'—'}</span>`,
+    })}
     <div class="act-body ${isOpen?'open':'closed'}">
       ${imagenPractica(act.nombre) ? `<div style="padding:12px 16px 0">${botonVerPractica(`verImagenDeAct(${ai})`, imagenPractica(act.nombre))}</div>` : ''}
-      <div class="act-photo-zone" onclick="triggerActPhoto(${ai})">
+      <div class="act-photo-zone ${act.photo?'':'vacia'}" onclick="triggerActPhoto(${ai})">
         ${act.photo
           ?`<img src="${act.photo}" alt="pieza"><div class="act-photo-overlay" style="display:flex;align-items:center;justify-content:center">📷 Cambiar foto</div>`
           :`<div class="act-photo-placeholder" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px"><span style="font-size:36px">📸</span><span>Añadir foto de la pieza</span></div>`}
@@ -3125,7 +3142,24 @@ function actCardHTML(act, ai) {
             quitarTitulo: esNota(act.rapida) ? 'Volver a la nota de la práctica' : 'Quitar nota' })}
         </div>`; }).join('')}
       </div>
+      <button class="act-borrar" onclick="confirmDelAct(${ai})">🗑 Eliminar esta práctica</button>
     </div>
+  </div>`;
+}
+
+// Cabecera común de las tarjetas de práctica (evaluada o pendiente):
+// miniatura (plano o foto) · nombre en 2 líneas como mucho · fecha/estado · nota o botón a la derecha
+function cabeceraPractica({ onclick, miniatura, verPlano, nombre, meta, metaClase = '', derecha }) {
+  return `<div class="act-head" onclick="${onclick}">
+    <div class="act-thumb" ${verPlano ? `onclick="event.stopPropagation();${verPlano}" title="Ver la práctica"` : ''}>
+      ${miniatura ? `<img src="${miniatura}" alt="" />` : '<span>📋</span>'}
+      ${verPlano ? '<i>⤢</i>' : ''}
+    </div>
+    <div class="act-head-info">
+      <div class="act-nombre">${escHTML(nombre)}</div>
+      <div class="act-meta ${metaClase}">${meta}</div>
+    </div>
+    ${derecha}
   </div>`;
 }
 
@@ -3172,18 +3206,13 @@ function renderRubrica() {
         // ── Práctica pendiente: tarjeta de inicio ──
         const defCrits = def.crits || null;
         const critInfo = def.inds?.length ? `${def.inds.length} indicadores` : defCrits ? `${defCrits.length} criterios P` : `todos los criterios P`;
-        html+=`<div class="act-card" style="opacity:.85">
-          <div class="act-header" style="align-items:center">
-            <div>
-              <h3>${escHTML(def.nombre)}</h3>
-              <div class="meta" style="color:var(--amber)">⏳ Pendiente · ${critInfo}</div>
-            </div>
-            <button onclick="iniciarActividad(S.configActs[S.moduloId][${di}].nombre)"
-              style="background:var(--teal);color:#fff;border:none;padding:12px 20px;border-radius:14px;font-size:17px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;min-height:52px">
-              Evaluar →
-            </button>
-          </div>
-          ${def.imagen ? `<div style="padding:0 16px 14px">${botonVerPractica(`verImagenDef(${di})`, def.imagen)}</div>` : ''}
+        html+=`<div class="act-card pendiente">
+          ${cabeceraPractica({
+            onclick: `iniciarActividad(S.configActs[S.moduloId][${di}].nombre)`,
+            miniatura: def.imagen, verPlano: def.imagen ? `verImagenDef(${di})` : '',
+            nombre: def.nombre, meta: `⏳ Pendiente · ${critInfo}`, metaClase: 'pend',
+            derecha: `<span class="act-evaluar">Evaluar</span>`,
+          })}
         </div>`;
       }
     });
