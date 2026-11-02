@@ -705,7 +705,7 @@ try {
       <div class="config-tipo-tit tipo-p"><span class="crit-badge crit-p">P</span><span id="config-mod-label">Prácticas</span></div>
       <div class="card tipo-p" id="config-acts-list"></div>
       <details class="config-plegable tipo-p">
-        <summary><span class="config-act-num">≡</span><span class="config-plegable-tx"><b>Indicadores</b><small id="config-ind-label">Frases que se puntúan de 0 a 10 · toca para ver y editar</small></span></summary>
+        <summary><span class="config-act-num">≡</span><span class="config-plegable-tx"><b>Indicadores</b><small id="config-ind-label">Frases de 0 a 10 para prácticas y exámenes · toca para ver y editar</small></span></summary>
         <div class="config-plegable-body">
           <div class="card" id="config-ind-list" style="padding:0;overflow:hidden"></div>
           <button class="add-act-btn" onclick="openIndicador(null,'nota')">＋ Añadir indicador de práctica</button>
@@ -1245,7 +1245,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v92';
+const APP_VERSION = 'v93';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -2425,7 +2425,8 @@ function evalModulo(key) {
   const idsT = soloActivos(m.IND_T, modId).map(i => i.id);
   // Notas de examen de un criterio. Un examen puede evaluar criterios de cualquier tipo
   // (p. ej. una prueba de prevención evalúa criterios P); sin criterios marcados cuenta para todos los T.
-  const notasExamen = id => pruebas.filter(p => (p.crits && p.crits.length ? p.crits : idsT).includes(id)).map(p => p.nota);
+  const critsDe = new Map(pruebas.map(p => { const c = critsExamen(p, modId); return [p, c.length ? c : idsT]; }));
+  const notasExamen = id => pruebas.filter(p => critsDe.get(p).includes(id)).map(p => p.nota);
 
   // Notas de prácticas de un criterio (por criterios o a través de los indicadores de cada práctica)
   const notasPracticas = id => acts.filter(a => critsPractica(a, modId).includes(id))
@@ -3027,12 +3028,12 @@ function renderExamenesConfig() {
   // Mismas tarjetas que las prácticas: número (o candado si es obligatorio), nombre y resumen
   el.innerHTML = `<div class="card tipo-t">${exs.length ? exs.map((ex, i) => {
       const hechos = alus.filter(a => esNota(ex.notas[a.id])).length;
-      const nCrits = (ex.crits || []).length;
+      const nCrits = critsExamen(ex, modId).length, nInds = (ex.inds || []).length;
       return `<div class="config-act-item" style="cursor:pointer" onclick="configAbrirExamen('${ex.id}')">
         <div class="config-act-num" title="${ex.obligatoria ? 'Obligatorio' : ''}">${ex.obligatoria ? '🔒' : i + 1}</div>
         <div class="config-act-name">
           <div>${escHTML(ex.nombre || 'Examen sin nombre')}</div>
-          <div style="font-size:12px;color:var(--muted);font-weight:400;margin-top:2px">${fmtFecha(ex.fecha)} · ${nCrits ? `${nCrits} criterio(s)` : 'toda la teoría'} · ${hechos} de ${alus.length} con nota</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:400;margin-top:2px">${fmtFecha(ex.fecha)} · ${nInds ? `${nInds} indicador(es)` : nCrits ? `${nCrits} criterio(s)` : 'toda la teoría'} · ${hechos} de ${alus.length} con nota</div>
         </div>
         <span class="item-arrow">›</span>
       </div>`;
@@ -3094,7 +3095,7 @@ function renderIndicadoresConfig() {
 
   // Títulos con el recuento (el bloque de prácticas está plegado: avisa aunque esté cerrado)
   document.getElementById('config-ind-label').textContent =
-    `${deP.length} frase(s) de 0 a 10${deP.length && faltanP.length ? ` · ⚠ ${faltanP.length} criterio(s) sin indicador` : ''} · toca para ver y editar`;
+    `${deP.length} frase(s) de 0 a 10, para prácticas y exámenes${deP.length && faltanP.length ? ` · ⚠ ${faltanP.length} criterio(s) sin indicador` : ''} · toca para ver y editar`;
   const nInfo = deO.filter(x => x.ind.modo === 'info').length;
   document.getElementById('config-obs-sub').textContent = (deO.length ? `${deO.length} frase(s): ${deO.length - nInfo} Sí / No${nInfo ? ` · ${nInfo} informativa(s)` : ''}` : 'Usa los criterios de actitud')
     + (lista.length && faltanA.length ? ` · ⚠ ${faltanA.length} criterio(s) sin frase` : '') + ' · toca para ver y editar';
@@ -3883,7 +3884,7 @@ const examenesModulo = (modId = S.moduloId) => (S.examenes && S.examenes[modId])
 function getPruebas(key) {
   const aluId = key.slice(0, key.lastIndexOf('_'));
   const deClase = examenesModulo(modDeKey(key)).map(ex => ({ nombre: ex.nombre, fecha: ex.fecha, obligatoria: ex.obligatoria,
-    crits: ex.crits, nota: esNota(ex.notas[aluId]) ? ex.notas[aluId] : null, examenId: ex.id }));
+    crits: ex.crits, inds: ex.inds, nota: esNota(ex.notas[aluId]) ? ex.notas[aluId] : null, examenId: ex.id }));
   return [...deClase, ...pruebasPropias(key)];
 }
 
@@ -3891,9 +3892,6 @@ function renderEscrita() {
   const key = akey();
   const pruebas = pruebasPropias(key);
   const deClase = examenesModulo();
-  const indsT = getIndT();
-  // Otros criterios activos del módulo que también se pueden evaluar con un examen (p. ej. prevención)
-  const indsOtros = [...getIndP().map(i => ({ ...i, tipo:'p' })), ...getIndA().map(i => ({ ...i, tipo:'a' }))];
   let html = '';
 
   if (!pruebas.length && !deClase.length) {
@@ -3926,19 +3924,7 @@ function renderEscrita() {
   if (deClase.length && pruebas.length) html += `<div class="section-label" style="margin-top:6px">Exámenes solo de este alumno</div>`;
 
   pruebas.forEach((p, i) => {
-    const crits = p.crits || [];
     const tieneNota = esNota(p.nota);
-    const otrosMarcados = indsOtros.filter(ind => crits.includes(ind.id)).length;
-    const critItem = (ind, badge) => {
-      const on = crits.includes(ind.id);
-      return `<label class="examen-crit-item ${on?'on':''}">
-        <input type="checkbox" ${on?'checked':''} onchange="togglePruebaCrit(${i},'${ind.id}',this.checked)" />
-        <div class="examen-crit-text">
-          <div class="examen-crit-ce">${badge ? `<span class="crit-badge crit-${badge}" style="width:18px;height:18px;font-size:10px;margin-right:4px">${badge.toUpperCase()}</span>` : ''}${ind.ce}</div>
-          <div class="examen-crit-desc">${ind.texto}</div>
-        </div>
-      </label>`;
-    };
     html += `<div class="examen-card ${p.obligatoria?'obligatoria':''}">
       <div class="examen-header">
         <div style="display:flex;gap:8px;align-items:center">
@@ -3962,29 +3948,71 @@ function renderEscrita() {
         ${p.obligatoria && tieneNota && p.nota < 5 ? `<div class="examen-aviso">⛔ No superada: el alumno no puede aprobar el módulo hasta superarla.</div>` : ''}
         ${p.obligatoria && !tieneNota ? `<div class="examen-aviso pendiente">⏳ Pendiente de nota.</div>` : ''}
       </div>
-      <div class="examen-crits">
-        <div class="examen-crits-header">
-          <span class="examen-crits-title">
-            Criterios que evalúa
-            <span class="examen-crits-count">${crits.length ? `${crits.length} marcado(s)` : `ninguno marcado: cuenta para todos los de teoría`}</span>
-          </span>
-          <div style="display:flex;gap:6px">
-            <button class="examen-crit-mini-btn" onclick="togglePruebaAllCrits(${i},true)">✓ Toda la teoría</button>
-            <button class="examen-crit-mini-btn" onclick="togglePruebaAllCrits(${i},false)">✕ Ninguno</button>
-          </div>
-        </div>
-        ${indsT.length ? `<div class="examen-crit-sub"><span class="crit-badge crit-t" style="width:20px;height:20px;font-size:10px">T</span> Teoría</div>
-          <div class="examen-crit-list">${indsT.map(ind => critItem(ind)).join('')}</div>` : ''}
-        ${indsOtros.length ? `<details class="examen-otros" ${otrosMarcados?'open':''}>
-          <summary>Otros criterios del módulo (prevención, prácticas, actitud)${otrosMarcados?` · ${otrosMarcados} marcado(s)`:''}</summary>
-          <div class="examen-crit-list">${indsOtros.map(ind => critItem(ind, ind.tipo)).join('')}</div>
-        </details>` : ''}
-      </div>
+      ${queEvaluaExamenHTML(p, `p${i}`, {
+        ind: id => `togglePruebaInd(${i},'${id}',this.checked)`,
+        crit: id => `togglePruebaCrit(${i},'${id}',this.checked)`,
+        todaTeoria: `togglePruebaAllCrits(${i},true)`, ninguno: `togglePruebaAllCrits(${i},false)` })}
+      <div style="padding:0 14px 14px"><button class="btn-guardar" style="margin:0" onclick="guardarYa('✓ Examen guardado');window.scrollTo(0,0)">✓ Guardar examen</button></div>
     </div>`;
   });
 
   html += `<button class="add-act-btn" onclick="addPrueba()">＋ Añadir examen</button>`;
   document.getElementById('escrita-content').innerHTML = html;
+}
+
+// Criterios que evalúa un examen: los de sus indicadores más los criterios marcados sueltos.
+// Vacío = no se ha marcado nada: cuenta para todos los criterios de teoría.
+function critsExamen(ex, modId = S.moduloId) {
+  const deInds = (ex.inds || []).flatMap(id => critsDeIndicador(indicadorPorId(id, modId), modId));
+  return [...new Set([...deInds, ...(ex.crits || [])])];
+}
+
+// Bloque "Qué evalúa" del examen (de toda la clase o de un alumno). Lo habitual son los indicadores
+// (los mismos de 0 a 10 que usan las prácticas); los criterios sueltos quedan plegados debajo.
+// clave: para recordar si está desplegado; acc: código onchange/onclick de cada control.
+function queEvaluaExamenHTML(ex, clave, acc) {
+  const inds = ex.inds || [], crits = ex.crits || [];
+  const indsNota = indicadoresDe('nota');
+  const todos = [...getIndP(), ...getIndA(), ...getIndT()];
+  const ceDe = id => todos.find(c => c.id === id)?.ce;
+  const total = critsExamen(ex).length;
+  const resumen = inds.length || crits.length
+    ? [inds.length ? `${inds.length} indicador(es)` : '', crits.length ? `${crits.length} criterio(s) sueltos` : ''].filter(Boolean).join(' + ') + ` · ${total} criterio(s)`
+    : 'nada marcado: cuenta para toda la teoría';
+  const item = (on, onchange, arriba, texto) => `<label class="examen-crit-item ${on?'on':''}">
+      <input type="checkbox" ${on?'checked':''} onchange="${onchange}" />
+      <div class="examen-crit-text"><div class="examen-crit-ce">${arriba}</div><div class="examen-crit-desc">${texto}</div></div>
+    </label>`;
+  const badge = t => `<span class="crit-badge crit-${t}" style="width:18px;height:18px;font-size:10px;margin-right:4px">${t.toUpperCase()}</span>`;
+  const listaCrits = `
+    <div style="display:flex;gap:6px;padding:8px 0 4px">
+      <button class="examen-crit-mini-btn" onclick="${acc.todaTeoria}">✓ Toda la teoría</button>
+      <button class="examen-crit-mini-btn" onclick="${acc.ninguno}">✕ Ninguno</button>
+    </div>
+    <div class="examen-crit-list">${[...getIndT().map(c => ({ ...c, t:'t' })), ...getIndP().map(c => ({ ...c, t:'p' })), ...getIndA().map(c => ({ ...c, t:'a' }))]
+      .map(c => item(crits.includes(c.id), acc.crit(c.id), badge(c.t) + c.ce, c.texto)).join('')}</div>`;
+  S._queEvaluaAbierto = S._queEvaluaAbierto || {};
+  const abierto = S._queEvaluaAbierto[clave] ?? (!inds.length && !crits.length);
+  return `<details class="examen-otros que-evalua" ${abierto ? 'open' : ''} ontoggle="S._queEvaluaAbierto['${clave}']=this.open">
+    <summary>Qué evalúa · ${resumen}</summary>
+    ${indsNota.length ? `
+      <div class="examen-crit-sub">Indicadores</div>
+      <div class="examen-crit-list">${indsNota.map(ind => item(inds.includes(ind.id), acc.ind(ind.id),
+        critsDeIndicador(ind).map(ceDe).filter(Boolean).join(' · ') || 'sin criterios activos', escHTML(ind.texto))).join('')}</div>
+      <details class="examen-otros" ${crits.length ? 'open' : ''}>
+        <summary>Criterios sueltos (sin indicador)${crits.length ? ` · ${crits.length} marcado(s)` : ''}</summary>
+        ${listaCrits}
+      </details>`
+    : `<div class="examen-crit-sub">Criterios</div>${listaCrits}`}
+  </details>`;
+}
+
+function togglePruebaInd(i, indId, on) {
+  const p = S.notas[akey()]?.pruebas?.[i];
+  if (!p) return;
+  p.inds = on ? [...new Set([...(p.inds || []), indId])] : (p.inds || []).filter(x => x !== indId);
+  scheduleSave();
+  renderEscrita(); updateHeader();
 }
 
 function togglePruebaAllCrits(i, on) {
@@ -4238,6 +4266,25 @@ function cpxCrit(id, on) {
   ex.crits = on ? [...new Set([...(ex.crits || []), id])] : (ex.crits || []).filter(c => c !== id);
   scheduleSave(); renderClasePractica();
 }
+function cpxInd(id, on) {
+  const ex = cpExamen();
+  if (!ex) return;
+  ex.inds = on ? [...new Set([...(ex.inds || []), id])] : (ex.inds || []).filter(x => x !== id);
+  scheduleSave(); renderClasePractica();
+}
+// Guardar la definición del examen (nombre, fecha, obligatorio, qué evalúa). Si se vino desde Configurar, vuelve allí;
+// si no, baja a las notas de los alumnos.
+function cpxGuardarDef() {
+  const ex = cpExamen();
+  if (!ex) return;
+  if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  if (!ex.nombre) { showToast('⚠ Escribe el nombre del examen'); document.getElementById('cpx-nombre')?.focus(); return; }
+  guardarYa(`✓ Examen «» guardado`);
+  if (navHistory[navHistory.length - 2] === 'screen-config') { goBack(); return; }
+  S._queEvaluaAbierto && (S._queEvaluaAbierto.clase = false);
+  renderClasePractica();
+  document.getElementById('cpx-cuenta')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 function cpxTodosCrits(on) {
   const ex = cpExamen();
   if (!ex) return;
@@ -4276,19 +4323,6 @@ function cpxSiguiente(ev, input) {
 
 function renderExamenClase(el, alus) {
   const ex = cpExamen();
-  const crits = ex.crits || [];
-  const indsT = getIndT();
-  const indsOtros = [...getIndP().map(i => ({ ...i, tipo:'p' })), ...getIndA().map(i => ({ ...i, tipo:'a' }))];
-  const critItem = (ind, badge) => {
-    const on = crits.includes(ind.id);
-    return `<label class="examen-crit-item ${on?'on':''}">
-      <input type="checkbox" ${on?'checked':''} onchange="cpxCrit('${ind.id}',this.checked)" />
-      <div class="examen-crit-text">
-        <div class="examen-crit-ce">${badge ? `<span class="crit-badge crit-${badge}" style="width:18px;height:18px;font-size:10px;margin-right:4px">${badge.toUpperCase()}</span>` : ''}${ind.ce}</div>
-        <div class="examen-crit-desc">${ind.texto}</div>
-      </div>
-    </label>`;
-  };
   const hechos = alus.filter(a => esNota(ex.notas[a.id])).length;
   el.innerHTML = `
     <div class="examen-card ${ex.obligatoria?'obligatoria':''}">
@@ -4307,17 +4341,10 @@ function renderExamenClase(el, alus) {
           <span>🔒 <strong>Obligatorio:</strong> hay que aprobarlo (5 o más) para superar el módulo</span>
         </label>
       </div>
-      <details class="examen-otros cpx-crits" ${S._cpxCritsAbierto?'open':''} ontoggle="S._cpxCritsAbierto=this.open">
-        <summary>Criterios que evalúa · ${crits.length ? `${crits.length} marcado(s)` : 'ninguno marcado: cuenta para toda la teoría'}</summary>
-        <div style="display:flex;gap:6px;padding:8px 0 4px">
-          <button class="examen-crit-mini-btn" onclick="cpxTodosCrits(true)">✓ Toda la teoría</button>
-          <button class="examen-crit-mini-btn" onclick="cpxTodosCrits(false)">✕ Ninguno</button>
-        </div>
-        ${indsT.length ? `<div class="examen-crit-sub"><span class="crit-badge crit-t" style="width:20px;height:20px;font-size:10px">T</span> Teoría</div>
-          <div class="examen-crit-list">${indsT.map(ind => critItem(ind)).join('')}</div>` : ''}
-        ${indsOtros.length ? `<div class="examen-crit-sub">Otros criterios (prevención, prácticas, actitud)</div>
-          <div class="examen-crit-list">${indsOtros.map(ind => critItem(ind, ind.tipo)).join('')}</div>` : ''}
-      </details>
+      ${queEvaluaExamenHTML(ex, 'clase', {
+        ind: id => `cpxInd('${id}',this.checked)`, crit: id => `cpxCrit('${id}',this.checked)`,
+        todaTeoria: 'cpxTodosCrits(true)', ninguno: 'cpxTodosCrits(false)' })}
+      <div style="padding:0 14px 14px"><button class="btn-guardar" style="margin:0" onclick="cpxGuardarDef()">✓ Guardar examen</button></div>
     </div>
     <div class="section-label" id="cpx-cuenta">Notas · ${hechos} de ${alus.length}</div>
     <div class="card">${alus.map(a => {
@@ -4916,7 +4943,7 @@ function generarPDF(observaciones = '') {
     const mInds = indsModulo(mod.id);
     const ceDe = id => [...(mInds.IND_P||[]), ...(mInds.IND_A||[]), ...(mInds.IND_T||[])].find(i => i.id === id)?.ce || id;
     pruebas.forEach((p, pi) => {
-      const critsInP = (p.crits || []);
+      const critsInP = critsExamen(p, mod.id);
       const tieneNota = esNota(p.nota);
       const rowH = critsInP.length ? 14 : 10;
       if (y + rowH > 275) { doc.addPage(); y = 14; }
@@ -4963,7 +4990,7 @@ function generarPDF(observaciones = '') {
 
     // Resumen agregado de CE trabajados en todas las pruebas
     const allCrits = new Set();
-    pruebas.forEach(p => (p.crits||[]).forEach(c => allCrits.add(c)));
+    pruebas.forEach(p => critsExamen(p, mod.id).forEach(c => allCrits.add(c)));
     if (allCrits.size && indsT.length) {
       if (y > 260) { doc.addPage(); y = 14; }
       doc.setFont('helvetica','bold');
