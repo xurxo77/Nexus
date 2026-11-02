@@ -1245,7 +1245,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v91';
+const APP_VERSION = 'v92';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -3493,6 +3493,7 @@ function actCardHTML(act, ai) {
           { quitar: esNota(act.rapida) ? `setRapida(${ai},null)` : null })}
         <div class="rapida-hint">Se aplica a todos los ${porInd ? 'indicadores' : 'criterios'} de la práctica. Si alguno destaca o falla, ajústalo abajo${ajustados?` · <strong>${ajustados} ajustado(s) a mano</strong>`:''}.</div>
         ${LEYENDA_FRANJAS}
+        ${esNota(act.rapida) ? `<button class="btn-guardar" onclick="guardarPracticaAlumno(${ai})">✓ Guardar práctica</button>` : ''}
       </div>
       <div style="padding:8px 16px 4px"><div class="prog-wrap"><div class="prog-bar" style="width:${pct}%;background:var(--teal)"></div></div></div>
       <div class="ind-list">
