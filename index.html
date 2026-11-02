@@ -645,7 +645,7 @@ try {
       <h1 id="topbarTitle">NEXUS <span style="font-weight:300;font-size:14px;opacity:.75;letter-spacing:.03em">by Xurxo</span></h1>
       <p id="topbarSub">Departamento de Fabricación Mecánica · 2026-2027</p>
     </div>
-    <button class="topbar-action" id="configBtn" style="display:none;align-items:center;gap:7px;font-size:15px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openConfig()" title="Criterios y prácticas" aria-label="Criterios y prácticas"><span>⚙</span><span class="txt">Criterios y prácticas</span></button>
+    <button class="topbar-action" id="configBtn" style="display:none;align-items:center;gap:7px;font-size:15px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openConfig()" title="Configurar el módulo" aria-label="Configurar el módulo"><span>⚙</span><span class="txt">Configurar</span></button>
     <button class="topbar-action" id="pdfBtn" style="display:none;align-items:center;gap:7px;font-size:16px;font-weight:600;padding:9px 16px;border-radius:24px;width:auto;white-space:nowrap" onclick="openPDFModal()" title="Exportar informe PDF" aria-label="Exportar informe PDF"><span>📄</span><span class="txt">Exportar informe</span></button>
     <button class="topbar-action" id="settingsBtn" onclick="openSettings()" title="Ajustes" style="font-size:24px;width:44px;height:44px;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,0.2);border-radius:50%;border:1.5px solid rgba(255,255,255,0.3)">⚙</button>
     <button class="topbar-action" id="infoBtn" onclick="openInfo()" title="Información" style="font-size:20px;font-weight:700;width:44px;height:44px;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,0.2);border-radius:50%;border:1.5px solid rgba(255,255,255,0.3);font-family:'Outfit',sans-serif">ⓘ</button>
@@ -1048,33 +1048,42 @@ try {
         <summary>🚀 Cómo usar la app</summary>
         <div class="info-content">
           <p><strong>Antes de empezar (una vez por módulo):</strong></p>
-          <p>Entra en el módulo y pulsa <strong>⚙ Criterios y prácticas</strong>:</p>
-          <p>• Desmarca los criterios que no vas a trabajar este curso.</p>
-          <p>• Si tu programación lo indica, pon el peso de cada RA (si no, todos pesan igual).</p>
-          <p>• Define las prácticas: nombre, criterios que evalúa e imagen (plano, croquis o foto de la pieza).</p>
-
-          <p style="margin-top:14px"><strong>Indicadores de evaluación:</strong></p>
-          <p>En ⚙ Criterios y prácticas puedes tener una lista de <strong>indicadores</strong>: frases concretas («Calidad de las uniones soldadas», «Mantiene su puesto limpio…») vinculadas a uno o varios criterios. Las prácticas se puntúan por indicadores (0-10) y la observación usa los indicadores Sí/No; cada nota pasa a sus criterios. Los informativos aparecen en la ficha y el informe, pero no cuentan para la nota. Todos los módulos traen una propuesta inicial que cubre todos sus criterios de práctica y actitud: revísala y adáptala a tu programación.</p>
+          <p>Entra en el módulo y pulsa <strong>⚙ Configurar</strong>. Está ordenado como las pestañas de la ficha, cada tipo con su color:</p>
+          <p>• <strong>P · Prácticas:</strong> define las prácticas (nombre, imagen del plano o la pieza, e indicadores que evalúa). Debajo, en «Indicadores», están las frases de 0 a 10 que usan las prácticas y los exámenes.</p>
+          <p>• <strong>A · Hoja de observación:</strong> las frases que marcas con Sí / No en el taller. Las informativas aparecen en la ficha y el informe, pero no cuentan para la nota.</p>
+          <p>• <strong>T · Exámenes:</strong> puedes prepararlos con antelación (nombre, fecha prevista, si es obligatorio e indicadores que evalúa).</p>
+          <p>• <strong>Criterios que trabajo</strong> (una vez al curso): desmarca los criterios que no vas a trabajar y, si tu programación lo indica, pon el peso de cada RA. Los criterios desmarcados no cuentan ni salen en el informe.</p>
+          <p>Todos los módulos traen una propuesta de indicadores y frases que cubre sus criterios de práctica y actitud: revísala y adáptala a tu programación.</p>
 
           <p style="margin-top:14px"><strong>Flujo básico:</strong></p>
           <p>1. Elige la clase. Solo aparecen las clases y los módulos que impartes: se marcan en ⚙ Ajustes → Módulos que imparto.</p>
-          <p>2. Selecciona el módulo</p>
-          <p>3. Escoge al alumno</p>
-          <p>4. Evalúa en las 3 pestañas: <strong>Prácticas · Observación · Examen</strong></p>
+          <p>2. Elige el módulo. Verás la lista de alumnos con su nota en curso.</p>
+          <p>3. Lo más rápido: <strong>📋 Evaluar a toda la clase</strong>. O entra en un alumno y evalúa en sus 3 pestañas: <strong>Prácticas · Observación · Examen</strong>.</p>
+          <p>Para volver atrás, usa el gesto de atrás del móvil o el botón ‹ de abajo a la derecha (se aparta al bajar por una lista y vuelve al subir).</p>
 
-          <p style="margin-top:14px"><strong>Prácticas (procedimental · P):</strong></p>
-          <p>Pon la <strong>nota de la práctica de 0 a 10</strong>: se aplica a todos sus criterios. Si un criterio destaca o falla, ajústalo con su propia nota. Con <strong>📐 Ver la práctica</strong> se abre su imagen a pantalla completa.</p>
-          <p>Para calificar a toda la clase en una sola pantalla, usa <strong>📋 Evaluar a toda la clase</strong> desde la lista de alumnos. Sirve para <strong>prácticas</strong> (cada alumno con su nota de 0 a 10), para la <strong>observación de actitud</strong> (un indicador cada vez, Sí o No por alumno, con «Todos Sí» para ir rápido) y para <strong>exámenes</strong>: el examen se crea una sola vez (nombre, fecha, si es obligatorio y criterios) y escribes la nota de cada alumno seguida, pasando al siguiente con Intro. En la ficha de cada alumno aparece con su nota.</p>
+          <p style="margin-top:14px"><strong>📋 Evaluar a toda la clase:</strong></p>
+          <p>• <strong>Prácticas:</strong> elige la práctica, pulsa «Poner a todos» con la nota más habitual y cambia solo a quien se salga. Quien no la haya hecho, sin nota (✕).</p>
+          <p>• <strong>Observación de actitud:</strong> un indicador cada vez, Sí o No por alumno, con «Todos Sí» para ir rápido y ‹ › para pasar de frase.</p>
+          <p>• <strong>Exámenes:</strong> el examen se crea una sola vez y escribes la nota de cada alumno seguida, pasando al siguiente con Intro. En la ficha de cada alumno aparece con su nota.</p>
 
-          <p style="margin-top:14px"><strong>Observación (actitudinal · A):</strong></p>
-          <p>Crea una sesión (recomendado: 2 por trimestre) y marca Sí / No en cada criterio. En cada criterio, Sí cuenta 10 y No cuenta 0, y se hace la media de todas las sesiones. Algunos módulos (3015 y 3073) no tienen criterios de actitud en el currículo.</p>
+          <p style="margin-top:14px"><strong>Prácticas (P):</strong></p>
+          <p>Pon la <strong>nota de la práctica de 0 a 10</strong>: se aplica a todos sus indicadores. Si alguno destaca o falla, ajústalo con su propia nota. Con <strong>📐 Ver la práctica</strong> se abre su imagen a pantalla completa.</p>
 
-          <p style="margin-top:14px"><strong>Examen (teórico · T):</strong></p>
-          <p>Añade cada examen con su nombre, fecha y nota (admite decimales), y marca los criterios que evalúa. Además de los de teoría, puedes marcar cualquier otro criterio del módulo, por ejemplo los de prevención de riesgos. Si no marcas ninguno, cuenta para todos los criterios de teoría.</p>
+          <p style="margin-top:14px"><strong>Observación (A):</strong></p>
+          <p>Crea una sesión con su fecha y marca Sí / No en cada frase. La nota de la sesión es el porcentaje de Sí (3 Sí de 4 = 7,5) y la actitud es la media de las sesiones. Cada frase cuenta también para los criterios a los que está vinculada (Sí = 10, No = 0).</p>
+
+          <p style="margin-top:14px"><strong>Examen (T):</strong></p>
+          <p>Pon nombre, fecha y nota (admite decimales) y marca en «Qué evalúa» los <strong>indicadores</strong> del examen (o, plegados debajo, criterios sueltos). Si no marcas nada, cuenta para todos los criterios de teoría. Un examen cuenta siempre en la parte de teoría, aunque evalúe criterios de procedimiento.</p>
           <p>Marca un examen como <strong>🔒 obligatorio</strong> (p. ej. la prueba de seguridad para bajar al taller) y el alumno no podrá aprobar el módulo hasta superarlo con un 5.</p>
 
-          <p style="margin-top:14px"><strong>Informe PDF:</strong></p>
-          <p>Desde cada alumno, <strong>📄 Exportar informe</strong> genera un PDF con la nota de cada RA, la nota del módulo, las prácticas con sus fotos, la observación y los exámenes. Desde el resumen de clase puedes exportar el PDF de toda la clase.</p>
+          <p style="margin-top:14px"><strong>Botones «✓ Guardar»:</strong></p>
+          <p>La app guarda sola cada nota al momento. Los botones verdes «✓ Guardar práctica / observación / examen» confirman lo hecho (con un resumen y lo que falte) y te devuelven atrás. Si sales sin pulsarlos, no se pierde nada.</p>
+
+          <p style="margin-top:14px"><strong>Cerrar una evaluación:</strong></p>
+          <p>En la lista de alumnos, «Cerrar 1ª» guarda la nota de cada alumno en ese momento. Luego verás la tendencia (↑ ↓ =) respecto a la última evaluación cerrada.</p>
+
+          <p style="margin-top:14px"><strong>Informes:</strong></p>
+          <p>Desde cada alumno, <strong>📄 Exportar informe</strong> genera un PDF con la nota de cada RA, la nota del módulo (en curso o cerrada), las evaluaciones cerradas, las prácticas con sus fotos, la observación y los exámenes. Desde la lista de alumnos, <strong>📊 Ver resumen de clase</strong> muestra a toda la clase y permite exportar el PDF de la clase, con una columna por cada evaluación cerrada.</p>
         </div>
       </details>
 
@@ -1087,10 +1096,12 @@ try {
             Criterio = media de prácticas, observación y exámenes · RA = media de sus criterios · <strong>Módulo = media de los RA según su peso</strong>
           </p>
           <p><strong>Condición de aprobado:</strong> todos los RA con 5 o más y cada parte (prácticas, actitud y teoría) con 5 o más. Si no, la nota queda en <strong>4 como máximo</strong>.</p>
-          <p><strong>Cada parte se calcula por instrumento:</strong> prácticas = notas de las prácticas · actitud = hoja de observación · teoría = exámenes. Un examen cuenta siempre en teoría, aunque evalúe criterios de procedimiento (por ejemplo, la prueba de seguridad).</p>
-          <p>La nota final es <strong>entera, de 1 a 10</strong>. Los pesos de los RA se configuran en ⚙ Criterios y prácticas (por defecto, todos iguales).</p>
+          <p><strong>Cada parte es la media de lo que ves en pantalla:</strong> prácticas = media de las notas de las prácticas · actitud = media de las sesiones de observación (% de Sí) · teoría = media de los exámenes. Un examen cuenta siempre en teoría, aunque evalúe criterios de procedimiento (por ejemplo, la prueba de seguridad).</p>
+          <p><strong>Por qué la nota del módulo no es la media de las partes:</strong> sale de los RA, y cada RA de sus criterios. Muchos RA incluyen criterios de actitud, orden o seguridad que se evalúan con la observación, así que un alumno que trabaja bien en el taller puede tener más nota en un RA que en su práctica o su examen. En la ficha, «Ver detalle de la nota» muestra cada RA con su nota y de dónde sale (cuántos criterios vienen de prácticas, de observación o de exámenes, y con qué media).</p>
+          <p>La nota final es <strong>entera, de 1 a 10</strong>. Los pesos de los RA se configuran en ⚙ Configurar → Criterios que trabajo (por defecto, todos iguales).</p>
           <p>La nota es <strong>acumulada</strong> (todo lo evaluado desde el inicio de curso) y está <strong>en curso</strong> hasta que cierras la evaluación con el botón «Cerrar» de la lista de alumnos. Al cerrar, se guarda la nota de cada alumno en ese momento y ya no cambia; aparece en la lista, en la ficha y en el informe PDF. Si te equivocas, puedes reabrir la última evaluación cerrada.</p>
-          <p>Si a un alumno le falta por evaluar alguna parte (prácticas, actitud o teoría), su nota sale en ámbar con el aviso «falta…». El detalle por partes y por RA está en la ficha del alumno, en «Ver detalle de la nota».</p>
+          <p>Si a un alumno le falta por evaluar alguna parte (prácticas, actitud o teoría), su nota sale en ámbar con el aviso «falta…». Un criterio o un RA sin ninguna nota no cuenta en la media: aparece como sin evaluar (por ejemplo, si aún no se ha trabajado). Antes de la evaluación final, revisa que cada alumno tenga alguna nota en todos los RA.</p>
+          <p><strong>Colores de las notas</strong> (iguales en toda la app y en los PDF): rojo, no llega a 5 · verde, aprobado (más intenso cuanto más alta) · ámbar, falta alguna parte · gris, sin notas.</p>
 
           <p style="margin-top:12px"><strong>Escala de las prácticas (0-10):</strong></p>
           <p>0-4 No conseguido · 5-6 Conseguido justo · 7-8 Conseguido · 9-10 Excelente</p>
@@ -1145,7 +1156,7 @@ try {
           <p>• Protege tu dispositivo con PIN o contraseña</p>
           <p>• Usa códigos o iniciales en lugar de nombres completos siempre que puedas</p>
           <p>• No compartas el dispositivo desbloqueado con la app abierta</p>
-          <p>• Exporta copias de seguridad periódicamente</p>
+          <p>• Exporta copias de seguridad periódicamente (se guardan cifradas con tu contraseña)</p>
           <p>• Al final del curso, exporta un backup y borra todo</p>
 
           <p style="margin-top:12px"><strong>Responsabilidad docente:</strong></p>
@@ -1164,10 +1175,10 @@ try {
           <p>Sí, una vez instalada como PWA funciona sin conexión.</p>
 
           <p style="margin-top:10px"><strong>¿Puedo usar la app en varios dispositivos?</strong></p>
-          <p>No hay sincronización automática. Usa exportar/importar para mover los datos manualmente.</p>
+          <p>No hay sincronización automática. Haz una copia en un dispositivo y restáurala en el otro (Ajustes → Gestión de datos). Ten en cuenta que restaurar sustituye todos los datos del dispositivo de destino.</p>
 
           <p style="margin-top:10px"><strong>¿Y si cambio de móvil?</strong></p>
-          <p>Antes de cambiar: ⚙ Ajustes → Gestión de datos → Copia completa. En el móvil nuevo: instala la app y en ⚙ Ajustes → Gestión de datos → Restaurar copia.</p>
+          <p>Antes de cambiar: ⚙ Ajustes → Gestión de datos → Copia completa (con tu contraseña). En el móvil nuevo: instala la app y en ⚙ Ajustes → Gestión de datos → Restaurar copia; te pedirá esa contraseña.</p>
 
           <p style="margin-top:10px"><strong>¿Se pueden compartir los datos con compañeros?</strong></p>
           <p>No se recomienda. Los datos de evaluación son personales y confidenciales.</p>
@@ -1176,7 +1187,7 @@ try {
           <p>Exporta copia completa, guárdala en sitio seguro, y usa "Borrar TODOS los datos" para empezar limpio el siguiente curso.</p>
 
           <p style="margin-top:10px"><strong>¿Puedo imprimir las evaluaciones?</strong></p>
-          <p>Sí. Desde cada alumno pulsa "📄 Exportar informe". El PDF incluye la nota de cada RA, la nota del módulo, las puntuaciones y las fotos de prácticas.</p>
+          <p>Sí. Desde cada alumno pulsa "📄 Exportar informe": el PDF incluye la nota de cada RA, la nota del módulo, las evaluaciones cerradas, las puntuaciones y las fotos de prácticas. Para toda la clase, usa "📊 Ver resumen de clase" → "Exportar PDF de la clase".</p>
 
           <p style="margin-top:10px"><strong>¿Cómo se actualiza la app?</strong></p>
           <p>Cuando hay una versión nueva, al abrir la app aparece el aviso «Hay una versión nueva de NEXUS» con el botón «Actualizar». Tus datos no se tocan.</p>
@@ -1257,7 +1268,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v96';
+const APP_VERSION = 'v97';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -2102,7 +2113,7 @@ function getIndT() { return soloActivos(indsModulo(S.moduloId).IND_T); }
 //   modo 'nota' → se puntúa de 0 a 10 en las prácticas
 //   modo 'sino' → Sí / No en las hojas de observación
 //   modo 'info' → Sí / No informativo: aparece en la ficha y el informe, pero no cuenta para la nota
-// Propuesta inicial por módulo (el profesor la edita en ⚙ Criterios y prácticas; su versión se guarda en settings).
+// Propuesta inicial por módulo (el profesor la edita en ⚙ Configurar; su versión se guarda en settings).
 const INDICADORES_PROPUESTOS = {
   MOD3021: [
     { id:'IND_3021_01', modo:'nota', texto:'Interpreta el plano, hace el croquis y selecciona el material', crits:['3021-P01','3021-P02','3021-P03'] },
@@ -3035,7 +3046,7 @@ function setCritsRA(ra, on) {
   if (g) setCritsModulo(g.items.map(i => i.id), on);
 }
 
-// ── Indicadores de evaluación del módulo (pantalla ⚙ Criterios y prácticas) ──
+// ── Indicadores de evaluación del módulo (pantalla ⚙ Configurar) ──
 // Exámenes del módulo en Configurar: son los mismos que en "Evaluar a toda la clase".
 // Se crean o abren en el editor de esa pantalla (nombre, fecha, obligatorio, criterios y notas).
 function renderExamenesConfig() {
@@ -3656,7 +3667,7 @@ function renderRubrica() {
     if (!acts.length) {
       html+=`<div class="card empty">
         <div class="empty-icon">📦</div>
-        <p>No hay prácticas evaluadas.<br>Pulsa <strong>Añadir práctica</strong> para empezar,<br>o define prácticas en <strong>⚙ Criterios y prácticas</strong>.</p>
+        <p>No hay prácticas evaluadas.<br>Pulsa <strong>Añadir práctica</strong> para empezar,<br>o define prácticas en <strong>⚙ Configurar</strong>.</p>
       </div>`;
     } else {
       acts.forEach((act,ai)=>{
@@ -3821,7 +3832,7 @@ function renderObs() {
   // Sin nada que observar (p. ej. 3073 sin criterios de actitud ni indicadores)
   if (!filas.length) {
     document.getElementById('obs-content').innerHTML = `<div class="card empty"><div class="empty-icon">👁</div>
-      <p>Este módulo no tiene criterios de actitud ni indicadores de observación.<br>Puedes crear indicadores en <strong>⚙ Criterios y prácticas</strong>.</p></div>`;
+      <p>Este módulo no tiene criterios de actitud ni indicadores de observación.<br>Puedes crear indicadores en <strong>⚙ Configurar</strong>.</p></div>`;
     return;
   }
   const sessions=Object.keys(S.observaciones).filter(k=>k.startsWith(key+'_')).sort().reverse();
