@@ -62,11 +62,10 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 #app{max-width:560px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;overflow:hidden;position:relative}
 
 /* ── Topbar ── */
-.topbar{background:linear-gradient(135deg,#1A237E,#283593);color:#fff;padding:18px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;flex-shrink:0;min-height:68px}
-.topbar-back{background:none;border:none;color:#fff;font-size:26px;cursor:pointer;min-width:52px;min-height:52px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s;flex-shrink:0}
-.topbar-back:hover{background:rgba(255,255,255,.15)}
+.topbar{background:linear-gradient(135deg,#1A237E,#283593);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;flex-shrink:0;min-height:68px}
 .topbar-title{flex:1;min-width:0}
-.topbar-title h1{font-size:19px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.03em;line-height:1.2}
+/* Sin flecha de volver (se vuelve con el gesto o el botón flotante): el título ocupa todo el ancho y puede usar dos líneas */
+.topbar-title h1{font-size:20px;font-weight:700;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;letter-spacing:.02em;line-height:1.2}
 .topbar-title p{font-size:12px;opacity:.75;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em}
 #topbarSub{white-space:normal;line-height:1.3} /* el nombre del departamento no cabe en una línea en el móvil */
 .topbar-action{background:none;border:none;color:#fff;font-size:26px;cursor:pointer;min-width:52px;min-height:52px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s;flex-shrink:0}
@@ -584,7 +583,7 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
   .clase-badge{width:40px;height:52px}
   .clase-banner-info h2{font-size:27px}
   .nota-big{font-size:76px}
-  .topbar-title h1{font-size:18px}
+  .topbar-title h1{font-size:19px}
   .topbar-title p{font-size:11.5px}
 }
 </style>
@@ -627,7 +626,6 @@ try {
   <!-- Botón flotante de volver, abajo a la derecha: la zona más cómoda para el pulgar (la flecha de arriba queda lejos) -->
   <button id="backFab" class="back-fab" style="display:none" onclick="goBack()" title="Volver" aria-label="Volver a la pantalla anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
   <div class="topbar" id="topbar">
-    <button class="topbar-back" id="backBtn" style="display:none" onclick="goBack()">←</button>
     <div class="topbar-title">
       <h1 id="topbarTitle">NEXUS <span style="font-weight:300;font-size:14px;opacity:.75;letter-spacing:.03em">by Xurxo</span></h1>
       <p id="topbarSub">Departamento de Fabricación Mecánica · 2026-2027</p>
@@ -1244,7 +1242,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v89';
+const APP_VERSION = 'v90';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -2547,7 +2545,6 @@ function showScreen(id,title,sub,showConf=false) {
     _subEl.textContent = sub || '';
     _subEl.style.display = sub ? '' : 'none';
   }
-  document.getElementById('backBtn').style.display=navHistory.length>1?'':'none';
   document.getElementById('backFab').style.display=navHistory.length>1?'':'none';
   document.getElementById('backFab').classList.remove('oculto');
   document.getElementById('configBtn').style.display=showConf?'flex':'none';
