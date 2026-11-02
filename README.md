@@ -1,7 +1,4 @@
-# NEXUS · Evaluación FP
-
-PWA de evaluación criterial para Formación Profesional de Soldadura y Calderería.
-Diseñada para docentes de FP de Andalucía (CFGM CMSYC).
+NEXUS es una aplicación web (PWA) de evaluación criterial por resultados de aprendizaje para el CFGM de Soldadura y Calderería y la FP Básica de Fabricación de Elementos Metálicos, según la Orden de 18 de septiembre de 2025, pensada para docentes de FP de Andalucía. Funciona sin conexión y todos los datos del alumnado se quedan en el dispositivo del profesor.
 
 ## Instalación en GitHub Pages
 
