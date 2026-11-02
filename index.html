@@ -1245,7 +1245,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v93';
+const APP_VERSION = 'v94';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -2455,9 +2455,20 @@ function evalModulo(key) {
   // sea cual sea el tipo de criterio que evalúen (p. ej. una prueba de seguridad sobre criterios de
   // procedimiento cuenta en teoría). Cada parte es la media, criterio a criterio, de las notas de ese instrumento.
   // La nota de cada criterio, y por tanto la de cada RA, sigue juntando todos los instrumentos.
-  const todosIds = criterios.map(c => c.id);
-  const parte = notasDe => mediaDe(todosIds.map(id => mediaDe(notasDe(id))).filter(v => v !== null));
-  const bloques = { p: parte(notasPracticas), a: parte(notasObservacion), t: parte(notasExamen) };
+  // Cada parte es la media de lo que el profesor ve en pantalla, no de criterios: así coincide con
+  // "Media prácticas", con la nota de cada sesión de observación y con las notas de los exámenes.
+  // (Si se promediara por criterios, una frase vinculada a 5 criterios pesaría 5 veces más que otra con 1.)
+  //   P = media de las notas de las prácticas · A = media de las sesiones (% de Sí) · T = media de los exámenes
+  const filasA = indsSiNo.length ? indsSiNo.map(i => i.id) : soloActivos(m.IND_A, modId).map(i => i.id);
+  const notaDeSesion = s => {
+    const resp = filasA.map(id => s[id]).filter(v => v === 'Sí' || v === 'No');
+    return resp.length ? resp.filter(v => v === 'Sí').length / resp.length * 10 : null;
+  };
+  const bloques = {
+    p: mediaDe(acts.map(a => actScore(a, modId)).filter(esNota)),
+    a: mediaDe(sesiones.map(notaDeSesion).filter(esNota)),
+    t: mediaDe(pruebas.map(p => p.nota)),
+  };
   // Partes que se esperan en este módulo: prácticas si hay criterios de procedimiento, observación si hay
   // criterios de actitud o frases Sí/No, y teoría si hay criterios teóricos o algún examen creado
   const partes = {
