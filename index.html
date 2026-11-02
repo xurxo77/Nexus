@@ -141,6 +141,9 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .score-pill.global{background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.45)}
 /* Lista de alumnos: acción principal y primeros pasos */
 .btn-principal{width:100%;min-height:58px;border:none;border-radius:16px;background:var(--navy);color:#fff;font-size:var(--fs-md);font-weight:700;cursor:pointer;box-shadow:var(--shadow);margin-bottom:6px}
+/* Botón de cierre «✓ Guardar …»: verde de confirmación; la app ya guarda sola, este botón confirma y vuelve */
+.btn-guardar{width:100%;min-height:54px;border:none;border-radius:16px;background:#2E7D32;color:#fff;font-size:var(--fs-md);font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(46,125,50,.3);margin-top:12px;transition:transform .12s}
+.btn-guardar:active{transform:scale(.98)}
 .chip-prov{border:1.5px dashed currentColor}
 /* Fila de alumno: compacta, con la nota del módulo grande a la derecha.
    Cada alumno en su propia tarjeta, con un poco de aire entre ellas */
@@ -1242,7 +1245,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v90';
+const APP_VERSION = 'v91';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -3507,6 +3510,7 @@ function actCardHTML(act, ai) {
             quitarTitulo: esNota(act.rapida) ? 'Volver a la nota de la práctica' : 'Quitar nota' })}
         </div>`; }).join('')}
       </div>
+      <button class="btn-guardar" onclick="guardarPracticaAlumno(${ai})">✓ Guardar práctica</button>
       <button class="act-borrar" onclick="confirmDelAct(${ai})">🗑 Eliminar esta práctica</button>
     </div>
   </div>`;
@@ -3805,6 +3809,7 @@ function renderObs() {
           <button class="toggle-btn no ${data[f.id]==='No'?'active':''}" onclick="setObs('${sk}','${f.id}','No',this)">No</button>
         </div>
       </div>`).join('')}
+      <div style="padding:12px 16px 14px"><button class="btn-guardar" style="margin:0" onclick="guardarObsAlumno('${sk}')">✓ Guardar observación</button></div>
     </div>`;
   });
   if (!sessions.length) html+=`<div class="card empty"><div class="empty-icon">👁</div><p>No hay sesiones de observación todavía.</p></div>`;
@@ -4046,6 +4051,58 @@ function deletePrueba(i) {
   showToast('✓ Examen eliminado');
 }
 
+// ═══════════ BOTONES "GUARDAR" ═══════════
+// La app guarda sola cada cambio al momento. Estos botones dan un cierre claro: guardan ya (sin esperar),
+// confirman con un resumen de lo hecho y devuelven a la pantalla anterior.
+function guardarYa(mensaje) {
+  if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); // aplica la última casilla escrita
+  persistState();
+  haptic(12);
+  showToast(mensaje);
+}
+// Ficha del alumno: cierra la práctica abierta
+function guardarPracticaAlumno(ai) {
+  const act = (S.actividades[akey()] || [])[ai];
+  const s = act ? actScore(act) : null;
+  S.openActIdx = null;
+  renderRubrica(); updateHeader();
+  guardarYa(`✓ Práctica guardada${s !== null ? ` · nota ${s}` : ' · sin nota todavía'}`);
+  window.scrollTo(0, 0);
+}
+// Ficha del alumno: sesión de observación
+function guardarObsAlumno(sk) {
+  const filas = filasObservacion().filter(f => f.cuenta);
+  const data = S.observaciones[sk] || {};
+  const sinMarcar = filas.filter(f => data[f.id] !== 'Sí' && data[f.id] !== 'No').length;
+  guardarYa(sinMarcar ? `✓ Observación guardada · ${sinMarcar} frase(s) sin marcar` : '✓ Observación guardada');
+  window.scrollTo(0, 0);
+}
+// Evaluar a toda la clase: práctica, observación o examen. Resume, avisa de lo que falta y vuelve a la lista.
+function cpGuardar(tipo) {
+  if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  const alus = S.alumnos[S.claseId] || [];
+  let mensaje;
+  if (tipo === 'practica') {
+    const con = alus.filter(a => { const act = cpPractica(a.id); return act && actScore(act) !== null; }).length;
+    mensaje = `✓ ${cpDef()?.nombre || 'Práctica'} guardada · ${con} de ${alus.length} con nota`;
+  } else if (tipo === 'examen') {
+    const ex = cpExamen();
+    const con = alus.filter(a => esNota(ex?.notas[a.id])).length;
+    mensaje = `✓ ${ex?.nombre || 'Examen'} guardado · ${con} de ${alus.length} con nota`;
+  } else {
+    // Observación: alumnos a los que les falta alguna frase de las que cuentan para la nota
+    const filas = filasObservacion().filter(f => f.cuenta);
+    const incompletos = alus.filter(a => {
+      const d = S.observaciones[`${a.id}_${S.moduloId}_${S._cpObsFecha}`] || {};
+      return filas.some(f => d[f.id] !== 'Sí' && d[f.id] !== 'No');
+    }).length;
+    if (incompletos && !confirm(`${incompletos} alumno(s) tienen alguna frase sin marcar en esta sesión.\n\n¿Guardar igualmente? (puedes completarlo luego)`)) return;
+    mensaje = `✓ Observación del ${fmtFecha(S._cpObsFecha)} guardada${incompletos ? ` · ${incompletos} alumno(s) incompletos` : ''}`;
+  }
+  guardarYa(mensaje);
+  cpElegir(null);
+}
+
 // ═══════════ OBSERVACIÓN A TODA LA CLASE ═══════════
 // Un indicador cada vez, con Sí / No por alumno. Escribe en la misma sesión de observación
 // que la ficha del alumno: S.observaciones["alumnoId_moduloId_fecha"][indicadorId] = 'Sí' | 'No'.
@@ -4132,7 +4189,8 @@ function renderObsClase(el, alus) {
         </div>
       </div>`; }).join('')}
     </div>
-    ${i < filas.length - 1 ? `<button class="btn-principal" onclick="cpObsFila(1);window.scrollTo(0,0)">Siguiente indicador ›</button>` : ''}`;
+    ${i < filas.length - 1 ? `<button class="btn-principal" onclick="cpObsFila(1);window.scrollTo(0,0)">Siguiente indicador ›</button>` : ''}
+    <button class="btn-guardar" onclick="cpGuardar('observacion')">✓ Guardar observación</button>`;
 }
 
 // ═══════════ EXÁMENES DE TODA LA CLASE ═══════════
@@ -4270,7 +4328,8 @@ function renderExamenClase(el, alus) {
                onchange="cpxNota('${ex.id}','${a.id}',this)" onkeydown="cpxSiguiente(event,this)" />
       </div>`; }).join('')}
     </div>
-    <div class="cp-sub" style="padding:0 4px">Escribe la nota y pulsa Intro para pasar al siguiente. Quien no lo haya hecho, déjalo vacío.</div>`;
+    <div class="cp-sub" style="padding:0 4px">Escribe la nota y pulsa Intro para pasar al siguiente. Quien no lo haya hecho, déjalo vacío.</div>
+    <button class="btn-guardar" onclick="cpGuardar('examen')">✓ Guardar notas del examen</button>`;
 }
 
 // Mantener por retrocompat (por si hay localStorage antiguo)
@@ -5098,7 +5157,8 @@ function renderClasePractica() {
       ${botonesNota(r, v => `cpSet('${a.id}',${v})`, { quitar: r !== null ? `cpSet('${a.id}',null)` : null })}
     </div>`;
   });
-  el.innerHTML = html + `</div>`;
+  el.innerHTML = html + `</div>
+    <button class="btn-guardar" onclick="cpGuardar('practica')">✓ Guardar práctica</button>`;
 }
 
 function cpSet(aluId, val, pintar = true) {
