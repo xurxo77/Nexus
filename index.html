@@ -204,6 +204,18 @@ input,textarea,select,button{font-family:'Outfit',sans-serif;font-size:var(--fs-
 .stu-detalle-body .ra-chip{background:var(--bg);color:var(--muted);border-color:var(--border)}
 .stu-detalle-body .ra-chip.bien{background:#E8F5E9;color:#2E7D32;border-color:#A5D6A7}
 .stu-detalle-body .ra-chip.mal{background:#FFEBEE;color:#C62828;border-color:#EF9A9A}
+/* Detalle de la nota: una fila por RA con su nota y de dónde sale */
+.ra-filas{display:flex;flex-direction:column;gap:6px}
+.ra-fila{border:1.5px solid var(--border);border-left-width:4px;border-radius:10px;padding:8px 10px;background:var(--bg)}
+.ra-fila.bien{border-left-color:#2E7D32}
+.ra-fila.mal{border-left-color:#C62828;background:#FFF5F5}
+.ra-fila-top{display:flex;align-items:baseline;gap:8px}
+.ra-fila-top b{font-size:14px;color:var(--navy)}
+.ra-fila-nota{font-size:16px;font-weight:800;color:var(--text)}
+.ra-fila.bien .ra-fila-nota{color:#2E7D32}
+.ra-fila.mal .ra-fila-nota{color:#C62828}
+.ra-fila-peso{margin-left:auto;font-size:11px;color:var(--muted)}
+.ra-fila-comp{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}
 .stu-detalle-nota{font-size:12px;color:var(--muted)}
 .stu-acciones{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:10px}
 .stu-acciones button{flex:1;min-height:44px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-size:14px;font-weight:600;color:var(--navy);cursor:pointer}
@@ -1245,7 +1257,7 @@ try {
 <script>
 // Versión de la app: se muestra en ⓘ Información técnica y se guarda en las copias de seguridad.
 // Al publicar una versión nueva, cámbiala aquí y en CACHE_NAME de sw.js (mismo número).
-const APP_VERSION = 'v94';
+const APP_VERSION = 'v96';
 
 // ═══════════ DATA ═══════════
 const CLASES = [
@@ -2440,11 +2452,13 @@ function evalModulo(key) {
     ...indsSiNo.filter(ind => critsDeIndicador(ind, modId).includes(id)).map(ind => sino(s[ind.id])),
   ]).filter(esNota);
   const notaCriterio = id => mediaDe([...notasPracticas(id), ...notasObservacion(id), ...notasExamen(id)]);
+  // De qué instrumentos sale la nota de cada criterio (para explicar la nota de cada RA en la ficha)
+  const fuentesCriterio = id => ({ p: notasPracticas(id).length > 0, a: notasObservacion(id).length > 0, t: notasExamen(id).length > 0 });
 
   const criterios = [
-    ...soloActivos(m.IND_P, modId).map(i => ({ ...i, tipo:'p', nota: notaCriterio(i.id) })),
-    ...soloActivos(m.IND_A, modId).map(i => ({ ...i, tipo:'a', nota: notaCriterio(i.id) })),
-    ...soloActivos(m.IND_T, modId).map(i => ({ ...i, tipo:'t', nota: notaCriterio(i.id) })),
+    ...soloActivos(m.IND_P, modId).map(i => ({ ...i, tipo:'p', nota: notaCriterio(i.id), fuentes: fuentesCriterio(i.id) })),
+    ...soloActivos(m.IND_A, modId).map(i => ({ ...i, tipo:'a', nota: notaCriterio(i.id), fuentes: fuentesCriterio(i.id) })),
+    ...soloActivos(m.IND_T, modId).map(i => ({ ...i, tipo:'t', nota: notaCriterio(i.id), fuentes: fuentesCriterio(i.id) })),
   ];
   // Exámenes obligatorios (p. ej. prueba de seguridad): hay que aprobarlos para superar el módulo
   const nombreExamen = p => p.nombre || 'examen obligatorio';
@@ -3362,6 +3376,7 @@ function renderAlumnos() {
 }
 function selectAlumno(id) {
   S.alumnoId=id;
+  S._detalleAbierto = false; // "Ver detalle de la nota" empieza siempre recogido al entrar en un alumno
   // Recordar pestaña previa de este alumno/módulo (o empezar en Prácticas)
   S._lastTab = S._lastTab || {};
   const k = `${id}_${S.moduloId}`;
@@ -3397,8 +3412,30 @@ function updateHeader() {
     : ev.provisional ? `Faltan: ${ev.faltan.join(', ')}`
     : '✓ Todas las partes evaluadas';
   const pill = (letra, v) => `<span class="score-pill"><span class="label">${letra}</span><span class="val" style="color:${scoreColor(v)}">${scoreLabel(v)}</span></span>`;
-  const raChips = ev.ras.map(x => `<span class="ra-chip ${x.superado===false?'mal':x.superado?'bien':''}"
-      title="RA${x.ra} · ${x.evaluados}/${x.total} criterios evaluados · peso ${Math.round(x.peso*10)/10} %">RA${x.ra} ${x.nota!==null?x.nota.toFixed(1):'—'}</span>`).join('');
+  // Detalle por RA: su nota y de dónde sale, agrupando sus criterios por los instrumentos que los han evaluado.
+  // Ej.: "RA2 · 6,9 — 5 de práctica y examen (media 5,0) · 3 solo de observación (media 10) · 2 sin nota"
+  const nombreFuentes = f => {
+    const n = [f.p && 'práctica', f.a && 'observación', f.t && 'examen'].filter(Boolean);
+    return n.length === 1 ? `solo de ${n[0]}` : `de ${n.slice(0, -1).join(', ')} y ${n[n.length - 1]}`;
+  };
+  const fmt1 = v => (Math.round(v * 10) / 10).toLocaleString('es-ES');
+  const raChips = ev.ras.map(x => {
+    const crits = ev.criterios.filter(c => raDe(c) == x.ra);
+    const grupos = {};
+    crits.filter(c => c.nota !== null).forEach(c => {
+      const g = nombreFuentes(c.fuentes);
+      (grupos[g] = grupos[g] || []).push(c.nota);
+    });
+    const sinNota = crits.filter(c => c.nota === null).length;
+    const partes = Object.entries(grupos).sort((a, b) => b[1].length - a[1].length)
+      .map(([g, notas]) => `${notas.length} ${g} (media ${fmt1(mediaDe(notas))})`);
+    if (sinNota) partes.push(`${sinNota} sin nota`);
+    return `<div class="ra-fila ${x.superado===false?'mal':x.superado?'bien':''}" title="${escHTML(RA_TEXTOS[S.moduloId]?.[x.ra] || '')}">
+      <div class="ra-fila-top"><b>RA${x.ra}</b><span class="ra-fila-nota">${x.nota!==null?fmt1(x.nota):'—'}</span>
+        <span class="ra-fila-peso">${x.evaluados}/${x.total} criterios · peso ${fmt1(x.peso)} %</span></div>
+      <div class="ra-fila-comp">${partes.length ? partes.join(' · ') : 'sin notas todavía'}</div>
+    </div>`;
+  }).join('');
   // El nombre ya está en la barra de arriba: aquí solo el estado y la nota, con los mismos colores que la lista
   const est = estadoNota(ev);
   document.getElementById('stuHeader').innerHTML=`
@@ -3418,7 +3455,8 @@ function updateHeader() {
       <div class="stu-detalle-body">
         <div class="stu-detalle-tit">Por partes</div>
         <div class="stu-scores">${pill('Prácticas', ev.bloques.p)}${pill('Actitud', ev.bloques.a)}${pill('Teoría', ev.bloques.t)}</div>
-        ${raChips ? `<div class="stu-detalle-tit">Por resultados de aprendizaje</div><div class="ra-chips">${raChips}</div>` : ''}
+        ${raChips ? `<div class="stu-detalle-tit">Por resultados de aprendizaje · la nota del módulo sale de aquí</div><div class="ra-filas">${raChips}</div>
+        <div class="stu-detalle-nota">Cada RA es la media de sus criterios, y cada criterio la media de todo lo que lo ha evaluado (prácticas, observación y exámenes). Los criterios «solo de observación» son los de actitud, orden o seguridad que el currículo incluye en cada RA.</div>` : ''}
         <div class="stu-detalle-nota">Para aprobar: todos los RA y cada parte con 5 o más.</div>
         ${(() => { const cerradas = cierresDe().filter(c => c.notas[a.id]);
           return cerradas.length ? `<div class="stu-detalle-tit">Evaluaciones cerradas</div>
